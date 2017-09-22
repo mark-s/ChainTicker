@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using ChainTicker.DataSource.Coins.Rest;
 using NUnit.Framework;
 using Shouldly;
 
@@ -6,16 +7,17 @@ namespace ChainTicker.DataSource.Coins.Tests
 {
 
     [TestFixture]
-    public class CoinServiceTests
+    public class CoinInfoServiceTests
     {
 
         [Test]
         public async Task GetAllAvailableCoins_ReturnsAllCoinsAsync()
         {
 
-            var cs = new CoinService();
-            
-            var result = await cs.GetAllAvailableCoinsAsync(null);
+            var coinInfoService = new CoinInfoService(new RestService());
+
+            var result = await coinInfoService.GetAllCoinsAsync();
+
 
             result.Count.ShouldBe(100);
 
