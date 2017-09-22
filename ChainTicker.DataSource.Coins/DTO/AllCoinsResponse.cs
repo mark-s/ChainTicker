@@ -3,7 +3,7 @@ using RestSharp.Deserializers;
 
 namespace ChainTicker.DataSource.Coins.DTO
 {
-    public class AllCoins
+    public class AllCoinsResponse
     {
         public string Response { get; set; }
         public string Message { get; set; }

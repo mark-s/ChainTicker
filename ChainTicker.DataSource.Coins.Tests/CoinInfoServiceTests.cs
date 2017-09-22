@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using ChainTicker.DataSource.Coins.Rest;
 using NUnit.Framework;
 using Shouldly;
@@ -18,8 +19,10 @@ namespace ChainTicker.DataSource.Coins.Tests
 
             var result = await coinInfoService.GetAllCoinsAsync();
 
+            result.GetCoinInfo("BTC");
 
-            result.Count.ShouldBe(100);
+
+            result.GetAllCoinCodes().Count().ShouldBe(100);
 
         }
 

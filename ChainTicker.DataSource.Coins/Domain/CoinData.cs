@@ -1,20 +1,25 @@
-﻿using ChainTicker.DataSource.Coins.DTO;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using ChainTicker.DataSource.Coins.DTO;
 
 namespace ChainTicker.DataSource.Coins.Domain
 {
     public class CoinData
     {
-        private readonly AllCoins _allCoins;
-        private string _baseImageUrl;
-        private string _baseLinkUrl;
+        private readonly AllCoinsResponse _allCoinsResponse;
 
-
-        public CoinData(AllCoins allCoins, string baseImageUrl, string baseLinkUrl)
+        public CoinData(AllCoinsResponse allCoinsResponse)
         {
-            _allCoins = allCoins;
-            _baseImageUrl = baseImageUrl;
-            _baseLinkUrl = baseLinkUrl;
+            _allCoinsResponse = allCoinsResponse;
         }
+
+        public IEnumerable<string> GetAllCoinCodes()
+            => _allCoinsResponse.Coins.Values.Select(c => c.Name);
+        
+        public CoinInfo GetCoinInfo(string coinCode)
+            => _allCoinsResponse.Coins[coinCode];
+
 
     }
 }
