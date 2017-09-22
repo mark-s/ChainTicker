@@ -6,7 +6,7 @@ namespace ChanTicker.Core.Entities
     public class Coin : ICoin
     {
         public string Code { get; }
-        public string Name { get; }
+        public string Name { get; } 
 
         public Coin(string code, string name)
         {
@@ -16,5 +16,7 @@ namespace ChanTicker.Core.Entities
             Code = code.ToUpperInvariant();
             Name = name;
         }
+
+        public static ICoin UnknownCoin() => new Coin("???", "Unknown");
     }
 }

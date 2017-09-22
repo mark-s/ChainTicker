@@ -6,13 +6,14 @@ namespace ChanTicker.Core.Entities
     public class Tick : ITick
     {
         public DateTimeOffset TimeStamp { get; }
-        public double? Price { get; }
+        public decimal? Price { get; }
 
-        public Tick(double? price, DateTimeOffset timeStamp)
+        public Tick(decimal? price, DateTimeOffset timeStamp)
         {
             Price = price;
             TimeStamp = timeStamp;
         }
-
     }
+
+
 }

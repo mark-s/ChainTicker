@@ -13,7 +13,7 @@ namespace ChainTicker.Transport.Pubnub
         private readonly Subject<ReceivedMessage> _messageSubject = new Subject<ReceivedMessage>();
 
 
-        public PubnubTransport(string subscribeKey, IPubnubLogger logger)
+        public PubnubTransport(string subscribeKey, IPubnubLog logger)
         {
             var config = CreateConfiguration(subscribeKey, logger);
 

@@ -1,23 +1,29 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.UI.Shell", "ChainTicker.UI.Shell\ChainTicker.UI.Shell.csproj", "{904B5155-97EA-44A8-A481-B2BCD31C6FF2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{586D29B4-CB3B-4B5C-A2F3-CD4EB26E1338}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exchanges", "Exchanges", "{586D29B4-CB3B-4B5C-A2F3-CD4EB26E1338}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Transports", "Transports", "{4EA4C279-209D-43D5-91CF-B65B0B1BA6AA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChainTicker.Transport.Pubnub", "ChainTicker.Transport.PubNub\ChainTicker.Transport.Pubnub.csproj", "{DFEF79C4-744D-4AD8-AD6D-E757E53519D1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChainTicker.Transport.EngineIo", "ChainTicker.Transport.EngineIo\ChainTicker.Transport.EngineIo.csproj", "{E48590FE-3A39-44A5-8114-BFF731E7219E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanTicker.Core", "ChanTicker.Core\ChanTicker.Core.csproj", "{31377670-13EF-4AE5-A42E-37ECEAC43CF5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChainTicker.Source.BitFlyer", "ChainTicker.Source.BitFlyer\ChainTicker.Source.BitFlyer.csproj", "{03C65DA1-2FB6-4093-8876-5F52955910B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChainTicker.Exchange.BitFlyer", "ChainTicker.Exchange.BitFlyer\ChainTicker.Exchange.BitFlyer.csproj", "{03C65DA1-2FB6-4093-8876-5F52955910B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.Transport.Shared", "ChainTicker.Transport.Shared\ChainTicker.Transport.Shared.csproj", "{EA558549-EF89-44A8-9952-45C54E397EFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChainTicker.Transport.Shared", "ChainTicker.Transport.Shared\ChainTicker.Transport.Shared.csproj", "{EA558549-EF89-44A8-9952-45C54E397EFA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataSources", "DataSources", "{D90AB66E-91DC-483A-8D9B-D761E2A15F78}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataSources.Tests", "DataSources.Tests", "{A3167C2D-D658-4377-BA06-1A014E1D5786}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.DataSource.Coins.Tests", "ChainTicker.DataSource.Coins.Tests\ChainTicker.DataSource.Coins.Tests.csproj", "{BAF97953-F7A4-4739-9FA5-25BE5D5BF0E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.DataSource.Coins", "ChainTicker.DataSource.Coins\ChainTicker.DataSource.Coins.csproj", "{0C4403BE-BE6E-486C-B8EE-E76D989204C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +39,6 @@ Global
 		{DFEF79C4-744D-4AD8-AD6D-E757E53519D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFEF79C4-744D-4AD8-AD6D-E757E53519D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFEF79C4-744D-4AD8-AD6D-E757E53519D1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E48590FE-3A39-44A5-8114-BFF731E7219E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E48590FE-3A39-44A5-8114-BFF731E7219E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E48590FE-3A39-44A5-8114-BFF731E7219E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E48590FE-3A39-44A5-8114-BFF731E7219E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{31377670-13EF-4AE5-A42E-37ECEAC43CF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{31377670-13EF-4AE5-A42E-37ECEAC43CF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31377670-13EF-4AE5-A42E-37ECEAC43CF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -49,15 +51,24 @@ Global
 		{EA558549-EF89-44A8-9952-45C54E397EFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA558549-EF89-44A8-9952-45C54E397EFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA558549-EF89-44A8-9952-45C54E397EFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAF97953-F7A4-4739-9FA5-25BE5D5BF0E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAF97953-F7A4-4739-9FA5-25BE5D5BF0E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAF97953-F7A4-4739-9FA5-25BE5D5BF0E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAF97953-F7A4-4739-9FA5-25BE5D5BF0E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C4403BE-BE6E-486C-B8EE-E76D989204C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C4403BE-BE6E-486C-B8EE-E76D989204C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C4403BE-BE6E-486C-B8EE-E76D989204C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C4403BE-BE6E-486C-B8EE-E76D989204C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DFEF79C4-744D-4AD8-AD6D-E757E53519D1} = {4EA4C279-209D-43D5-91CF-B65B0B1BA6AA}
-		{E48590FE-3A39-44A5-8114-BFF731E7219E} = {4EA4C279-209D-43D5-91CF-B65B0B1BA6AA}
 		{03C65DA1-2FB6-4093-8876-5F52955910B7} = {586D29B4-CB3B-4B5C-A2F3-CD4EB26E1338}
 		{EA558549-EF89-44A8-9952-45C54E397EFA} = {4EA4C279-209D-43D5-91CF-B65B0B1BA6AA}
+		{BAF97953-F7A4-4739-9FA5-25BE5D5BF0E5} = {A3167C2D-D658-4377-BA06-1A014E1D5786}
+		{0C4403BE-BE6E-486C-B8EE-E76D989204C3} = {D90AB66E-91DC-483A-8D9B-D761E2A15F78}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6006C29E-BE1B-47E2-AD7A-EAE0C62787E0}
