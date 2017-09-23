@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\ChainTicker.UI.Shell\Properties\AssemblyInfoShared.cs">
+      <Link>Properties\AssemblyInfoShared.cs</Link>
+    </Compile>
     <Compile Include="Domain\CoinData.cs" />
     <Compile Include="Domain\Coin.cs" />
     <Compile Include="DTO\AllCoinsResponse.cs" />
