@@ -56,6 +56,10 @@
       <Project>{0c4403be-be6e-486c-b8ee-e76d989204c3}</Project>
       <Name>ChainTicker.DataSource.Coins</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ChanTicker.Core\ChanTicker.Core.csproj">
+      <Project>{31377670-13EF-4AE5-A42E-37ECEAC43CF5}</Project>
+      <Name>ChanTicker.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

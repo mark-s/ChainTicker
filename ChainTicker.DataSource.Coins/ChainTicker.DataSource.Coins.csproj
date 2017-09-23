@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\CoinData.cs" />
-    <Compile Include="Domain\CoinDetails.cs" />
+    <Compile Include="Domain\Coin.cs" />
     <Compile Include="DTO\AllCoinsResponse.cs" />
     <Compile Include="CoinInfoService.cs" />
     <Compile Include="DTO\CoinInfo.cs" />
@@ -55,6 +55,11 @@
       <Version>105.2.3</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ChanTicker.Core\ChanTicker.Core.csproj">
+      <Project>{31377670-13EF-4AE5-A42E-37ECEAC43CF5}</Project>
+      <Name>ChanTicker.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

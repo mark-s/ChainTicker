@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using RestSharp.Deserializers;
 
 namespace ChainTicker.DataSource.Coins.DTO
 {
@@ -12,7 +11,6 @@ namespace ChainTicker.DataSource.Coins.DTO
 
         public int Type { get; set; }
 
-        [DeserializeAs(Name = "Data")]
-        public Dictionary<string, CoinInfo> Coins { get; set; }
+        public Dictionary<string, CoinInfo> Data { get; set; }
     }
 }

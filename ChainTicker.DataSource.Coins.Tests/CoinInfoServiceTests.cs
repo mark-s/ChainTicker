@@ -19,7 +19,9 @@ namespace ChainTicker.DataSource.Coins.Tests
 
             var result = await coinInfoService.GetAllCoinsAsync();
 
-            result.GetCoinInfo("BTC");
+            var btcInfo = result.GetCoinInfo("BTC");
+
+            var allCoinCodes =  result.GetAllCoinCodes().OrderBy(c => c).ToList();
 
 
             result.GetAllCoinCodes().Count().ShouldBe(100);
