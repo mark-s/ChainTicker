@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ChainTicker.Transport.Shared
+namespace ChanTicker.Core.IO
 {
     public class JsonSerializer : ISerialize
     {

@@ -16,7 +16,8 @@ namespace ChainTicker.DataSource.Coins.Tests
         public async Task GetAllAvailableCoins_ReturnsAllCoinsAsync()
         {
 
-            var coinInfoService = new CoinInfoService(new RestService(), new FileIOService());
+            var fileIo = new FileIOService(new JsonSerializer());
+            var coinInfoService = new CoinInfoService(new RestService(), new CryptoCompareConfig(), new CoinInfoCacheService(fileIo));
 
             var result = await coinInfoService.GetAllCoinsAsync();
 

@@ -1,4 +1,4 @@
-﻿namespace ChainTicker.Transport.Shared
+﻿namespace ChanTicker.Core.IO
 {
     public interface ISerialize
     {
