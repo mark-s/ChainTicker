@@ -33,7 +33,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -43,13 +42,14 @@
       <Link>Properties\AssemblyInfoShared.cs</Link>
     </Compile>
     <Compile Include="CoinInfoCacheService.cs" />
-    <Compile Include="CryptoCompareConfig.cs" />
+    <Compile Include="CoinInfoServiceConfig.cs" />
     <Compile Include="Domain\CoinData.cs" />
     <Compile Include="Domain\Coin.cs" />
     <Compile Include="DTO\AllCoinsResponse.cs" />
     <Compile Include="CoinInfoService.cs" />
     <Compile Include="DTO\CoinInfo.cs" />
     <Compile Include="ICoinInfoCacheService.cs" />
+    <Compile Include="ICoinInfoService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rest\IRestService.cs" />
     <Compile Include="Rest\RestClientExtensions.cs" />

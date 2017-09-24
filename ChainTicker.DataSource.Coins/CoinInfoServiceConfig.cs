@@ -2,14 +2,14 @@
 
 namespace ChainTicker.DataSource.Coins
 {
-    public class CryptoCompareConfig
+    public class CoinInfoServiceConfig
     {
         public string RestBaseUri { get; }
         public string CacheFileName { get; }
         public int MaxCacheAgeDays { get; }
 
 
-        public CryptoCompareConfig(string restBaseUri = "https://www.cryptocompare.com/api",
+        public CoinInfoServiceConfig(string restBaseUri = "https://www.cryptocompare.com/api",
                                              string cacheFileName = "coins.json",
                                              int maxCacheAgeDays = 7)
         {

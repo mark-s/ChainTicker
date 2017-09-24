@@ -4,7 +4,7 @@ namespace ChainTicker.DataSource.Coins
 {
     public interface ICoinInfoCacheService
     {
-        bool IsStale(CryptoCompareConfig config);
+        bool IsStale(CoinInfoServiceConfig config);
 
         Task<T> LoadAsync<T>(string fileName);
 

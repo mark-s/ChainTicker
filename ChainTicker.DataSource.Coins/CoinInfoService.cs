@@ -8,15 +8,15 @@ using RestSharp;
 
 namespace ChainTicker.DataSource.Coins
 {
-    public class CoinInfoService
+    public class CoinInfoService : ICoinInfoService
     {
         private readonly IRestService _restService;
-        private readonly CryptoCompareConfig _config;
+        private readonly CoinInfoServiceConfig _config;
         private readonly ICoinInfoCacheService _cache;
 
 
         public CoinInfoService(IRestService restService,
-                                      CryptoCompareConfig config,
+                                      CoinInfoServiceConfig config,
                                       ICoinInfoCacheService cacheService)
         {
             _restService = restService;

@@ -14,7 +14,7 @@ namespace ChainTicker.DataSource.Coins
         }
 
 
-        public bool IsStale(CryptoCompareConfig config)
+        public bool IsStale(CoinInfoServiceConfig config)
         {
             // check there's actually some saved data to load from 
             if (_fileIOService.FileExists(config.CacheFileName) == false)
