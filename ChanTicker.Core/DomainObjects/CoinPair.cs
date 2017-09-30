@@ -1,7 +1,7 @@
 ﻿using System;
 using ChanTicker.Core.Interfaces;
 
-namespace ChanTicker.Core.Entities
+namespace ChanTicker.Core.DomainObjects
 {
     public class CoinPair : ICoinPair
     {

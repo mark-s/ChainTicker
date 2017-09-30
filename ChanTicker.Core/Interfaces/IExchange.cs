@@ -5,8 +5,6 @@
 
         ISourceInfo SourceInfo { get; }
 
-        IExchangeDataSource ExchangeDataSource { get; }
-
-        ICoinPriceDataSource CoinPriceDataSource { get; }
+        ICoinPriceDataSource CoinPriceData { get; }
     }
 }

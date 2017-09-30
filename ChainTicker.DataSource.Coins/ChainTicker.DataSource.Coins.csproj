@@ -51,9 +51,6 @@
     <Compile Include="ICoinInfoCacheService.cs" />
     <Compile Include="ICoinInfoService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rest\IRestService.cs" />
-    <Compile Include="Rest\RestClientExtensions.cs" />
-    <Compile Include="Rest\RestService.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="RestSharp">

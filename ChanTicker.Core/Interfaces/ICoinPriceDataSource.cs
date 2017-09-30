@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ChanTicker.Core.Interfaces
 {
     public interface ICoinPriceDataSource
     {
-        Task<ICoinPair[]> GetAvailableCoinPairsAsync();
+        Task<List<IMarketPair>> GetAvailableMarketsAsync();
 
         Task<ICoinPairPrice> GetCurrentPriceAsync(ICoinPair coinPair);
 
-        IObservable<ICoinPairPrice> SubscribeToPriceTicker(ICoinPair coinPair);
+        Task<IObservable<ICoinPairPrice>> SubscribeToPriceTicker(ICoinPair coinPair);
     }
 }

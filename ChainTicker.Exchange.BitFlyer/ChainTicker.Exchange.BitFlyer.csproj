@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ChainTicker.Transport.PubNub\ChainTicker.Transport.Pubnub.csproj" />
+    <ProjectReference Include="..\ChainTicker.Transport.Rest\ChainTicker.Transport.Rest.csproj" />
     <ProjectReference Include="..\ChanTicker.Core\ChanTicker.Core.csproj" />
   </ItemGroup>
 

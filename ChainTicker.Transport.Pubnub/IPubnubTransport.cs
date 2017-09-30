@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ChainTicker.Transport.Pubnub
 {
@@ -8,7 +9,13 @@ namespace ChainTicker.Transport.Pubnub
 
         void SubscribeToChannel(string channelName);
 
+        List<string> GetSubscribedChannels();
+
         void UnsubscribeToChannel(string channelName);
+        
+        void UnsubscribeFromAllChannels();
+
+        void Disconnect();
 
     }
 }

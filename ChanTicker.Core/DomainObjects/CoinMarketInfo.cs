@@ -1,6 +1,6 @@
 ﻿using ChanTicker.Core.Interfaces;
 
-namespace ChanTicker.Core.Entities
+namespace ChanTicker.Core.DomainObjects
 {
     public class CoinMarketInfo : ICoinMarketInfo
     {

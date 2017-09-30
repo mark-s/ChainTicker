@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -23,7 +24,6 @@ namespace ChainTicker.Transport.Pubnub
                                                                      (pubnubObj, presence) => PresenceCallback(presence), StatusCallback);
 
             _pubnubConnector.AddListener(listenerSubscribeCallback);
-
         }
 
 
@@ -39,6 +39,15 @@ namespace ChainTicker.Transport.Pubnub
         {
             _pubnubConnector.Unsubscribe<string>().Channels(new[] { channelName }).Execute();
         }
+
+        public void UnsubscribeFromAllChannels() 
+            => _pubnubConnector.UnsubscribeAll<string>();
+
+        public void Disconnect() 
+            => _pubnubConnector.Disconnect<string>();
+
+        public List<string> GetSubscribedChannels() 
+            => _pubnubConnector.GetSubscribedChannels();
 
         private PNConfiguration CreateConfiguration(string subscribeKey, IPubnubLog logger)
         {
