@@ -1,13 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace ChanTicker.Core.Interfaces
 {
-    public interface IMarketPair : IEqualityComparer<IMarketPair>
+    public interface IMarket 
     {
-        string Base { get; }
-
-        string Counter { get; }
-
         string Id { get; }
+
+        string BaseCurrency { get; }
+
+        string CounterCurrency { get; }
+
+        Task<ITick> GetCurrentPriceAsync();
+
+        IObservable<ITick> SubscribeToTicks();
     }
+
 }

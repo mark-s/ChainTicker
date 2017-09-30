@@ -4,7 +4,7 @@ namespace ChanTicker.Core.Interfaces
 {
     public interface ICoinMarketInfoProvider
     {
-        ISourceInfo SourceInfo { get; }
+        IExchangeInfo ExchangeInfo { get; }
 
         Task<ICoinMarketInfo[]> GetMarketOverviewAsync();
 

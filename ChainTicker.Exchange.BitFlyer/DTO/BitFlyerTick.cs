@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 namespace ChainTicker.Exchange.BitFlyer.DTO
 {
 
-    public partial class BitFlyerTick : ITick
+    public class BitFlyerTick : ITick
     {
         [JsonProperty("best_bid_size")]
         public double BestBidSize { get; set; }
@@ -49,21 +49,6 @@ namespace ChainTicker.Exchange.BitFlyer.DTO
 
         [JsonIgnore]
         public decimal? Price => LastTradedPrice;
-    }
-
-
-    public partial class BitFlyerTick
-    {
-        private static readonly JsonSerializerSettings _settings = new JsonSerializerSettings
-        {
-            MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
-            DateParseHandling = DateParseHandling.DateTimeOffset,
-        };
-
-        public static BitFlyerTick FromJson(string json)
-        {
-            return JsonConvert.DeserializeObject<BitFlyerTick>(json, _settings);
-        }
     }
 
 

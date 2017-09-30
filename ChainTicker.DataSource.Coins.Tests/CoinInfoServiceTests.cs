@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using ChainTicker.DataSource.Coins.Rest;
+using ChainTicker.Transport.Rest;
 using ChanTicker.Core.IO;
 using FakeItEasy;
 using NUnit.Framework;
@@ -12,14 +12,16 @@ namespace ChainTicker.DataSource.Coins.Tests
     [TestFixture]
     public class CoinInfoServiceTests
     {
-        private IRestService _restService;
         private ICoinInfoCacheService _cacheService;
+        private RestService _restService;
+
 
         [SetUp]
         public virtual void SetUp()
         {
-            _restService = A.Fake<IRestService>();
+
             _cacheService = A.Fake<ICoinInfoCacheService>();
+            _restService = new RestService(new ChainTickerJsonSerializer());
         }
 
 
@@ -29,8 +31,8 @@ namespace ChainTicker.DataSource.Coins.Tests
 
             A.CallTo(() => _cacheService.IsStale(A<CoinInfoServiceConfig>.Ignored)).Returns(true);
 
-            var fileIo = new FileIOService(new JsonSerializer());
-            var coinInfoService = new CoinInfoService(new RestService(), new CoinInfoServiceConfig(), new CoinInfoCacheService(fileIo));
+            var fileIo = new FileIOService(new ChainTickerJsonSerializer());
+            var coinInfoService = new CoinInfoService(new RestService(new ChainTickerJsonSerializer()), new CoinInfoServiceConfig(), new CoinInfoCacheService(fileIo));
 
             var result = await coinInfoService.GetAllCoinsAsync();
 

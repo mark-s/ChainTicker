@@ -1,32 +1,65 @@
-﻿using System.Threading.Tasks;
-using RestSharp;
+﻿using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+using ChanTicker.Core.IO;
 
 namespace ChainTicker.Transport.Rest
 {
     public class RestService : IRestService
     {
-        private readonly ServiceCommands _availableCommands;
+        private ServiceCommands _availableCommands;
+        private readonly ISerialize _serializer;
 
-        public RestService(ServiceCommands availableCommands)
+        public RestService(ISerialize serializer)
         {
-            _availableCommands = availableCommands;
+            _serializer = serializer;
         }
 
-        public async Task<IRestResponse<T>> GetAsync<T>(string commandName)
+        public async Task<IResponse<T>> GetAsync<T>(string commandName)
         {
-            var restClient = new RestClient();
-            var request = new RestRequest(_availableCommands.GetCommandUri(commandName));
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    var restEndpointUrl = _availableCommands.GetCommandUri(commandName);
+                    var result = await client.GetStringAsync(restEndpointUrl);
+                    var data = _serializer.Deserialize<T>(result);
+                    return new Response<T>(data);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return new Response<T>(ex.Message);
+                }
+            }
 
-            return await restClient.ExecuteTaskAsync<T>(request);
         }
 
-        public async Task<IRestResponse<T>> GetAsync<T>(string commandName, string commandArgs)
+        public async Task<IResponse<T>> GetAsync<T>(string commandName, string commandArgs)
         {
-            var restClient = new RestClient();
-            var request = new RestRequest(_availableCommands.GetCommandUri(commandName, commandArgs));
 
-            return await restClient.ExecuteTaskAsync<T>(request);
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    var restEndpointUrl = _availableCommands.GetCommandUri(commandName, commandArgs);
+                    var result = await client.GetStringAsync(restEndpointUrl);
+                    var data = _serializer.Deserialize<T>(result);
+                    return new Response<T>(data);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return new Response<T>(ex.Message);
+                }
+            }
+
         }
 
+        public void RegisterCommands(ServiceCommands commands)
+        {
+            _availableCommands = commands;
+        }
     }
 }
+

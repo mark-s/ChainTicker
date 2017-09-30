@@ -3,8 +3,8 @@
     public interface IExchange
     {
 
-        ISourceInfo SourceInfo { get; }
+        IExchangeInfo ExchangeInfo { get; }
 
-        ICoinPriceDataSource CoinPriceData { get; }
+        IMarketDataSource MarketDataSource { get; }
     }
 }

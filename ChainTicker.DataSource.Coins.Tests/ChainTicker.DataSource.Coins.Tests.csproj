@@ -59,6 +59,10 @@
       <Project>{0c4403be-be6e-486c-b8ee-e76d989204c3}</Project>
       <Name>ChainTicker.DataSource.Coins</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ChainTicker.Transport.Rest\ChainTicker.Transport.Rest.csproj">
+      <Project>{3F6CF485-9C3E-4459-845D-E2A1121D4961}</Project>
+      <Name>ChainTicker.Transport.Rest</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChanTicker.Core\ChanTicker.Core.csproj">
       <Project>{31377670-13EF-4AE5-A42E-37ECEAC43CF5}</Project>
       <Name>ChanTicker.Core</Name>

@@ -2,7 +2,7 @@
 
 namespace ChanTicker.Core.IO
 {
-    public class JsonSerializer : ISerialize
+    public class ChainTickerJsonSerializer : ISerialize
     {
         public T Deserialize<T>(string jsonText) => JsonConvert.DeserializeObject<T>(jsonText);
 

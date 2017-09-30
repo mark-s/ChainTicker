@@ -2,7 +2,7 @@
 
 namespace ChainTicker.Exchange.BitFlyer
 {
-    internal class BitFlyerSourceInfo : ISourceInfo
+    internal class BitFlyerExchangeInfo : IExchangeInfo
     {
         public string Name => "BitFlyer";
         public string Uri => "THE URL";

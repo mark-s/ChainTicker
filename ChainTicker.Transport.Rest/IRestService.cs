@@ -1,13 +1,14 @@
 ﻿using System.Threading.Tasks;
-using RestSharp;
+
 
 namespace ChainTicker.Transport.Rest
 {
     public interface IRestService
     {
-        Task<IRestResponse<T>> GetAsync<T>(string commandName);
+        Task<IResponse<T>> GetAsync<T>(string commandName);
 
-        Task<IRestResponse<T>> GetAsync<T>(string commandName, string commandArgs);
+        Task<IResponse<T>> GetAsync<T>(string commandName, string commandArgs);
 
+        void RegisterCommands(ServiceCommands commands);
     }
 }

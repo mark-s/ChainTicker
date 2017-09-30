@@ -2,14 +2,14 @@
 
 namespace ChanTicker.Core.DomainObjects
 {
-    public class SourceInfo : ISourceInfo
+    public class ExchangeInfo : IExchangeInfo
     {
         public string Name { get; }
         public string Uri { get; }
         public string Description { get; }
         public bool IsEnabled { get; }
 
-        public SourceInfo(string name, string uri, string description, bool isEnabled)
+        public ExchangeInfo(string name, string uri, string description, bool isEnabled)
         {
             Name = name;
             Uri = uri;

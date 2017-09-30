@@ -1,10 +1,8 @@
 ﻿using System.Diagnostics;
-using System.Net;
 using System.Threading.Tasks;
 using ChainTicker.DataSource.Coins.Domain;
 using ChainTicker.DataSource.Coins.DTO;
-using ChainTicker.DataSource.Coins.Rest;
-using RestSharp;
+using ChainTicker.Transport.Rest;
 
 namespace ChainTicker.DataSource.Coins
 {
@@ -14,7 +12,6 @@ namespace ChainTicker.DataSource.Coins
         private readonly CoinInfoServiceConfig _config;
         private readonly ICoinInfoCacheService _cache;
 
-
         public CoinInfoService(IRestService restService,
                                       CoinInfoServiceConfig config,
                                       ICoinInfoCacheService cacheService)
@@ -22,19 +19,22 @@ namespace ChainTicker.DataSource.Coins
             _restService = restService;
             _config = config;
             _cache = cacheService;
+            
+            var serviceCommands = new ServiceCommands("https://www.cryptocompare.com/api");
+            serviceCommands.AddCommand("getAllCoins", new Command("/data/coinlist"));
+            _restService.RegisterCommands(serviceCommands);
         }
 
         public async Task<CoinData> GetAllCoinsAsync()
         {
             if (_cache.IsStale(_config))
             {
-                var response = await _restService.GetAsync<AllCoinsResponse>(_config.RestBaseUri, "/data/coinlist");
+                var response = await _restService.GetAsync<AllCoinsResponse>("getAllCoins");
 
-                if (response.StatusCode == HttpStatusCode.OK)
+                if (response.IsSuccess)
                     return await HandleOkAsync(response.Data);
                 else
-                    return await HandleErrorAsync(response);
-             
+                    return await HandleErrorAsync(response); 
             }
             else
                 return await GetFromCacheAsync();
@@ -49,7 +49,7 @@ namespace ChainTicker.DataSource.Coins
             return Parse(response);
         }
 
-        private async Task<CoinData> HandleErrorAsync(IRestResponse response)
+        private async Task<CoinData> HandleErrorAsync(IResponse<AllCoinsResponse> response)
         {
             Debug.WriteLine(response.ErrorMessage);
             return await GetFromCacheAsync();

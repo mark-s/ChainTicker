@@ -1,6 +1,6 @@
 ﻿namespace ChanTicker.Core.Interfaces
 {
-    public interface ISourceInfo
+    public interface IExchangeInfo
     {
         string Name { get; }
 

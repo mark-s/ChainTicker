@@ -1,28 +1,28 @@
-﻿using System;
-using ChainTicker.Transport.Pubnub;
+﻿using ChainTicker.Transport.Pubnub;
 using ChainTicker.Transport.Rest;
 using ChanTicker.Core.Interfaces;
-using PubnubApi;
+using ChanTicker.Core.IO;
 
 
 namespace ChainTicker.Exchange.BitFlyer
 {
     public class BitFlyerExchange : IExchange
     {
-       
+        public IExchangeInfo ExchangeInfo { get; } = new BitFlyerExchangeInfo();
 
-        public ISourceInfo SourceInfo { get; } = new BitFlyerSourceInfo();
         private const string SUBSCRIBE_KEY = "sub-c-52a9ab50-291b-11e5-baaa-0619f8945a4f";
         private const string BASE_URL = "https://api.bitflyer.jp";
-        
 
-        public ICoinPriceDataSource CoinPriceData { get; }
+        public IMarketDataSource MarketDataSource { get; }
 
         public BitFlyerExchange()
         {
-            var availableCommande = GetBitFlyerCommandSet();
+            var pubnubTransport = new PubnubTransport(SUBSCRIBE_KEY, new DebugLogger());
 
-            CoinPriceData = new BitFlyerCoinPriceDataSource(new PubnubTransport(SUBSCRIBE_KEY,new DebugLogger()), new RestService(availableCommande));
+            var restService = new RestService(new ChainTickerJsonSerializer());
+            restService.RegisterCommands(GetBitFlyerCommandSet());
+
+            MarketDataSource = new MarketDataSourceAsync(pubnubTransport, restService);
         }
 
         private ServiceCommands GetBitFlyerCommandSet()
@@ -35,7 +35,7 @@ namespace ChainTicker.Exchange.BitFlyer
             commandSet.AddCommand("getexecutions", new Command("/v1/getexecutions", "product_code"));
             commandSet.AddCommand("gethealth", new Command("/v1/gethealth"));
             commandSet.AddCommand("getprices", new Command("/v1/getprices"));
-            
+
             return commandSet;
 
         }
