@@ -1,4 +1,4 @@
-﻿namespace ChainTicker.MarketEnvironment
+﻿namespace ChainTicker.Domain
 {
     public class MarketConfig : IMarketConfig
     {

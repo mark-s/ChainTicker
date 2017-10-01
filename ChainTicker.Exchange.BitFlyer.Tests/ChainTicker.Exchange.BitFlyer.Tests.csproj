@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BAF97953-F7A4-4739-9FA5-25BE5D5BF0E5}</ProjectGuid>
+    <ProjectGuid>{80A7D018-28C5-4929-988E-49F0FB8F9932}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChainTicker.DataSource.Coins.Tests</RootNamespace>
-    <AssemblyName>ChainTicker.DataSource.Coins.Tests</AssemblyName>
+    <RootNamespace>ChainTicker.Exchange.BitFlyer.Tests</RootNamespace>
+    <AssemblyName>ChainTicker.Exchange.BitFlyer.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,40 +30,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FakeItEasy, Version=4.0.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
+      <HintPath>..\packages\FakeItEasy.4.0.0\lib\net45\FakeItEasy.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.8.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.8.1\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Shouldly, Version=2.8.3.0, Culture=neutral, PublicKeyToken=6042cbcb05cbc941, processorArchitecture=MSIL">
+      <HintPath>..\packages\Shouldly.2.8.3\lib\net451\Shouldly.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\ChainTicker.UI.Shell\Properties\AssemblyInfoShared.cs">
-      <Link>Properties\AssemblyInfoShared.cs</Link>
-    </Compile>
-    <Compile Include="CoinInfoServiceTests.cs" />
+    <Compile Include="BitFlyerExchangeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FakeItEasy">
-      <Version>4.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="NUnit">
-      <Version>3.8.1</Version>
-    </PackageReference>
-    <PackageReference Include="Shouldly">
-      <Version>2.8.3</Version>
-    </PackageReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ChainTicker.DataSource.Coins\ChainTicker.DataSource.Coins.csproj">
-      <Project>{0c4403be-be6e-486c-b8ee-e76d989204c3}</Project>
-      <Name>ChainTicker.DataSource.Coins</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChainTicker.Transport.Rest\ChainTicker.Transport.Rest.csproj">
-      <Project>{3F6CF485-9C3E-4459-845D-E2A1121D4961}</Project>
-      <Name>ChainTicker.Transport.Rest</Name>
+    <ProjectReference Include="..\ChainTicker.Exchange.BitFlyer\ChainTicker.Exchange.BitFlyer.csproj">
+      <Project>{03C65DA1-2FB6-4093-8876-5F52955910B7}</Project>
+      <Name>ChainTicker.Exchange.BitFlyer</Name>
     </ProjectReference>
     <ProjectReference Include="..\ChanTicker.Core\ChanTicker.Core.csproj">
       <Project>{31377670-13EF-4AE5-A42E-37ECEAC43CF5}</Project>

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ChanTicker.Core.Interfaces;
 
-namespace ChanTicker.Core.DomainObjects
+namespace ChainTicker.Domain
 {
     public class CoinPairEqualityComparer : IEqualityComparer<ICoinPair>
     {

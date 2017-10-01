@@ -17,15 +17,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChainTicker.Exchange.BitFly
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataSources", "DataSources", "{D90AB66E-91DC-483A-8D9B-D761E2A15F78}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataSources.Tests", "DataSources.Tests", "{A3167C2D-D658-4377-BA06-1A014E1D5786}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.DataSource.Coins.Tests", "ChainTicker.DataSource.Coins.Tests\ChainTicker.DataSource.Coins.Tests.csproj", "{BAF97953-F7A4-4739-9FA5-25BE5D5BF0E5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.DataSource.Coins", "ChainTicker.DataSource.Coins\ChainTicker.DataSource.Coins.csproj", "{0C4403BE-BE6E-486C-B8EE-E76D989204C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.Transport.Rest", "ChainTicker.Transport.Rest\ChainTicker.Transport.Rest.csproj", "{3F6CF485-9C3E-4459-845D-E2A1121D4961}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChainTicker.Transport.Rest", "ChainTicker.Transport.Rest\ChainTicker.Transport.Rest.csproj", "{3F6CF485-9C3E-4459-845D-E2A1121D4961}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.MarketEnvironment", "ChainTicker.MarketEnvironment\ChainTicker.MarketEnvironment.csproj", "{A5BE23B4-D431-4BEF-A6B6-7185754C50F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChainTicker.Domain", "ChainTicker.Domain\ChainTicker.Domain.csproj", "{A5BE23B4-D431-4BEF-A6B6-7185754C50F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.Exchange.BitFlyer.Tests", "ChainTicker.Exchange.BitFlyer.Tests\ChainTicker.Exchange.BitFlyer.Tests.csproj", "{80A7D018-28C5-4929-988E-49F0FB8F9932}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +65,10 @@ Global
 		{A5BE23B4-D431-4BEF-A6B6-7185754C50F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5BE23B4-D431-4BEF-A6B6-7185754C50F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5BE23B4-D431-4BEF-A6B6-7185754C50F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80A7D018-28C5-4929-988E-49F0FB8F9932}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80A7D018-28C5-4929-988E-49F0FB8F9932}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80A7D018-28C5-4929-988E-49F0FB8F9932}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80A7D018-28C5-4929-988E-49F0FB8F9932}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,10 +76,10 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{DFEF79C4-744D-4AD8-AD6D-E757E53519D1} = {4EA4C279-209D-43D5-91CF-B65B0B1BA6AA}
 		{03C65DA1-2FB6-4093-8876-5F52955910B7} = {586D29B4-CB3B-4B5C-A2F3-CD4EB26E1338}
-		{BAF97953-F7A4-4739-9FA5-25BE5D5BF0E5} = {A3167C2D-D658-4377-BA06-1A014E1D5786}
+		{BAF97953-F7A4-4739-9FA5-25BE5D5BF0E5} = {D90AB66E-91DC-483A-8D9B-D761E2A15F78}
 		{0C4403BE-BE6E-486C-B8EE-E76D989204C3} = {D90AB66E-91DC-483A-8D9B-D761E2A15F78}
 		{3F6CF485-9C3E-4459-845D-E2A1121D4961} = {4EA4C279-209D-43D5-91CF-B65B0B1BA6AA}
-		{A5BE23B4-D431-4BEF-A6B6-7185754C50F8} = {586D29B4-CB3B-4B5C-A2F3-CD4EB26E1338}
+		{80A7D018-28C5-4929-988E-49F0FB8F9932} = {586D29B4-CB3B-4B5C-A2F3-CD4EB26E1338}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6006C29E-BE1B-47E2-AD7A-EAE0C62787E0}

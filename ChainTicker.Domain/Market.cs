@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using ChanTicker.Core.Interfaces;
 
-namespace ChanTicker.Core.Interfaces
+namespace ChainTicker.Domain
 {
     public class Market : IMarket
     {

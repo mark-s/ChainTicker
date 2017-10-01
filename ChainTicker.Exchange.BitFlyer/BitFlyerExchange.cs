@@ -1,4 +1,4 @@
-﻿using ChainTicker.Transport.Pubnub;
+﻿
 using ChainTicker.Transport.Rest;
 using ChanTicker.Core.Interfaces;
 using ChanTicker.Core.IO;
@@ -17,12 +17,12 @@ namespace ChainTicker.Exchange.BitFlyer
 
         public BitFlyerExchange()
         {
-            var pubnubTransport = new PubnubTransport(SUBSCRIBE_KEY, new DebugLogger());
+            //var pubnubTransport = new PubnubTransport(SUBSCRIBE_KEY, new DebugLogger());
 
             var restService = new RestService(new ChainTickerJsonSerializer());
             restService.RegisterCommands(GetBitFlyerCommandSet());
 
-            MarketDataSource = new MarketDataSourceAsync(pubnubTransport, restService);
+            MarketDataSource = new MarketDataSourceAsync(null, restService);
         }
 
         private ServiceCommands GetBitFlyerCommandSet()

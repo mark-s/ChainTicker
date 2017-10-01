@@ -1,11 +1,10 @@
 ﻿using System;
-using ChanTicker.Core.Interfaces;
 using Newtonsoft.Json;
 
 namespace ChainTicker.Exchange.BitFlyer.DTO
 {
 
-    public class BitFlyerTick : ITick
+    public class BitFlyerTick
     {
         [JsonProperty("best_bid_size")]
         public double BestBidSize { get; set; }
@@ -42,13 +41,6 @@ namespace ChainTicker.Exchange.BitFlyer.DTO
 
         [JsonProperty("volume_by_product")]
         public double VolumeByProduct { get; set; }
-
-
-        [JsonIgnore]
-        public DateTimeOffset TimeStamp => TickTimeStamp;
-
-        [JsonIgnore]
-        public decimal? Price => LastTradedPrice;
     }
 
 
