@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace ChainTicker.DataSource.Coins.DTO
 {
-    public class AllCoinsResponse
+    internal class AllCoinsResponse
     {
         public string Response { get; set; }
         public string Message { get; set; }

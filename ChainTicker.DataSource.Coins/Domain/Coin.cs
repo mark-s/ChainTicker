@@ -7,7 +7,7 @@ namespace ChainTicker.DataSource.Coins.Domain
 {
 
     [DebuggerDisplay("{" + nameof(Description) + "}")]
-    public class Coin : ICoin
+    internal class Coin : ICoin
     {
 
         public string Code { get; }
@@ -17,12 +17,15 @@ namespace ChainTicker.DataSource.Coins.Domain
         public string Description { get; }
 
 
-        public string InfoUrl { get; }
+        public string ImageUrlShort { get; }
+        public string InfoUrlShort { get; }
+        public string ImageUrlFull { get; }
+        public string InfoUrlFull { get; }
 
-        public string ImageUrl { get; }
-
+        public string ImageFileName { get; }
 
         public string Algorithm { get; }
+
 
         public string ProofType { get; }
 
@@ -42,8 +45,13 @@ namespace ChainTicker.DataSource.Coins.Domain
             Name = coinInfo.CoinName;
             Description = coinInfo.FullName;
 
-            InfoUrl = baseLinkUrl + coinInfo.Url;
-            ImageUrl = baseImageUrl + coinInfo.ImageUrl;
+            InfoUrlFull = baseLinkUrl + coinInfo.Url;
+            ImageUrlFull = baseImageUrl + coinInfo.ImageUrl;
+
+            InfoUrlShort = coinInfo.Url;
+            ImageUrlShort = coinInfo.ImageUrl;
+
+            ImageFileName = coinInfo.ImageUrl?.Replace("/", "");
 
             Algorithm = coinInfo.Algorithm;
             ProofType = coinInfo.ProofType;
@@ -54,6 +62,6 @@ namespace ChainTicker.DataSource.Coins.Domain
             TotalCoinsFreeFloat = coinInfo.TotalCoinsFreeFloat;
         }
 
-
+        
     }
 }

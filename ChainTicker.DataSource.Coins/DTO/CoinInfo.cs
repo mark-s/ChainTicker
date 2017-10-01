@@ -1,6 +1,6 @@
 namespace ChainTicker.DataSource.Coins.DTO
 {
-    public class CoinInfo
+    internal class CoinInfo
     {
         public string Id { get; set; }
 

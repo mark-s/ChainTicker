@@ -11,18 +11,19 @@ namespace ChanTicker.Core.IO
             _fileIOService = fileIOService;
         }
 
-        public bool IsStale(string cacheFileName, TimeSpan cacheAgeTimeSpan)
+        public bool IsStale(ChainTickerFolder folder, string cacheFileName, TimeSpan cacheAgeTimeSpan)
         {
             // check there's actually some saved data to load from 
-            if (_fileIOService.FileExists(cacheFileName) == false)
+            if (_fileIOService.FileExists(folder, cacheFileName) == false)
                 return true;
 
-            var saveTime = _fileIOService.GetFileSaveTime(cacheFileName);
+            var saveTime = _fileIOService.GetFileSaveTime(folder, cacheFileName);
 
             var difference = saveTime.CompareTo(DateTime.Now.Subtract(cacheAgeTimeSpan));
-            
+
             return difference < 0;
 
         }
+
     }
 }

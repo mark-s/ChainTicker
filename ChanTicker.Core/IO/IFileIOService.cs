@@ -5,11 +5,15 @@ namespace ChanTicker.Core.IO
 {
     public interface IFileIOService
     {
-        Task<string> LoadAsync(string fileName);
+        Task<string> LoadTextAsync(ChainTickerFolder folder, string fileName);
 
-        Task SaveAsync(string fileName, string textToSave);
+        Task SaveTextAsync(ChainTickerFolder folder, string fileName, string textToSave);
 
-        DateTime GetFileSaveTime(string fileName);
+        DateTime GetFileSaveTime(ChainTickerFolder folder, string fileName);
+
+        string GetPathAndFilename(ChainTickerFolder folder, string fileName);
+
+        bool FileExists(ChainTickerFolder folder, string fileName);
 
         bool FileExists(string fileName);
     }

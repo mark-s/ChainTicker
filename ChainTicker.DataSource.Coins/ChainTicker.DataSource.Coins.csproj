@@ -41,12 +41,18 @@
     <Compile Include="..\ChainTicker.UI.Shell\Properties\AssemblyInfoShared.cs">
       <Link>Properties\AssemblyInfoShared.cs</Link>
     </Compile>
+    <Compile Include="CoinLogoService.cs" />
     <Compile Include="Domain\CoinData.cs" />
     <Compile Include="Domain\Coin.cs" />
+    <Compile Include="Domain\CoinDataBase.cs" />
+    <Compile Include="Domain\CoinDataUnavailable.cs" />
+    <Compile Include="Domain\UnknownCoin.cs" />
     <Compile Include="DTO\AllCoinsResponse.cs" />
     <Compile Include="CoinInfoService.cs" />
     <Compile Include="DTO\CoinInfo.cs" />
     <Compile Include="ICoinInfoService.cs" />
+    <Compile Include="ICoinLogoService.cs" />
+    <Compile Include="IconDownloader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

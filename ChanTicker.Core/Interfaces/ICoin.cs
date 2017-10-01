@@ -7,8 +7,15 @@
         string Name { get; }
 
         string Algorithm { get; }
-        string ImageUrl { get; }
-        string InfoUrl { get; }
+
+        string ImageUrlShort { get; }
+        string InfoUrlShort { get; }
+
+        string ImageUrlFull { get; }
+        string InfoUrlFull { get; }
+
+        string ImageFileName { get; }
+
         bool IsFullyPremined { get; }
         string PreMinedValue { get; }
         string ProofType { get; }

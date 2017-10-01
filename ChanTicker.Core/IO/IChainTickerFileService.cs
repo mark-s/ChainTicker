@@ -6,8 +6,8 @@ namespace ChanTicker.Core.IO
     {
         bool IsCacheStale(CachedFile cachedFile);
 
-        Task<T> LoadAndDeserializeAsync<T>(string fileName);
+        Task<T> LoadAndDeserializeAsync<T>(ChainTickerFolder folder, string fileName);
 
-        Task SaveAndSerializeAsync<T>(string fileName, T data);
+        Task SaveAndSerializeAsync<T>(ChainTickerFolder folder, string fileName, T data);
     }
 }

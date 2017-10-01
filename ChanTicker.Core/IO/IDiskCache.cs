@@ -4,7 +4,6 @@ namespace ChanTicker.Core.IO
 {
     public interface IDiskCache
     {
-        bool IsStale(string cacheFileName, TimeSpan cacheAgeTimeSpan);
-
+        bool IsStale(ChainTickerFolder cache, string cacheFileName, TimeSpan cacheAgeTimeSpan);
     }
 }

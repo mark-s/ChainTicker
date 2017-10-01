@@ -16,7 +16,11 @@ namespace ChainTicker.Exchange.BitFlyer.Tests
         {
             // Arrange
             var restService = new RestService();
-            var fileService = new ChainTickerFileService(new DiskCache(new FileIOService()), new FileIOService(), new ChainTickerJsonSerializer());
+            var folderService = new FolderService();
+            var fileIoService = new FileIOService(folderService);
+            var diskCache = new DiskCache(fileIoService);
+
+            var fileService = new ChainTickerFileService(diskCache, fileIoService, new ChainTickerJsonSerializer());
 
             var exchange = new BitFlyerExchange(restService, fileService);
 

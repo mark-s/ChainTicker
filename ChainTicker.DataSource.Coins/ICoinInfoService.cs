@@ -1,10 +1,17 @@
-﻿using System.Threading.Tasks;
-using ChainTicker.DataSource.Coins.Domain;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using ChanTicker.Core.Interfaces;
 
 namespace ChainTicker.DataSource.Coins
 {
     public interface ICoinInfoService
     {
-        Task<CoinData> GetAllCoinsAsync();
+        Task PopulateAvailableCoinsAsync();
+
+        IEnumerable<string> GetAllCoinCodes();
+
+        IEnumerable<ICoin> GetAllCoins();
+
+        ICoin GetCoinInfo(string coinCode);
     }
 }

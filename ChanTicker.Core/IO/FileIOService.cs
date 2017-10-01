@@ -7,29 +7,31 @@ namespace ChanTicker.Core.IO
 {
     public class FileIOService : IFileIOService
     {
+        private readonly IFolderService _folderService;
 
         private readonly Encoding _encoding = Encoding.UTF8;
-        private readonly string _applicationBaseFolder;
-        private const string APPNAME = "ChainTicker";
 
-        public FileIOService()
+
+        public FileIOService(IFolderService folderService)
         {
-            _applicationBaseFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), APPNAME);
-            EnsureApplicationStorageExists(_applicationBaseFolder);
+            _folderService = folderService;
         }
- 
 
-        public DateTime GetFileSaveTime(string fileName) 
-            => File.GetLastWriteTime(GetPathAndFilename(fileName));
 
-        public bool FileExists(string fileName) 
-            => File.Exists(GetPathAndFilename(fileName));
+        public DateTime GetFileSaveTime(ChainTickerFolder folder, string fileName)
+            => File.GetLastWriteTime(GetPathAndFilename(folder, fileName));
 
-        public async Task SaveAsync(string fileName, string textToSave)
+        public bool FileExists(ChainTickerFolder folder, string fileName)
+            => File.Exists(GetPathAndFilename(folder, fileName));
+
+        public bool FileExists(string fileName)
+            => File.Exists(fileName);
+
+        public async Task SaveTextAsync(ChainTickerFolder folder, string fileName, string textToSave)
         {
             var jsonAsBytes = _encoding.GetBytes(textToSave);
 
-            var fullPathAndFileName = GetPathAndFilename(fileName);
+            var fullPathAndFileName = GetPathAndFilename(folder, fileName);
             if (File.Exists(fullPathAndFileName))
                 File.Delete(fullPathAndFileName);
 
@@ -39,9 +41,9 @@ namespace ChanTicker.Core.IO
             }
         }
 
-        public async Task<string> LoadAsync(string fileName)
+        public async Task<string> LoadTextAsync(ChainTickerFolder folder, string fileName)
         {
-            var fullPathAndFileName = GetPathAndFilename(fileName);
+            var fullPathAndFileName = GetPathAndFilename(folder, fileName);
             byte[] result;
 
             using (var fileStream = File.Open(fullPathAndFileName, FileMode.Open))
@@ -54,15 +56,11 @@ namespace ChanTicker.Core.IO
         }
 
 
-        private string GetPathAndFilename(string fileName) 
-            => Path.Combine(_applicationBaseFolder, fileName);
+        public string GetPathAndFilename(ChainTickerFolder folder, string fileName)
+            => Path.Combine(_folderService.GetFolderPath(folder), fileName);
 
 
-        private void EnsureApplicationStorageExists(string applicationBaseFolder)
-        {
-            if (Directory.Exists(applicationBaseFolder) == false)
-                Directory.CreateDirectory(applicationBaseFolder);
-        }
+
 
     }
 }

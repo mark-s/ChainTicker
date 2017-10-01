@@ -53,7 +53,7 @@ namespace ChainTicker.Exchange.BitFlyer
                 availableMarkets.AddRange(result.Data.Select(m => new Market(m.ProductCode, m.MainCurrency, m.SubCurrency)));
                 
                 // save to cache
-                await _fileService.SaveAndSerializeAsync(CACHE_FILE_NAME, availableMarkets);
+                await _fileService.SaveAndSerializeAsync(ChainTickerFolder.Cache, CACHE_FILE_NAME, availableMarkets);
             }
             else
             {
@@ -65,6 +65,6 @@ namespace ChainTicker.Exchange.BitFlyer
         }
 
         private Task<List<Market>> GetFromCacheAsync()
-            => _fileService.LoadAndDeserializeAsync<List<Market>>(CACHE_FILE_NAME);
+            => _fileService.LoadAndDeserializeAsync<List<Market>>(ChainTickerFolder.Cache, CACHE_FILE_NAME);
     }
 }
