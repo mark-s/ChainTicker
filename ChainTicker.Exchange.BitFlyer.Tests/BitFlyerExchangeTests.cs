@@ -16,11 +16,9 @@ namespace ChainTicker.Exchange.BitFlyer.Tests
         {
             // Arrange
             var restService = new RestService();
-            var serialiser =  new ChainTickerJsonSerializer();
-            var fileIo = new FileIOService();
-            
+            var fileService = new ChainTickerFileService(new DiskCache(new FileIOService()), new FileIOService(), new ChainTickerJsonSerializer());
 
-            var exchange = new BitFlyerExchange(restService, serialiser, new DiskCache(fileIo), fileIo);
+            var exchange = new BitFlyerExchange(restService, fileService);
 
             var markets = await exchange.GetAvailableMarketsAsync();
 

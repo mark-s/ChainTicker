@@ -11,27 +11,23 @@ namespace ChainTicker.DataSource.Coins
     public class CoinInfoService : ICoinInfoService
     {
         private readonly IRestService _restService;
-        private readonly IDiskCache _cache;
-        private readonly IFileIOService _fileIOService;
+        private readonly IChainTickerFileService _fileService;
         private readonly ISerialize _serializer;
 
         private const string CACHE_FILE_NAME = "coins.json";
         private readonly TimeSpan _maxCacheAge = TimeSpan.FromDays(5);
 
-        public CoinInfoService(IRestService restService,
-                                      IDiskCache cache,
-                                      IFileIOService fileIOService,
-                                      ISerialize serializer)
+        public CoinInfoService(IRestService restService,IChainTickerFileService fileService)
         {
             _restService = restService;
-            _cache = cache;
-            _fileIOService = fileIOService;
-            _serializer = serializer;
+            _fileService = fileService;
+
+            _serializer = new ChainTickerJsonSerializer();
         }
 
         public async Task<CoinData> GetAllCoinsAsync()
         {
-            if (_cache.IsStale(CACHE_FILE_NAME, _maxCacheAge))
+            if (_fileService.IsCacheStale(new CachedFile(CACHE_FILE_NAME, _maxCacheAge)))
                 return await GetFromWebServiceAsync();
             else
                 return await GetFromCacheAsync();
@@ -52,9 +48,7 @@ namespace ChainTicker.DataSource.Coins
 
         private async Task<CoinData> GetFromCacheAsync()
         {
-            var rawResponseText = await _fileIOService.LoadAsync(CACHE_FILE_NAME).ConfigureAwait(false); ;
-            var cachedAllCoinsResponse = _serializer.Deserialize<AllCoinsResponse>(rawResponseText);
-
+            var cachedAllCoinsResponse = await _fileService.LoadAndDeserializeAsync<AllCoinsResponse>(CACHE_FILE_NAME).ConfigureAwait(false);
             return Parse(cachedAllCoinsResponse);
         }
 
@@ -62,9 +56,7 @@ namespace ChainTicker.DataSource.Coins
         private async Task<CoinData> SaveToCacheAndParse(AllCoinsResponse response)
         {
             // Save to the cache so we don't need to do this expensive call all the time
-
-            await _fileIOService.SaveAsync(CACHE_FILE_NAME, _serializer.Serialize(response)).ConfigureAwait(false); ;
-
+            await _fileService.SaveAndSerializeAsync(CACHE_FILE_NAME,response).ConfigureAwait(false); 
             return Parse(response);
         }
 

@@ -25,13 +25,13 @@ namespace ChainTicker.Exchange.BitFlyer
 
 
         public BitFlyerExchange(IRestService restService,
-                                        ISerialize serialiser,
-                                        IDiskCache diskCache,
-                                        IFileIOService fileIOService)
+                                        IChainTickerFileService fileService)
         {
-            _pubnubTransport = new PubnubTransport(SUBSCRIBE_KEY, new DebugLogger());
-            _marketDataService = new BitFlyerMarketDataService(Info.ApiBaseUrl, restService, serialiser);
-            _bitFlyerMarketsService = new BitFlyerMarketsService(Info.ApiBaseUrl, restService, serialiser, fileIOService, diskCache);
+            var jsonSerialiser = new ChainTickerJsonSerializer();
+
+            _pubnubTransport = null; // new PubnubTransport(SUBSCRIBE_KEY, new DebugLogger());
+            _marketDataService = new BitFlyerMarketDataService(Info.ApiBaseUrl, restService, jsonSerialiser);
+            _bitFlyerMarketsService = new BitFlyerMarketsService(Info.ApiBaseUrl, restService, jsonSerialiser, fileService);
         }
 
 

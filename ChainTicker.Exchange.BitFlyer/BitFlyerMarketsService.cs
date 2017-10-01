@@ -13,10 +13,9 @@ namespace ChainTicker.Exchange.BitFlyer
     public class BitFlyerMarketsService
     {
         private readonly ISerialize _serialiser;
+        private readonly IChainTickerFileService _fileService;
         private readonly string _endpointBaseUrl;
         private readonly IRestService _restService;
-        private readonly IDiskCache _cache;
-        private readonly IFileIOService _fileIOService;
 
         private const string CACHE_FILE_NAME = "BitFlyerAvailableMarkets.json";
         private readonly TimeSpan _maxCacheAge = TimeSpan.FromHours(8);
@@ -24,19 +23,17 @@ namespace ChainTicker.Exchange.BitFlyer
         public BitFlyerMarketsService(string endpointBaseUrl,
                                                 IRestService restService,
                                                 ISerialize serialiser,
-                                                IFileIOService fileIOService,
-                                                IDiskCache cache)
+                                                IChainTickerFileService fileService)
         {
             _serialiser = serialiser;
+            _fileService = fileService;
             _endpointBaseUrl = endpointBaseUrl;
             _restService = restService;
-            _cache = cache;
-            _fileIOService = fileIOService;
         }
 
         public async Task<List<Market>> GetAvailableMarketsAsync()
         {
-            if (_cache.IsStale(CACHE_FILE_NAME, _maxCacheAge))
+            if (_fileService.IsCacheStale(new CachedFile(CACHE_FILE_NAME, _maxCacheAge)))
                 return await GetFromWebServiceAsync();
             else
                 return await GetFromCacheAsync();
@@ -54,6 +51,9 @@ namespace ChainTicker.Exchange.BitFlyer
             if (result.IsSuccess)
             {
                 availableMarkets.AddRange(result.Data.Select(m => new Market(m.ProductCode, m.MainCurrency, m.SubCurrency)));
+                
+                // save to cache
+                await _fileService.SaveAndSerializeAsync(CACHE_FILE_NAME, availableMarkets);
             }
             else
             {
@@ -64,10 +64,7 @@ namespace ChainTicker.Exchange.BitFlyer
             return availableMarkets;
         }
 
-        private async Task<List<Market>> GetFromCacheAsync()
-        {
-            var cachedRaw = await _fileIOService.LoadAsync(CACHE_FILE_NAME);
-            return _serialiser.Deserialize<List<Market>>(cachedRaw);
-        }
+        private Task<List<Market>> GetFromCacheAsync()
+            => _fileService.LoadAndDeserializeAsync<List<Market>>(CACHE_FILE_NAME);
     }
 }
