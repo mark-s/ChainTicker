@@ -3,19 +3,17 @@ using System.Collections.Generic;
 
 namespace ChainTicker.Transport.Pubnub
 {
-    public interface IPubnubTransport
+    public interface IPubnubTransport : IDisposable
     {
-        IObservable<ReceivedMessage> RecievedMessagesObservable { get; }
+        IObservable<PubnubMessage> RecievedMessagesObservable { get; }
 
         void SubscribeToChannel(string channelName);
 
         List<string> GetSubscribedChannels();
 
-        void UnsubscribeToChannel(string channelName);
+        void UnsubscribeFromChannel(string channelName);
         
         void UnsubscribeFromAllChannels();
-
-        void Disconnect();
 
     }
 }

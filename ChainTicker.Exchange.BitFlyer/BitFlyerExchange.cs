@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ChainTicker.Transport.Pubnub;
 using ChainTicker.Transport.Rest;
@@ -9,10 +10,9 @@ using ChanTicker.Core.IO;
 
 namespace ChainTicker.Exchange.BitFlyer
 {
-    public class BitFlyerExchange : IExchange, IMarketDataService
+    public class BitFlyerExchange : IExchange, IDisposable
     {
-        private PubnubTransport _pubnubTransport;
-        private readonly IMarketDataService _marketDataService;
+        private readonly BitFlyerMarketDataService _marketDataService;
         private readonly BitFlyerMarketsService _bitFlyerMarketsService;
 
         public ExchangeInfo Info { get; } = new ExchangeInfo("BitFlyer", 
@@ -24,22 +24,37 @@ namespace ChainTicker.Exchange.BitFlyer
         private const string SUBSCRIBE_KEY = "sub-c-52a9ab50-291b-11e5-baaa-0619f8945a4f";
 
 
-        public BitFlyerExchange(IRestService restService,
-                                        IChainTickerFileService fileService)
+        public BitFlyerExchange(IRestService restService, IChainTickerFileService fileService)
         {
-            var jsonSerialiser = new ChainTickerJsonSerializer();
-
-            _pubnubTransport = null; // new PubnubTransport(SUBSCRIBE_KEY, new DebugLogger());
-            _marketDataService = new BitFlyerMarketDataService(Info.ApiBaseUrl, restService, jsonSerialiser);
-            _bitFlyerMarketsService = new BitFlyerMarketsService(Info.ApiBaseUrl, restService, jsonSerialiser, fileService);
+<<<<<<< HEAD
+            var pubnubTransport = new PubnubTransport(SUBSCRIBE_KEY, new DebugLogger());
+            _marketDataService = new BitFlyerMarketDataService(Info.ApiBaseUrl, restService, pubnubTransport);
+=======
+            _pubnubTransport = new PubnubTransport(SUBSCRIBE_KEY, new DebugLogger());
+            _marketDataService = new BitFlyerMarketDataService(Info.ApiBaseUrl, restService, _pubnubTransport);
+>>>>>>> 160af66... Working on BitFlyer subscription
+            _bitFlyerMarketsService = new BitFlyerMarketsService(Info.ApiBaseUrl, restService,  fileService);
         }
 
 
         public Task<ITick> GetCurrentPriceAsync(Market market)
             => _marketDataService.GetCurrentPriceAsync(market);
 
+        public IObservable<ITick> SubscribeToTicks(Market market)
+            => _marketDataService.SubscribeToTicks(market);
+
+<<<<<<< HEAD
+        public void UnsubscribeFromTicks(Market market) 
+            => _marketDataService.UnsubscribeFromTicks(market);
+
+=======
+>>>>>>> 160af66... Working on BitFlyer subscription
         public Task<List<Market>> GetAvailableMarketsAsync()
             => _bitFlyerMarketsService.GetAvailableMarketsAsync();
 
+        public void Dispose()
+        {
+            _marketDataService?.Dispose();
+        }
     }
 }

@@ -10,8 +10,8 @@ namespace ChainTicker.Transport.Pubnub
     public class PubnubTransport : IPubnubTransport
     {
         private readonly PubnubApi.Pubnub _pubnubConnector;
-        public IObservable<ReceivedMessage> RecievedMessagesObservable => _messageSubject.AsObservable();
-        private readonly Subject<ReceivedMessage> _messageSubject = new Subject<ReceivedMessage>();
+        public IObservable<PubnubMessage> RecievedMessagesObservable => _messageSubject.AsObservable();
+        private readonly Subject<PubnubMessage> _messageSubject = new Subject<PubnubMessage>();
 
 
         public PubnubTransport(string subscribeKey, IPubnubLog logger)
@@ -21,7 +21,8 @@ namespace ChainTicker.Transport.Pubnub
             _pubnubConnector = new PubnubApi.Pubnub(config);
 
             var listenerSubscribeCallback = new SubscribeCallbackExt((pubnubObj, message) => MessageReceivedCallback(message),
-                                                                     (pubnubObj, presence) => PresenceCallback(presence), StatusCallback);
+                                                                                         (pubnubObj, presence) => PresenceCallback(presence),
+                                                                                         StatusCallback);
 
             _pubnubConnector.AddListener(listenerSubscribeCallback);
         }
@@ -29,34 +30,41 @@ namespace ChainTicker.Transport.Pubnub
 
         public void SubscribeToChannel(string channelName)
         {
-            //.Channels(new[] { "lightning_ticker_BTC_JPY" })
-            //    .Channels(new[] { "lightning_ticker_ETH_BTC" })
+            var subscribed = GetSubscribedChannels();
 
-            _pubnubConnector.Subscribe<string>().Channels(new[] { channelName }).Execute();
+            if (subscribed.Contains(channelName))
+            {
+                Debug.WriteLine($"Trying to subscribe to already subscribed channel, Ignoring. [{channelName}]");
+                return;
+            }
+
+            subscribed.Add(channelName);
+
+            _pubnubConnector.Subscribe<string>().Channels(subscribed.ToArray()).Execute();
         }
 
-        public void UnsubscribeToChannel(string channelName)
+        public void UnsubscribeFromChannel(string channelName)
         {
-            _pubnubConnector.Unsubscribe<string>().Channels(new[] { channelName }).Execute();
+            if (GetSubscribedChannels().Contains(channelName))
+                _pubnubConnector.Unsubscribe<string>().Channels(new[] { channelName }).Execute();
+            else
+                Debug.WriteLine($"Trying to Unsubscribe from an unknown channel, Ignoring. [{channelName}]");
         }
 
-        public void UnsubscribeFromAllChannels() 
+        public void UnsubscribeFromAllChannels()
             => _pubnubConnector.UnsubscribeAll<string>();
 
-        public void Disconnect() 
-            => _pubnubConnector.Disconnect<string>();
 
-        public List<string> GetSubscribedChannels() 
-            => _pubnubConnector.GetSubscribedChannels();
+        public List<string> GetSubscribedChannels()
+            => _pubnubConnector.GetSubscribedChannels() ?? new List<string>();
 
         private PNConfiguration CreateConfiguration(string subscribeKey, IPubnubLog logger)
         {
-            // subscribeKey = "sub-c-52a9ab50-291b-11e5-baaa-0619f8945a4f"
             return new PNConfiguration
-                       {
-                           SubscribeKey = subscribeKey,
-                           PubnubLog = logger
-                       };
+            {
+                SubscribeKey = subscribeKey,
+                PubnubLog = logger
+            };
         }
 
 
@@ -64,7 +72,7 @@ namespace ChainTicker.Transport.Pubnub
             => Debug.WriteLine(presence.Event);
 
         private void MessageReceivedCallback(PNMessageResult<object> message)
-            => _messageSubject.OnNext(new ReceivedMessage(message.Channel, message.Message as string));
+            => _messageSubject.OnNext(new PubnubMessage(message.Channel, message.Message as string));
 
         private void StatusCallback(PubnubApi.Pubnub pubnubObj, PNStatus status)
         {
@@ -124,6 +132,27 @@ namespace ChainTicker.Transport.Pubnub
                     }
                     break;
             }
+        }
+
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _pubnubConnector?.Disconnect<string>();
+                _messageSubject?.Dispose();
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~PubnubTransport()
+        {
+            Dispose(false);
         }
     }
 }

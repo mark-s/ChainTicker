@@ -28,10 +28,10 @@ namespace ChanTicker.Core.Tests.IO
             var cacheLimit2Days = TimeSpan.FromDays(2);
 
             A.CallTo(() => _fileIO.FileExists(A<string>.Ignored)).Returns(true);
-            A.CallTo(() => _fileIO.GetFileSaveTime(A<string>.Ignored)).Returns(file3DaysOld);
+            A.CallTo(() => _fileIO.GetFileSaveTime(ChainTickerFolder.Cache, A<string>.Ignored)).Returns(file3DaysOld);
             
             // Act
-            var isStale = _diskCache.IsStale("ignored", cacheLimit2Days);
+            var isStale = _diskCache.IsStale(ChainTickerFolder.Cache, "ignored", cacheLimit2Days);
 
             // Assert
             isStale.ShouldBeTrue();
@@ -47,10 +47,10 @@ namespace ChanTicker.Core.Tests.IO
             var cacheLimit4Days = TimeSpan.FromDays(4);
 
             A.CallTo(() => _fileIO.FileExists(A<string>.Ignored)).Returns(true);
-            A.CallTo(() => _fileIO.GetFileSaveTime(A<string>.Ignored)).Returns(file3DaysOld);
+            A.CallTo(() => _fileIO.GetFileSaveTime(ChainTickerFolder.Cache, A<string>.Ignored)).Returns(file3DaysOld);
 
             // Act
-            var isStale = _diskCache.IsStale("ignored", cacheLimit4Days);
+            var isStale = _diskCache.IsStale(ChainTickerFolder.Cache, "ignored", cacheLimit4Days);
 
             // Assert
             isStale.ShouldBeFalse();
@@ -64,10 +64,10 @@ namespace ChanTicker.Core.Tests.IO
             var cacheLimit2Hours = TimeSpan.FromHours(2);
 
             A.CallTo(() => _fileIO.FileExists(A<string>.Ignored)).Returns(true);
-            A.CallTo(() => _fileIO.GetFileSaveTime(A<string>.Ignored)).Returns(file3HoursOld);
+            A.CallTo(() => _fileIO.GetFileSaveTime(ChainTickerFolder.Cache, A<string>.Ignored)).Returns(file3HoursOld);
 
             // Act
-            var isStale = _diskCache.IsStale("ignored", cacheLimit2Hours);
+            var isStale = _diskCache.IsStale(ChainTickerFolder.Cache, "ignored", cacheLimit2Hours);
 
             // Assert
             isStale.ShouldBeTrue();
@@ -83,10 +83,10 @@ namespace ChanTicker.Core.Tests.IO
             var cacheLimit4Hours = TimeSpan.FromHours(4);
 
             A.CallTo(() => _fileIO.FileExists(A<string>.Ignored)).Returns(true);
-            A.CallTo(() => _fileIO.GetFileSaveTime(A<string>.Ignored)).Returns(file3HoursOld);
+            A.CallTo(() => _fileIO.GetFileSaveTime(ChainTickerFolder.Cache, A<string>.Ignored)).Returns(file3HoursOld);
 
             // Act
-            var isStale = _diskCache.IsStale("ignored", cacheLimit4Hours);
+            var isStale = _diskCache.IsStale(ChainTickerFolder.Cache, "ignored", cacheLimit4Hours);
 
             // Assert
             isStale.ShouldBeFalse();

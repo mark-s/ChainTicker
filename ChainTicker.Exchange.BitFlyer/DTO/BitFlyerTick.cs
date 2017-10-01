@@ -25,7 +25,7 @@ namespace ChainTicker.Exchange.BitFlyer.DTO
         public string ProductCode { get; set; }
 
         [JsonProperty("ltp")]
-        public long LastTradedPrice { get; set; }
+        public decimal LastTradedPrice { get; set; }
 
         [JsonProperty("tick_id")]
         public long TickId { get; set; }

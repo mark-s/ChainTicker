@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using ChanTicker.Core.Domain;
 
 namespace ChanTicker.Core.Interfaces
@@ -6,5 +7,13 @@ namespace ChanTicker.Core.Interfaces
     public interface IMarketDataService
     {
         Task<ITick> GetCurrentPriceAsync(Market market);
+
+        IObservable<ITick> SubscribeToTicks(Market market);
+
+<<<<<<< HEAD
+        void UnsubscribeFromTicks(Market market);
+
+=======
+>>>>>>> 160af66... Working on BitFlyer subscription
     }
 }
