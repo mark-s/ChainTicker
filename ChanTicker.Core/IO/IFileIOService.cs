@@ -9,9 +9,8 @@ namespace ChanTicker.Core.IO
 
         Task SaveAsync<T>(string fileName, T data);
 
-        DateTime GetFileSaveDate(string fileName);
+        DateTime GetFileSaveTime(string fileName);
 
         bool FileExists(string fileName);
-
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace ChainTicker.Domain
+﻿namespace ChanTicker.Core.Domain
 {
-    public class MarketConfig : IMarketConfig
+    public class MarketConfig 
     {
         public string ProductCode { get; }
 

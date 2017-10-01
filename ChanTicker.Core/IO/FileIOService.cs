@@ -21,7 +21,7 @@ namespace ChanTicker.Core.IO
         }
  
 
-        public DateTime GetFileSaveDate(string fileName) 
+        public DateTime GetFileSaveTime(string fileName) 
             => File.GetLastWriteTime(GetPathAndFilename(fileName));
 
         public bool FileExists(string fileName) 

@@ -1,7 +1,7 @@
 using System;
 using ChanTicker.Core.Interfaces;
 
-namespace ChainTicker.Domain
+namespace ChanTicker.Core.Domain
 {
     public class Tick : ITick
     {
@@ -14,6 +14,4 @@ namespace ChainTicker.Domain
             TimeStamp = timeStamp;
         }
     }
-
-
 }

@@ -1,6 +1,6 @@
 ﻿namespace ChainTicker.Transport.Rest
 {
-    public class Response<T> : IResponse<T>
+    public class Response<T> 
     {
         public T Data { get; }
         public bool IsSuccess { get; }

@@ -1,65 +1,76 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using ChainTicker.DataSource.Coins.Domain;
 using ChainTicker.DataSource.Coins.DTO;
 using ChainTicker.Transport.Rest;
+using ChanTicker.Core.IO;
 
 namespace ChainTicker.DataSource.Coins
 {
     public class CoinInfoService : ICoinInfoService
     {
         private readonly IRestService _restService;
-        private readonly CoinInfoServiceConfig _config;
-        private readonly ICoinInfoCacheService _cache;
+        private readonly IDiskCache _cache;
+        private readonly IFileIOService _fileIOService;
+        private readonly ISerialize _serializer;
+
+        private const string CACHE_FILE_NAME = "coins.json";
+        private readonly TimeSpan _maxCacheAge = TimeSpan.FromDays(5);
 
         public CoinInfoService(IRestService restService,
-                                      CoinInfoServiceConfig config,
-                                      ICoinInfoCacheService cacheService)
+                                      IDiskCache cache,
+                                      IFileIOService fileIOService,
+                                      ISerialize serializer)
         {
             _restService = restService;
-            _config = config;
-            _cache = cacheService;
-            
-            var serviceCommands = new ServiceCommands("https://www.cryptocompare.com/api");
-            serviceCommands.AddCommand("getAllCoins", new Command("/data/coinlist"));
-            _restService.RegisterCommands(serviceCommands);
+            _cache = cache;
+            _fileIOService = fileIOService;
+            _serializer = serializer;
         }
 
         public async Task<CoinData> GetAllCoinsAsync()
         {
-            if (_cache.IsStale(_config))
-            {
-                var response = await _restService.GetAsync<AllCoinsResponse>("getAllCoins");
-
-                if (response.IsSuccess)
-                    return await HandleOkAsync(response.Data);
-                else
-                    return await HandleErrorAsync(response); 
-            }
+            if (_cache.IsStale(CACHE_FILE_NAME, _maxCacheAge))
+                return await GetFromWebServiceAsync();
             else
                 return await GetFromCacheAsync();
         }
 
 
-        private async Task<CoinData> HandleOkAsync(AllCoinsResponse response)
+        private async Task<CoinData> GetFromWebServiceAsync()
+        {
+            var query = new RestQuery("https://www.cryptocompare.com/api", "/data/coinlist").GetAddress();
+
+            var response = await _restService.GetAsync(query, s => _serializer.Deserialize<AllCoinsResponse>(s));
+
+            if (response.IsSuccess)
+                return await SaveToCacheAndParse(response.Data);
+            else
+                return await HandleErrorAsync(response);
+        }
+
+        private async Task<CoinData> GetFromCacheAsync()
+        {
+            var cachedData = await _fileIOService.LoadAsync<AllCoinsResponse>(CACHE_FILE_NAME);
+            return Parse(cachedData);
+        }
+
+
+        private async Task<CoinData> SaveToCacheAndParse(AllCoinsResponse response)
         {
             // Save to the cache so we don't need to do this expensive call all the time
-            await _cache.SaveAsync(_config.CacheFileName, response);
+            await _fileIOService.SaveAsync(CACHE_FILE_NAME, response);
 
             return Parse(response);
         }
 
-        private async Task<CoinData> HandleErrorAsync(IResponse<AllCoinsResponse> response)
+        private async Task<CoinData> HandleErrorAsync(Response<AllCoinsResponse> response)
         {
             Debug.WriteLine(response.ErrorMessage);
             return await GetFromCacheAsync();
         }
 
-        private async Task<CoinData> GetFromCacheAsync()
-        {
-            var cachedData = await _cache.LoadAsync<AllCoinsResponse>(_config.CacheFileName);
-            return Parse(cachedData);
-        }
 
         private CoinData Parse(AllCoinsResponse allCoinsResponse)
             => new CoinData(allCoinsResponse);

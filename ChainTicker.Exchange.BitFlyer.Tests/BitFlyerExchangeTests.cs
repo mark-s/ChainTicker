@@ -15,7 +15,7 @@ namespace ChainTicker.Exchange.BitFlyer.Tests
             // Arrange
             var exchange = new BitFlyerExchange();
 
-            var markets = await exchange.MarketDataSource.GetAvailableMarketsAsync();
+            var markets = await exchange.GetAvailableMarketsAsync();
 
             markets.Count.ShouldBe(10);
 

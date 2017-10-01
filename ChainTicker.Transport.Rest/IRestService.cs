@@ -1,14 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 
 namespace ChainTicker.Transport.Rest
 {
     public interface IRestService
     {
-        Task<IResponse<T>> GetAsync<T>(string commandName);
+        Task<Response<T>> GetAsync<T>(string restEndpointUrl, Func<string, T> deserialize);
 
-        Task<IResponse<T>> GetAsync<T>(string commandName, string commandArgs);
-
-        void RegisterCommands(ServiceCommands commands);
     }
 }

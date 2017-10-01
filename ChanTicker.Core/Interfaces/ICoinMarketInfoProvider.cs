@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
+using ChanTicker.Core.Domain;
 
 namespace ChanTicker.Core.Interfaces
 {
     public interface ICoinMarketInfoProvider
     {
-        IExchangeInfo ExchangeInfo { get; }
+        ExchangeInfo ExchangeInfo { get; }
 
         Task<ICoinMarketInfo[]> GetMarketOverviewAsync();
 
