@@ -4,18 +4,21 @@
     {
         public string Name { get; }
 
-        public string Uri { get; }
+        public string HomePageUrl { get; }
 
         public string Description { get; }
 
         public bool IsEnabled { get; }
 
-        public ExchangeInfo(string name, string uri, string description, bool isEnabled)
+        public string ApiBaseUrl { get; }
+
+        public ExchangeInfo(string name, string homePageUrl, string description, bool isEnabled, string apiBaseUrl)
         {
             Name = name;
-            Uri = uri;
+            HomePageUrl = homePageUrl;
             Description = description;
             IsEnabled = isEnabled;
+            ApiBaseUrl = apiBaseUrl;
         }
     }
 }

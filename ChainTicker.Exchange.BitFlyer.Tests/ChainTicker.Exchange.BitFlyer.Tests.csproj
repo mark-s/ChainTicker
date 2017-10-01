@@ -48,34 +48,6 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
-    <Reference Include="System.IO">
-      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.IO.FileSystem">
-      <HintPath>..\packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.IO.FileSystem.Primitives">
-      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Linq">
-      <HintPath>..\packages\System.Linq.4.3.0\lib\net463\System.Linq.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Reflection">
-      <HintPath>..\packages\System.Reflection.4.3.0\lib\net462\System.Reflection.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Runtime">
-      <HintPath>..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Runtime.Extensions">
-      <HintPath>..\packages\System.Runtime.Extensions.4.3.0\lib\net462\System.Runtime.Extensions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
@@ -92,6 +64,10 @@
     <ProjectReference Include="..\ChainTicker.Exchange.BitFlyer\ChainTicker.Exchange.BitFlyer.csproj">
       <Project>{03C65DA1-2FB6-4093-8876-5F52955910B7}</Project>
       <Name>ChainTicker.Exchange.BitFlyer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChainTicker.Transport.Rest\ChainTicker.Transport.Rest.csproj">
+      <Project>{3F6CF485-9C3E-4459-845D-E2A1121D4961}</Project>
+      <Name>ChainTicker.Transport.Rest</Name>
     </ProjectReference>
     <ProjectReference Include="..\ChanTicker.Core\ChanTicker.Core.csproj">
       <Project>{31377670-13EF-4AE5-A42E-37ECEAC43CF5}</Project>

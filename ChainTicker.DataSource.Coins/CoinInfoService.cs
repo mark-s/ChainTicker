@@ -52,15 +52,18 @@ namespace ChainTicker.DataSource.Coins
 
         private async Task<CoinData> GetFromCacheAsync()
         {
-            var cachedData = await _fileIOService.LoadAsync<AllCoinsResponse>(CACHE_FILE_NAME);
-            return Parse(cachedData);
+            var rawResponseText = await _fileIOService.LoadAsync(CACHE_FILE_NAME).ConfigureAwait(false); ;
+            var cachedAllCoinsResponse = _serializer.Deserialize<AllCoinsResponse>(rawResponseText);
+
+            return Parse(cachedAllCoinsResponse);
         }
 
 
         private async Task<CoinData> SaveToCacheAndParse(AllCoinsResponse response)
         {
             // Save to the cache so we don't need to do this expensive call all the time
-            await _fileIOService.SaveAsync(CACHE_FILE_NAME, response);
+
+            await _fileIOService.SaveAsync(CACHE_FILE_NAME, _serializer.Serialize(response)).ConfigureAwait(false); ;
 
             return Parse(response);
         }
@@ -68,7 +71,7 @@ namespace ChainTicker.DataSource.Coins
         private async Task<CoinData> HandleErrorAsync(Response<AllCoinsResponse> response)
         {
             Debug.WriteLine(response.ErrorMessage);
-            return await GetFromCacheAsync();
+            return await GetFromCacheAsync().ConfigureAwait(false); ;
         }
 
 

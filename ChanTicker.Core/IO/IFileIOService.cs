@@ -5,9 +5,9 @@ namespace ChanTicker.Core.IO
 {
     public interface IFileIOService
     {
-        Task<T> LoadAsync<T>(string fileName);
+        Task<string> LoadAsync(string fileName);
 
-        Task SaveAsync<T>(string fileName, T data);
+        Task SaveAsync(string fileName, string textToSave);
 
         DateTime GetFileSaveTime(string fileName);
 

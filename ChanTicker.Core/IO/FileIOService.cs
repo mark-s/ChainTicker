@@ -7,15 +7,13 @@ namespace ChanTicker.Core.IO
 {
     public class FileIOService : IFileIOService
     {
-        private readonly ISerialize _serializer;
+
         private readonly Encoding _encoding = Encoding.UTF8;
         private readonly string _applicationBaseFolder;
         private const string APPNAME = "ChainTicker";
 
-        public FileIOService(ISerialize serializer)
+        public FileIOService()
         {
-            _serializer = serializer;
-
             _applicationBaseFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), APPNAME);
             EnsureApplicationStorageExists(_applicationBaseFolder);
         }
@@ -27,11 +25,9 @@ namespace ChanTicker.Core.IO
         public bool FileExists(string fileName) 
             => File.Exists(GetPathAndFilename(fileName));
 
-        public async Task SaveAsync<T>(string fileName, T data)
+        public async Task SaveAsync(string fileName, string textToSave)
         {
-            var jsonText = _serializer.Serialize(data);
-
-            var jsonAsBytes = _encoding.GetBytes(jsonText);
+            var jsonAsBytes = _encoding.GetBytes(textToSave);
 
             var fullPathAndFileName = GetPathAndFilename(fileName);
             if (File.Exists(fullPathAndFileName))
@@ -43,7 +39,7 @@ namespace ChanTicker.Core.IO
             }
         }
 
-        public async Task<T> LoadAsync<T>(string fileName)
+        public async Task<string> LoadAsync(string fileName)
         {
             var fullPathAndFileName = GetPathAndFilename(fileName);
             byte[] result;
@@ -51,12 +47,10 @@ namespace ChanTicker.Core.IO
             using (var fileStream = File.Open(fullPathAndFileName, FileMode.Open))
             {
                 result = new byte[fileStream.Length];
-                await fileStream.ReadAsync(result, 0, (int)fileStream.Length);
+                await fileStream.ReadAsync(result, 0, (int)fileStream.Length).ConfigureAwait(false);
             }
 
-            var jsonString = _encoding.GetString(result);
-
-            return _serializer.Deserialize<T>(jsonString);
+            return _encoding.GetString(result);
         }
 
 
