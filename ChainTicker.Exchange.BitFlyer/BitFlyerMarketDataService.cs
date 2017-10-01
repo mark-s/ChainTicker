@@ -14,11 +14,11 @@ namespace ChainTicker.Exchange.BitFlyer
         private readonly IRestService _restService;
         private readonly ISerialize _serializer;
 
-        public BitFlyerMarketDataService(string baseUrl, IRestService restService, ISerialize serializer)
+        public BitFlyerMarketDataService(string baseUrl, IRestService restService)
         {
             _baseUrl = baseUrl;
             _restService = restService;
-            _serializer = serializer;
+            _serializer = new ChainTickerJsonSerializer();
         }
 
         public async Task<ITick> GetCurrentPriceAsync(Market market)

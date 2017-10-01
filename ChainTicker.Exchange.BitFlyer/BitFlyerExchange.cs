@@ -24,14 +24,11 @@ namespace ChainTicker.Exchange.BitFlyer
         private const string SUBSCRIBE_KEY = "sub-c-52a9ab50-291b-11e5-baaa-0619f8945a4f";
 
 
-        public BitFlyerExchange(IRestService restService,
-                                        IChainTickerFileService fileService)
+        public BitFlyerExchange(IRestService restService, IChainTickerFileService fileService)
         {
-            var jsonSerialiser = new ChainTickerJsonSerializer();
-
             _pubnubTransport = null; // new PubnubTransport(SUBSCRIBE_KEY, new DebugLogger());
-            _marketDataService = new BitFlyerMarketDataService(Info.ApiBaseUrl, restService, jsonSerialiser);
-            _bitFlyerMarketsService = new BitFlyerMarketsService(Info.ApiBaseUrl, restService, jsonSerialiser, fileService);
+            _marketDataService = new BitFlyerMarketDataService(Info.ApiBaseUrl, restService);
+            _bitFlyerMarketsService = new BitFlyerMarketsService(Info.ApiBaseUrl, restService,  fileService);
         }
 
 

@@ -22,10 +22,9 @@ namespace ChainTicker.Exchange.BitFlyer
 
         public BitFlyerMarketsService(string endpointBaseUrl,
                                                 IRestService restService,
-                                                ISerialize serialiser,
                                                 IChainTickerFileService fileService)
         {
-            _serialiser = serialiser;
+            _serialiser = new ChainTickerJsonSerializer();
             _fileService = fileService;
             _endpointBaseUrl = endpointBaseUrl;
             _restService = restService;
