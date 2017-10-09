@@ -8,12 +8,13 @@
     Title="MainWindow"
     Width="418.615"
     Height="350"
-    mc:Ignorable="d" Closing="Window_Closing">
+    Closing="Window_Closing"
+    mc:Ignorable="d">
     <Grid>
         <Button
             x:Name="button"
             Width="155"
-            Margin="26,27,0,0"
+            Margin="26,10,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="btnGetMarkets_Click"
@@ -22,32 +23,34 @@
         <ListBox
             x:Name="listBox"
             Width="155"
-            Height="114"
-            Margin="26,52,0,0"
+            Height="249"
+            Margin="26,35,0,0"
             HorizontalAlignment="Left"
-            VerticalAlignment="Top" />
+            VerticalAlignment="Top"
+            DisplayMemberPath="Id" />
 
         <Button
             x:Name="btnSubscribe"
             Width="75"
-            Margin="26,171,0,0"
+            Margin="26,289,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="Subscribe" Click="btnSubscribe_Click" />
+            Click="btnSubscribe_Click"
+            Content="Subscribe" />
         <TextBox
             x:Name="ticksBox"
-            Height="299"
-            Margin="205,10,10,0"
-            VerticalAlignment="Top"
+            Margin="205,10,10,10"
+            ScrollViewer.CanContentScroll="True"
             Text=""
-            TextWrapping="Wrap" />
+            VerticalScrollBarVisibility="Visible" />
         <Button
             x:Name="button1_Copy"
             Width="75"
-            Margin="106,171,0,0"
+            Margin="106,289,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="Unsubscribe" Click="button1_Copy_Click" />
+            Click="button1_Copy_Click"
+            Content="Unsubscribe" />
 
     </Grid>
 </Window>

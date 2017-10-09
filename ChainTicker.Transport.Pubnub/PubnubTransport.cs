@@ -63,7 +63,8 @@ namespace ChainTicker.Transport.Pubnub
             return new PNConfiguration
             {
                 SubscribeKey = subscribeKey,
-                PubnubLog = logger
+                PubnubLog = logger,
+                Secure = true
             };
         }
 
