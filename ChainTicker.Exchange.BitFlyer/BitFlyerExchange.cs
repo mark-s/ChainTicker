@@ -26,13 +26,10 @@ namespace ChainTicker.Exchange.BitFlyer
 
         public BitFlyerExchange(IRestService restService, IChainTickerFileService fileService)
         {
-<<<<<<< HEAD
+
             var pubnubTransport = new PubnubTransport(SUBSCRIBE_KEY, new DebugLogger());
             _marketDataService = new BitFlyerMarketDataService(Info.ApiBaseUrl, restService, pubnubTransport);
-=======
-            _pubnubTransport = new PubnubTransport(SUBSCRIBE_KEY, new DebugLogger());
-            _marketDataService = new BitFlyerMarketDataService(Info.ApiBaseUrl, restService, _pubnubTransport);
->>>>>>> 160af66... Working on BitFlyer subscription
+
             _bitFlyerMarketsService = new BitFlyerMarketsService(Info.ApiBaseUrl, restService,  fileService);
         }
 
@@ -43,12 +40,9 @@ namespace ChainTicker.Exchange.BitFlyer
         public IObservable<ITick> SubscribeToTicks(Market market)
             => _marketDataService.SubscribeToTicks(market);
 
-<<<<<<< HEAD
         public void UnsubscribeFromTicks(Market market) 
             => _marketDataService.UnsubscribeFromTicks(market);
 
-=======
->>>>>>> 160af66... Working on BitFlyer subscription
         public Task<List<Market>> GetAvailableMarketsAsync()
             => _bitFlyerMarketsService.GetAvailableMarketsAsync();
 

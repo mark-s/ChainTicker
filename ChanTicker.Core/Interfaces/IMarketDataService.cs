@@ -10,10 +10,7 @@ namespace ChanTicker.Core.Interfaces
 
         IObservable<ITick> SubscribeToTicks(Market market);
 
-<<<<<<< HEAD
         void UnsubscribeFromTicks(Market market);
 
-=======
->>>>>>> 160af66... Working on BitFlyer subscription
     }
 }

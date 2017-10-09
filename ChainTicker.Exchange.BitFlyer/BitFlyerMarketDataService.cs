@@ -1,8 +1,5 @@
 ﻿using System;
-<<<<<<< HEAD
-=======
-using System.Collections.Generic;
->>>>>>> 160af66... Working on BitFlyer subscription
+ 
 using System.Diagnostics;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -32,10 +29,6 @@ namespace ChainTicker.Exchange.BitFlyer
             _serializer = new ChainTickerJsonSerializer();
 
             _messageParser = new MessageParser(_serializer);
-<<<<<<< HEAD
-=======
-
->>>>>>> 160af66... Working on BitFlyer subscription
         }
 
         public async Task<ITick> GetCurrentPriceAsync(Market market)
@@ -80,19 +73,6 @@ namespace ChainTicker.Exchange.BitFlyer
         {
             _pubnubTransport?.Dispose();
         }
-
-
-        public IObservable<ITick> SubscribeToTicks(Market market)
-        {
-            var channelName = "lightning_ticker_" + market.Id;
-
-            _pubnubTransport.SubscribeToChannel(channelName);
-
-            return _pubnubTransport.RecievedMessagesObservable
-                                                .Where(m => m.ChannelName == channelName)
-                                                .Select(m => _messageParser.ConvertToTick(m));
-        }
-
 
     }
 }
