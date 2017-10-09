@@ -27,8 +27,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.Exchange.BitFly
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanTicker.Core.Tests", "ChanTicker.Core.Tests\ChanTicker.Core.Tests.csproj", "{B5F55D23-9191-4534-8FB9-887300B8EBA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DELETETHIS", "DELETETHIS\DELETETHIS.csproj", "{72972636-7896-4057-8F3D-821DB1FD1BF4}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,10 +69,6 @@ Global
 		{B5F55D23-9191-4534-8FB9-887300B8EBA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5F55D23-9191-4534-8FB9-887300B8EBA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5F55D23-9191-4534-8FB9-887300B8EBA2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{72972636-7896-4057-8F3D-821DB1FD1BF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{72972636-7896-4057-8F3D-821DB1FD1BF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{72972636-7896-4057-8F3D-821DB1FD1BF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{72972636-7896-4057-8F3D-821DB1FD1BF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
