@@ -1,5 +1,9 @@
-﻿namespace ChanTicker.Core.Domain
+﻿using System.Diagnostics;
+
+namespace ChanTicker.Core.Domain
 {
+
+    [DebuggerDisplay("{" + nameof(Name) + "}")]
     public class ExchangeInfo
     {
         public string Name { get; }

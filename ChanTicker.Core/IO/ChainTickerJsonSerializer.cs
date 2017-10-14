@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ChanTicker.Core.Interfaces;
+using Newtonsoft.Json;
 
 namespace ChanTicker.Core.IO
 {

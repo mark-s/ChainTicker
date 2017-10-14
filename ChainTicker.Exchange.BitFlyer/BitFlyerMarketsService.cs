@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ChainTicker.Exchange.BitFlyer.DTO;
 using ChainTicker.Transport.Rest;
 using ChanTicker.Core.Domain;
+using ChanTicker.Core.Interfaces;
 using ChanTicker.Core.IO;
 
 namespace ChainTicker.Exchange.BitFlyer
@@ -49,7 +50,7 @@ namespace ChainTicker.Exchange.BitFlyer
 
             if (result.IsSuccess)
             {
-                availableMarkets.AddRange(result.Data.Select(m => new Market(m.ProductCode, m.MainCurrency, m.SubCurrency)));
+                availableMarkets.AddRange(result.Data.Select(m => new Market(m.ProductCode, m.MainCurrency, m.SubCurrency, m.ProductCode)));
                 
                 // save to cache
                 await _fileService.SaveAndSerializeAsync(ChainTickerFolder.Cache, CACHE_FILE_NAME, availableMarkets);

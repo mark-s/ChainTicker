@@ -18,8 +18,8 @@ namespace ChainTicker.DataSource.Coins
 
         private const string CACHE_FILE_NAME = "coins.json";
         private readonly TimeSpan _maxCacheAge = TimeSpan.FromDays(5);
+        private CoinData _coinData;
 
-        private CoinDataBase _coinData = new CoinDataUnavailable();
 
         public CoinInfoService(IRestService restService,IChainTickerFileService fileService)
         {
@@ -35,6 +35,7 @@ namespace ChainTicker.DataSource.Coins
                 _coinData = await GetFromWebServiceAsync();
             else
                 _coinData = await GetFromCacheAsync();
+            
         }
 
         public IEnumerable<ICoin> GetAllCoins()

@@ -2,7 +2,6 @@
 using ChainTicker.Transport.Pubnub;
 using ChanTicker.Core.Domain;
 using ChanTicker.Core.Interfaces;
-using ChanTicker.Core.IO;
 
 namespace ChainTicker.Exchange.BitFlyer
 {

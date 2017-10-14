@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using ChanTicker.Core.Interfaces;
 
 namespace ChanTicker.Core.IO
 {

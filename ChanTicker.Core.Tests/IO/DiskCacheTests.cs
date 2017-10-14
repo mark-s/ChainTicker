@@ -1,4 +1,5 @@
 ﻿using System;
+using ChanTicker.Core.Interfaces;
 using ChanTicker.Core.IO;
 using FakeItEasy;
 using NUnit.Framework;

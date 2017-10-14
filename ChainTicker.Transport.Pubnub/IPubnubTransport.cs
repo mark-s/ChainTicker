@@ -15,5 +15,6 @@ namespace ChainTicker.Transport.Pubnub
         
         void UnsubscribeFromAllChannels();
 
+        bool IsSubscribedToChannel(string channelName);
     }
 }

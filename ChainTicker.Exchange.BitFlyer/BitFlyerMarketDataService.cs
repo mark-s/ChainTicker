@@ -1,6 +1,7 @@
 ﻿using System;
  
 using System.Diagnostics;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using ChainTicker.Exchange.BitFlyer.DTO;
@@ -57,6 +58,7 @@ namespace ChainTicker.Exchange.BitFlyer
             _pubnubTransport.SubscribeToChannel(channelName);
 
             return _pubnubTransport.RecievedMessagesObservable
+                                                 .ObserveOn(Scheduler.Default)
                                                 .Where(m => m.ChannelName == channelName)
                                                 .Select(m => _messageParser.ConvertToTick(m));
         }
@@ -74,5 +76,10 @@ namespace ChainTicker.Exchange.BitFlyer
             _pubnubTransport?.Dispose();
         }
 
+        public bool IsSubscribedToTicks(Market market)
+        {
+            var channelName = GetChannelName(market);
+            return _pubnubTransport.IsSubscribedToChannel(channelName);
+        }
     }
 }

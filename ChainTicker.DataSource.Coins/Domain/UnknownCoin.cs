@@ -6,10 +6,11 @@ namespace ChainTicker.DataSource.Coins.Domain
     [DebuggerDisplay("{" + nameof(Description) + "}")]
     internal class UnknownCoin : ICoin
     {
+        public bool IsValid => false;
 
-        public string Code { get; } = "???";
+        public string Code { get; } 
 
-        public string Name { get; } = "???";
+        public string Name { get; } 
 
         public string Description { get; } = "Unknown Coin";
 
@@ -35,6 +36,12 @@ namespace ChainTicker.DataSource.Coins.Domain
         public string PreMinedValue { get; } = "0";
 
         public string TotalCoinsFreeFloat { get; } = "0";
+
+        public UnknownCoin(string coinCode)
+        {
+            Code = coinCode;
+            Name = coinCode;
+        }
 
     }
 }

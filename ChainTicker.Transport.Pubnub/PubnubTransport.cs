@@ -54,6 +54,9 @@ namespace ChainTicker.Transport.Pubnub
         public void UnsubscribeFromAllChannels()
             => _pubnubConnector.UnsubscribeAll<string>();
 
+        public bool IsSubscribedToChannel(string channelName)
+            => GetSubscribedChannels().Contains(channelName);
+
 
         public List<string> GetSubscribedChannels()
             => _pubnubConnector.GetSubscribedChannels() ?? new List<string>();

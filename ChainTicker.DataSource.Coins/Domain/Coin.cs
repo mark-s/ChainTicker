@@ -9,23 +9,25 @@ namespace ChainTicker.DataSource.Coins.Domain
     [DebuggerDisplay("{" + nameof(Description) + "}")]
     internal class Coin : ICoin
     {
+        public bool IsValid => true;
 
         public string Code { get; }
 
         public string Name { get; }
 
         public string Description { get; }
-
-
+        
         public string ImageUrlShort { get; }
+
         public string InfoUrlShort { get; }
+
         public string ImageUrlFull { get; }
+
         public string InfoUrlFull { get; }
 
         public string ImageFileName { get; }
 
         public string Algorithm { get; }
-
 
         public string ProofType { get; }
 

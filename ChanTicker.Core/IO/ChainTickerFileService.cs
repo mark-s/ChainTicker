@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using ChanTicker.Core.Interfaces;
 
 namespace ChanTicker.Core.IO
 {

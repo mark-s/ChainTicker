@@ -5,7 +5,6 @@ using ChainTicker.Transport.Pubnub;
 using ChainTicker.Transport.Rest;
 using ChanTicker.Core.Domain;
 using ChanTicker.Core.Interfaces;
-using ChanTicker.Core.IO;
 
 
 namespace ChainTicker.Exchange.BitFlyer
@@ -36,6 +35,9 @@ namespace ChainTicker.Exchange.BitFlyer
 
         public Task<ITick> GetCurrentPriceAsync(Market market)
             => _marketDataService.GetCurrentPriceAsync(market);
+
+        public bool IsSubscribedToTicks(Market market)
+            => _marketDataService.IsSubscribedToTicks(market);
 
         public IObservable<ITick> SubscribeToTicks(Market market)
             => _marketDataService.SubscribeToTicks(market);
