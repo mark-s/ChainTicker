@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Reactive.Linq;
 using ChanTicker.Core.Domain;
 using ChanTicker.Core.Interfaces;
+using Prism.Commands;
 using Prism.Mvvm;
 
 namespace ChainTicker.Shell.Models
@@ -33,7 +34,22 @@ namespace ChainTicker.Shell.Models
         }
 
 
-        public TickModel CurrentTick = new TickModel();
+
+
+
+        private TickModel _currentTick;
+        public TickModel CurrentTick
+        {
+            get => _currentTick;
+            set => SetProperty(ref _currentTick, value);
+        }
+
+
+
+
+
+        public DelegateCommand SubscribeCommand { get; }
+
 
 
         public string DisplayName { get; }
@@ -44,13 +60,18 @@ namespace ChainTicker.Shell.Models
                                         Func<Market, IObservable<ITick>> subscriptionFunc,
                                         Action<Market> unSubscriptionFunc)
         {
+
+            _market = market ?? throw new ArgumentNullException(nameof(market), "market is required!");
+
             BaseCoin = baseCoinInfo;
             CounterCoin = counterCoinInfo;
-            _market = market;
             _subscriptionFunc = subscriptionFunc;
             _unSubscriptionFunc = unSubscriptionFunc;
             DisplayName = market.DisplayName;
-        }
+
+            SubscribeCommand = new DelegateCommand(StartSubscribe);
+            _currentTick = new TickModel();
+    }
 
         public void StartSubscribe()
         {

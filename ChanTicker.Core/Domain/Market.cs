@@ -2,7 +2,7 @@
 
 namespace ChanTicker.Core.Domain
 {
-    [DebuggerDisplay("{" + nameof(DisplayName) + "}")]
+    [DebuggerDisplay("Name: {" + nameof(DisplayName) + "}")]
     public class Market 
     {
         public string Id { get; }
@@ -16,6 +16,6 @@ namespace ChanTicker.Core.Domain
             BaseCurrency = baseCurrency;
             CounterCurrency = counterCurrency;
             DisplayName = displayName;
-        }
+         }
     }
 }

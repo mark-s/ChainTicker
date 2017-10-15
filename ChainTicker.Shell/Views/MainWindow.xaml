@@ -18,7 +18,7 @@
             Content="Get Markets" />
 
         <ListBox
-            Width="155"
+            Width="283"
             Height="249"
             Margin="26,35,0,0"
             HorizontalAlignment="Left"
@@ -31,7 +31,9 @@
                         <TextBlock Text=":" />
                         <TextBlock Text="{Binding CounterCoin.Code}" />
                         <TextBlock Text=" - " />
-                        <TextBlock Text="{Binding DisplayName}" />
+                        <TextBlock Text="{Binding CurrentTick.Price}" />
+                        <Button Command="{Binding SubscribeCommand}" Content="SUB" />
+                        <Button Command="{Binding UnSubscribeCommand}" Content="UNSIB" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -54,25 +56,23 @@
             Content="Unsubscribe" />
 
         <TextBlock
-            Margin="207,14,0,0"
+            Margin="350,14,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Text="{Binding TheExchange.Name}"
             TextWrapping="Wrap" />
         <TextBlock
-            Margin="207,56,0,0"
+            Margin="350,56,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Text="{Binding TheExchange.Description}"
             TextWrapping="Wrap" />
         <TextBlock
-            Margin="207,35,0,0"
+            Margin="350,35,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Text="{Binding TheExchange.HomePage}"
             TextWrapping="Wrap" />
-
-
 
 
 

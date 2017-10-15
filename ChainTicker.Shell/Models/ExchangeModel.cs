@@ -18,7 +18,7 @@ namespace ChainTicker.Shell.Models
         public string Description => _exchange.Info.Description;
 
         public string HomePage => _exchange.Info.HomePageUrl;
-        
+
         public DelegateCommand GetMarketsCommand { get; }
 
         private ObservableCollection<MarketModel> _markets;
@@ -41,7 +41,8 @@ namespace ChainTicker.Shell.Models
 
             var displayMarkets = new List<MarketModel>();
 
-            foreach (var market in await _exchange.GetAvailableMarketsAsync())
+            var markets = await _exchange.GetAvailableMarketsAsync();
+            foreach (var market in markets)
             {
                 displayMarkets.Add(new MarketModel(market,
                                                        _coinInfoFunc(market.BaseCurrency),

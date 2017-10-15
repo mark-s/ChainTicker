@@ -33,8 +33,6 @@ namespace ChainTicker.Shell.ViewModels
         private async Task InitAsync()
         {
             await _coinInfoService.PopulateAvailableCoinsAsync();
-
-            await TheExchange.GetAvailableMarketsAsync();
         }
 
 
