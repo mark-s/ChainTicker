@@ -38,9 +38,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\ChainTicker.UI.Shell\Properties\AssemblyInfoShared.cs">
-      <Link>Properties\AssemblyInfoShared.cs</Link>
-    </Compile>
     <Compile Include="CoinLogoService.cs" />
     <Compile Include="Domain\CoinData.cs" />
     <Compile Include="Domain\Coin.cs" />
@@ -62,6 +59,9 @@
       <Project>{31377670-13EF-4AE5-A42E-37ECEAC43CF5}</Project>
       <Name>ChanTicker.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

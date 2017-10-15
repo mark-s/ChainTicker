@@ -1,4 +1,5 @@
-﻿using ChainTicker.DataSource.Coins;
+﻿using System.Threading.Tasks;
+using ChainTicker.DataSource.Coins;
 using ChainTicker.DataSource.FiatCurrencies;
 using ChainTicker.Exchange.BitFlyer;
 using ChainTicker.Shell.Models;
@@ -13,13 +14,6 @@ namespace ChainTicker.Shell.ViewModels
         private readonly IFiatCurrenciesService _fiatCurrenciesService;
         private readonly BitFlyerExchange _bitFlyerExchange;
 
-        private string _title = "Prism Unity Application";
-        public string Title
-        {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
-        }
-
         public ExchangeModel TheExchange { get; }
 
         public MainWindowViewModel(ICoinInfoService coinInfoService,
@@ -32,15 +26,16 @@ namespace ChainTicker.Shell.ViewModels
 
             TheExchange = new ExchangeModel(_bitFlyerExchange, CoinInfoFunc);
 
+            InitAsync();
         }
 
 
-        //private async void btnGetMarkets_Click(object sender, RoutedEventArgs e)
-        //{
-        //    await _coinInfoService.PopulateAvailableCoinsAsync();
+        private async Task InitAsync()
+        {
+            await _coinInfoService.PopulateAvailableCoinsAsync();
 
-        //    await TheExchange.GetAvailableMarketsAsync();
-        //}
+            await TheExchange.GetAvailableMarketsAsync();
+        }
 
 
 

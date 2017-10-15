@@ -1,19 +1,34 @@
 ﻿using System;
-using System.ComponentModel;
 using ChainTicker.Shell.Helpers;
 using ChanTicker.Core.Interfaces;
+using Prism.Mvvm;
 
 namespace ChainTicker.Shell.Models
 {
-    public class TickModel : INotifyPropertyChanged
+    public class TickModel : BindableBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        public PriceDirection PriceDirection { get; private set; } = PriceDirection.Level;
+        private PriceDirection _priceDirection;
+        public PriceDirection PriceDirection
+        {
+            get => _priceDirection;
+            private set => SetProperty(ref _priceDirection, value);
+        }
 
-        public decimal? Price { get; private set; }
+        private decimal? _price;
+        public decimal? Price
+        {
+            get => _price;
+            private set => SetProperty(ref _price, value);
+        }
 
-        public DateTime TimeStamp { get; private set; }
+        private DateTime _timeStamp;
+        public DateTime TimeStamp
+        {
+            get => _timeStamp;
+            private set => SetProperty(ref _timeStamp, value);
+        }
+
 
         public void Update(ITick tick)
         {

@@ -10,12 +10,11 @@
     <Grid>
 
         <Button
-            x:Name="button"
             Width="155"
             Margin="26,10,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Click="btnGetMarkets_Click"
+            Command="{Binding TheExchange.GetMarketsCommand}"
             Content="Get Markets" />
 
         <ListBox
@@ -44,7 +43,6 @@
             Margin="26,289,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Click="btnSubscribe_Click"
             Content="Subscribe" />
 
         <Button
@@ -53,7 +51,6 @@
             Margin="106,289,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Click="button1_Copy_Click"
             Content="Unsubscribe" />
 
         <TextBlock

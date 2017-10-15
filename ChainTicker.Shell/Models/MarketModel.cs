@@ -1,14 +1,14 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics;
+using System.Reactive.Linq;
 using ChanTicker.Core.Domain;
 using ChanTicker.Core.Interfaces;
+using Prism.Mvvm;
 
 namespace ChainTicker.Shell.Models
 {
-    public class MarketModel : INotifyPropertyChanged
+    public class MarketModel : BindableBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private readonly Market _market;
         private readonly Func<Market, IObservable<ITick>> _subscriptionFunc;
@@ -17,10 +17,24 @@ namespace ChainTicker.Shell.Models
 
         private bool _isSubscribed;
 
-        public ICoin BaseCoin { get; }
-        public ICoin CounterCoin { get; }
+        private ICoin _baseCoin;
+
+        public ICoin BaseCoin
+        {
+            get => _baseCoin;
+            private set => SetProperty(ref _baseCoin, value);
+        }
+
+        private ICoin _counterCoin;
+        public ICoin CounterCoin
+        {
+            get => _counterCoin;
+            private set => SetProperty(ref _counterCoin, value);
+        }
+
 
         public TickModel CurrentTick = new TickModel();
+
 
         public string DisplayName { get; }
 

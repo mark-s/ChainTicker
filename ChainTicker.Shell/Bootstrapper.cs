@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Unity;
+﻿using System.Threading.Tasks;
+using Microsoft.Practices.Unity;
 using Prism.Unity;
 using ChainTicker.Shell.Views;
 using System.Windows;
@@ -25,7 +26,6 @@ namespace ChainTicker.Shell
             RegisterExchanges(Container);
         }
 
-
         private void RegisterServices(IUnityContainer container)
         {
             container.RegisterType<IRestService, RestService>(new ContainerControlledLifetimeManager());
@@ -34,7 +34,7 @@ namespace ChainTicker.Shell
 
             container.RegisterType<IDiskCache, DiskCache>(new ContainerControlledLifetimeManager());
             container.RegisterType<ISerialize, ChainTickerJsonSerializer>(new ContainerControlledLifetimeManager());
-            container.RegisterType<ChainTickerFileService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IChainTickerFileService,ChainTickerFileService>(new ContainerControlledLifetimeManager());
 
         }
 
