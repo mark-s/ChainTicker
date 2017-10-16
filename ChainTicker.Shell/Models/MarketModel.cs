@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Reactive.Linq;
 using ChanTicker.Core.Domain;
 using ChanTicker.Core.Interfaces;
@@ -10,49 +11,34 @@ namespace ChainTicker.Shell.Models
 {
     public class MarketModel : BindableBase
     {
-
         private readonly Market _market;
         private readonly Func<Market, IObservable<ITick>> _subscriptionFunc;
         private readonly Action<Market> _unSubscriptionFunc;
+
         private IDisposable _subscription;
-
+        
         private bool _isSubscribed;
-
-        private ICoin _baseCoin;
-
-        public ICoin BaseCoin
+        public bool IsSubscribed
         {
-            get => _baseCoin;
-            private set => SetProperty(ref _baseCoin, value);
+            get => _isSubscribed;
+            set
+            {
+                SetProperty(ref _isSubscribed, value);
+                SubscribeCommand.RaiseCanExecuteChanged();
+                UnsubscribeCommand.RaiseCanExecuteChanged();
+            }
         }
 
-        private ICoin _counterCoin;
-        public ICoin CounterCoin
-        {
-            get => _counterCoin;
-            private set => SetProperty(ref _counterCoin, value);
-        }
+        public string DisplayName => _market.DisplayName;
 
-
-
-
-
-        private TickModel _currentTick;
-        public TickModel CurrentTick
-        {
-            get => _currentTick;
-            set => SetProperty(ref _currentTick, value);
-        }
-
-
-
-
+        public ICoin BaseCoin { get; }
+        public ICoin CounterCoin { get; }
+        public TickModel CurrentTick { get; } 
 
         public DelegateCommand SubscribeCommand { get; }
+        public DelegateCommand UnsubscribeCommand { get; }
 
 
-
-        public string DisplayName { get; }
 
         internal MarketModel(Market market,
                                         ICoin baseCoinInfo,
@@ -63,37 +49,40 @@ namespace ChainTicker.Shell.Models
 
             _market = market ?? throw new ArgumentNullException(nameof(market), "market is required!");
 
+            CurrentTick = new TickModel(_market.MidMarketPriceSnapshot);
+
             BaseCoin = baseCoinInfo;
             CounterCoin = counterCoinInfo;
+
             _subscriptionFunc = subscriptionFunc;
             _unSubscriptionFunc = unSubscriptionFunc;
-            DisplayName = market.DisplayName;
 
-            SubscribeCommand = new DelegateCommand(StartSubscribe);
-            _currentTick = new TickModel();
-    }
+            SubscribeCommand = new DelegateCommand(Subscribe, () => IsSubscribed == false &&_market.HasLivePricesAvailable);
 
-        public void StartSubscribe()
+            UnsubscribeCommand = new DelegateCommand(UnSubscribe, () => IsSubscribed);
+        }
+
+        public void Subscribe()
         {
-            if (_isSubscribed)
-                return;
-            _isSubscribed = true;
+            if (IsSubscribed) return;
 
             _subscription = _subscriptionFunc(_market).ObserveOnDispatcher()
-                                                                    .Subscribe(
-                                                                       t => CurrentTick.Update(t),
-                                                                       ex => Debug.WriteLine(ex.Message),
-                                                                       () => Debug.WriteLine("OnCompleted"));
+                                                                      .Subscribe(t => CurrentTick.Update(t),
+                                                                                     ex => Debug.WriteLine(ex.Message),
+                                                                                     () => Debug.WriteLine("OnCompleted"));
 
+            IsSubscribed = true;
         }
 
         public void UnSubscribe()
         {
+            if (IsSubscribed == false) return;
+
             _subscription.Dispose();
             _unSubscriptionFunc(_market);
+
+            IsSubscribed = false;
         }
-
-
 
     }
 }

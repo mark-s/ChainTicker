@@ -4,9 +4,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:prism="http://prismlibrary.com/"
     Title="ChainTicker"
-    Width="525"
+    Width="563"
     Height="350"
     prism:ViewModelLocator.AutoWireViewModel="True">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+
     <Grid>
 
         <Button
@@ -18,7 +23,7 @@
             Content="Get Markets" />
 
         <ListBox
-            Width="283"
+            Width="191"
             Height="249"
             Margin="26,35,0,0"
             HorizontalAlignment="Left"
@@ -27,13 +32,10 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding BaseCoin.Code}" />
-                        <TextBlock Text=":" />
-                        <TextBlock Text="{Binding CounterCoin.Code}" />
-                        <TextBlock Text=" - " />
-                        <TextBlock Text="{Binding CurrentTick.Price}" />
+                        <CheckBox IsChecked="{Binding IsSubscribed}" />
+                        <TextBlock Text="{Binding DisplayName}" />
                         <Button Command="{Binding SubscribeCommand}" Content="SUB" />
-                        <Button Command="{Binding UnSubscribeCommand}" Content="UNSIB" />
+                        <Button Command="{Binding UnsubscribeCommand}" Content="UNSUB" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -74,7 +76,21 @@
             Text="{Binding TheExchange.HomePage}"
             TextWrapping="Wrap" />
 
-
+        <ItemsControl
+            Width="191"
+            Height="249"
+            Margin="324,35,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            ItemsSource="{Binding TheExchange.Markets}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Visibility="{Binding Path=IsSubscribed, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <TextBlock Text="{Binding CurrentTick.Price}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
     </Grid>
 

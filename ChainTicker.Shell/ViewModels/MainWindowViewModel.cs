@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
 using ChainTicker.DataSource.Coins;
 using ChainTicker.DataSource.FiatCurrencies;
 using ChainTicker.Exchange.BitFlyer;
@@ -16,6 +19,7 @@ namespace ChainTicker.Shell.ViewModels
 
         public ExchangeModel TheExchange { get; }
 
+
         public MainWindowViewModel(ICoinInfoService coinInfoService,
                                                 IFiatCurrenciesService fiatCurrenciesService, 
                                                 BitFlyerExchange bitFlyerExchange)
@@ -25,7 +29,7 @@ namespace ChainTicker.Shell.ViewModels
             _bitFlyerExchange = bitFlyerExchange;
 
             TheExchange = new ExchangeModel(_bitFlyerExchange, CoinInfoFunc);
-
+            
             InitAsync();
         }
 
@@ -53,7 +57,7 @@ namespace ChainTicker.Shell.ViewModels
         //{
         //    //var market = listBox.SelectedItems[0] as MarketModel;
 
-        //    //market?.StartSubscribe();
+        //    //market?.Subscribe();
 
 
         //}

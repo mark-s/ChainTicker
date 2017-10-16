@@ -3,7 +3,7 @@
 
 namespace ChainTicker.Exchange.BitFlyer.DTO
 {
-    public  class BitFlyerMarket
+    public class BitFlyerMarket
     {
         [JsonProperty("product_code")]
         public string ProductCode { get; set; }
@@ -12,7 +12,7 @@ namespace ChainTicker.Exchange.BitFlyer.DTO
         public string MainCurrency { get; set; }
 
         [JsonProperty("rate")]
-        public double Rate { get; set; }
+        public decimal CurrentPrice { get; set; }
 
         [JsonProperty("sub_currency")]
         public string SubCurrency { get; set; }

@@ -23,13 +23,13 @@ namespace ChainTicker.Exchange.BitFlyer
         private const string SUBSCRIBE_KEY = "sub-c-52a9ab50-291b-11e5-baaa-0619f8945a4f";
 
 
-        public BitFlyerExchange(IRestService restService, IChainTickerFileService fileService)
+        public BitFlyerExchange(IRestService restService)
         {
 
             var pubnubTransport = new PubnubTransport(SUBSCRIBE_KEY, new DebugLogger());
             _marketDataService = new BitFlyerMarketDataService(Info.ApiBaseUrl, restService, pubnubTransport);
 
-            _bitFlyerMarketsService = new BitFlyerMarketsService(Info.ApiBaseUrl, restService,  fileService);
+            _bitFlyerMarketsService = new BitFlyerMarketsService(Info.ApiBaseUrl, restService);
         }
 
 

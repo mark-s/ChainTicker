@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,29 +13,20 @@ namespace ChainTicker.Exchange.BitFlyer
     public class BitFlyerMarketsService
     {
         private readonly ISerialize _serialiser;
-        private readonly IChainTickerFileService _fileService;
         private readonly string _endpointBaseUrl;
         private readonly IRestService _restService;
 
-        private const string CACHE_FILE_NAME = "BitFlyerAvailableMarkets.json";
-        private readonly TimeSpan _maxCacheAge = TimeSpan.FromHours(8);
-
         public BitFlyerMarketsService(string endpointBaseUrl,
-                                                IRestService restService,
-                                                IChainTickerFileService fileService)
+                                                IRestService restService)
         {
             _serialiser = new ChainTickerJsonSerializer();
-            _fileService = fileService;
             _endpointBaseUrl = endpointBaseUrl;
             _restService = restService;
         }
 
         public async Task<List<Market>> GetAvailableMarketsAsync()
         {
-            if (_fileService.IsCacheStale(new CachedFile(CACHE_FILE_NAME, _maxCacheAge)))
-                return await GetFromWebServiceAsync();
-            else
-                return await GetFromCacheAsync();
+            return await GetFromWebServiceAsync();
         }
 
         private async Task<List<Market>> GetFromWebServiceAsync()
@@ -44,27 +34,26 @@ namespace ChainTicker.Exchange.BitFlyer
             var availableMarkets = new List<Market>();
 
             // note: Using 'getprices' here as it returns nicer data than 'getmarkets'
-            var query = new RestQuery(_endpointBaseUrl, "/v1/getprices");
+            var getPricesQuery = new RestQuery(_endpointBaseUrl, "/v1/getprices");
+            var getPricesResponse = await _restService.GetAsync(getPricesQuery.GetAddress(), s => _serialiser.Deserialize<List<BitFlyerMarket>>(s));
 
-            var result = await _restService.GetAsync(query.GetAddress(), s => _serialiser.Deserialize<List<BitFlyerMarket>>(s));
+            // but it returns All markets - even ones that can't be subscribed to... So need to flag them
+            var getMarketsQuery = new RestQuery(_endpointBaseUrl, "/v1/getmarkets");
+            var getMarketsResponse = await _restService.GetAsync(getMarketsQuery.GetAddress(), s => _serialiser.Deserialize<List<PlainMarket>>(s));
 
-            if (result.IsSuccess)
+            if (getPricesResponse.IsSuccess && getMarketsResponse.IsSuccess)
             {
-                availableMarkets.AddRange(result.Data.Select(m => new Market(m.ProductCode, m.MainCurrency, m.SubCurrency, m.ProductCode)));
-                
-                // save to cache
-                await _fileService.SaveAndSerializeAsync(ChainTickerFolder.Cache, CACHE_FILE_NAME, availableMarkets);
+                var marketsWithLivePrices = getMarketsResponse.Data;
+                availableMarkets.AddRange(getPricesResponse.Data.Select(m => new Market(m.ProductCode, m.MainCurrency, m.SubCurrency, m.ProductCode, m.CurrentPrice, marketsWithLivePrices.Any(p => p.ProductCode == m.ProductCode))));
             }
             else
             {
                 // TODO: display this to user
-                Debug.WriteLine("Failed to get Markets! " + result.ErrorMessage);
+                Debug.WriteLine("Failed to get Markets! " + getPricesResponse.ErrorMessage);
             }
 
             return availableMarkets;
         }
 
-        private Task<List<Market>> GetFromCacheAsync()
-            => _fileService.LoadAndDeserializeAsync<List<Market>>(ChainTickerFolder.Cache, CACHE_FILE_NAME);
     }
 }

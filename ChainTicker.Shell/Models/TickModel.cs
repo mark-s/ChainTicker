@@ -23,6 +23,12 @@ namespace ChainTicker.Shell.Models
         }
 
         private DateTime _timeStamp;
+
+        public TickModel(decimal initialPrice)
+        {
+            Price = initialPrice;
+        }
+
         public DateTime TimeStamp
         {
             get => _timeStamp;

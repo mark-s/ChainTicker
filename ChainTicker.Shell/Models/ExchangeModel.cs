@@ -28,6 +28,9 @@ namespace ChainTicker.Shell.Models
             private set => SetProperty(ref _markets, value);
         }
 
+
+
+
         public ExchangeModel(IExchange exchange, Func<string, ICoin> coinInfoFunc)
         {
             _exchange = exchange;
@@ -51,10 +54,9 @@ namespace ChainTicker.Shell.Models
                                                        _exchange.UnsubscribeFromTicks));
             }
 
-            Markets = new ObservableCollection<MarketModel>(displayMarkets);
-
+            Markets =  new ObservableCollection<MarketModel>(displayMarkets);
         }
 
-
+        
     }
 }
