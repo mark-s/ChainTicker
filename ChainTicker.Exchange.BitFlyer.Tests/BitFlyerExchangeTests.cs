@@ -18,13 +18,8 @@ namespace ChainTicker.Exchange.BitFlyer.Tests
         {
             // Arrange
             var restService = new RestService();
-            var folderService = new FolderService();
-            var fileIoService = new FileIOService(folderService);
-            var diskCache = new DiskCache(fileIoService);
 
-            var fileService = new ChainTickerFileService(diskCache, fileIoService, new ChainTickerJsonSerializer());
-
-            var exchange = new BitFlyerExchange(restService, fileService);
+            var exchange = new BitFlyerExchange(restService);
 
             var markets = await exchange.GetAvailableMarketsAsync();
 
@@ -43,12 +38,8 @@ namespace ChainTicker.Exchange.BitFlyer.Tests
         {
             // Arrange
             var restService = new RestService();
-            var folderService = new FolderService();
-            var fileIoService = new FileIOService(folderService);
-            var diskCache = new DiskCache(fileIoService);
-            var fileService = new ChainTickerFileService(diskCache, fileIoService, new ChainTickerJsonSerializer());
 
-            var exchange = new BitFlyerExchange(restService, fileService);
+            var exchange = new BitFlyerExchange(restService);
 
             var markets = await exchange.GetAvailableMarketsAsync();
 
@@ -71,12 +62,7 @@ namespace ChainTicker.Exchange.BitFlyer.Tests
         {
             // Arrange
             var restService = new RestService();
-            var folderService = new FolderService();
-            var fileIoService = new FileIOService(folderService);
-            var diskCache = new DiskCache(fileIoService);
-            var fileService = new ChainTickerFileService(diskCache, fileIoService, new ChainTickerJsonSerializer());
-
-            var exchange = new BitFlyerExchange(restService, fileService);
+            var exchange = new BitFlyerExchange(restService);
 
             var markets = await exchange.GetAvailableMarketsAsync();
 
