@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.DataSource.Fiat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.Shell", "ChainTicker.Shell\ChainTicker.Shell.csproj", "{99C9E82C-C594-446D-AA59-8FFBC43AD226}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.Ui.WpfAssets", "ChainTicker.Ui.WpfAssets\ChainTicker.Ui.WpfAssets.csproj", "{5C83A774-6746-483C-B146-B5A24EE29978}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{99C9E82C-C594-446D-AA59-8FFBC43AD226}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99C9E82C-C594-446D-AA59-8FFBC43AD226}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99C9E82C-C594-446D-AA59-8FFBC43AD226}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C83A774-6746-483C-B146-B5A24EE29978}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C83A774-6746-483C-B146-B5A24EE29978}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C83A774-6746-483C-B146-B5A24EE29978}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C83A774-6746-483C-B146-B5A24EE29978}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -94,6 +94,7 @@
     </Compile>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Helpers\PriceDirectionCalculator.cs" />
+    <Compile Include="Helpers\ReflectionHelpers.cs" />
     <Compile Include="Models\ExchangeModel.cs" />
     <Compile Include="Models\MarketModel.cs" />
     <Compile Include="Models\PriceDirection.cs" />
@@ -151,6 +152,10 @@
     <ProjectReference Include="..\ChainTicker.Transport.Rest\ChainTicker.Transport.Rest.csproj">
       <Project>{3f6cf485-9c3e-4459-845d-e2a1121d4961}</Project>
       <Name>ChainTicker.Transport.Rest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChainTicker.Ui.WpfAssets\ChainTicker.Ui.WpfAssets.csproj">
+      <Project>{5C83A774-6746-483C-B146-B5A24EE29978}</Project>
+      <Name>ChainTicker.Ui.WpfAssets</Name>
     </ProjectReference>
     <ProjectReference Include="..\ChanTicker.Core\ChanTicker.Core.csproj">
       <Project>{31377670-13ef-4ae5-a42e-37eceac43cf5}</Project>
