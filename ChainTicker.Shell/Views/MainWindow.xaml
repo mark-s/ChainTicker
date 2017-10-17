@@ -4,8 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:prism="http://prismlibrary.com/"
     Title="ChainTicker"
-    Width="563"
-    Height="447.333"
+    Width="776.127"
+    Height="447"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:viewModels="clr-namespace:ChainTicker.Shell.ViewModels"
+    d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel, IsDesignTimeCreatable=False}"
     prism:ViewModelLocator.AutoWireViewModel="True">
 
     <Window.Resources>
@@ -33,7 +38,6 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding DisplayName}" />
-                        <TextBlock Text="{Binding CurrentTick.Price}" />
                         <Button Command="{Binding SubscribeCommand}" Content="SUB" />
                         <Button Command="{Binding UnsubscribeCommand}" Content="UNSUB" />
                     </StackPanel>
@@ -42,31 +46,36 @@
         </ListBox>
 
         <TextBlock
-            Margin="350,14,0,0"
+            Margin="263,118,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Text="{Binding TheExchange.Name}"
             TextWrapping="Wrap" />
         <TextBlock
-            Margin="350,56,0,0"
+            Margin="504,20,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Text="{Binding TheExchange.Description}"
             TextWrapping="Wrap" />
         <TextBlock
-            Margin="350,35,0,0"
+            Margin="424,17,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Text="{Binding TheExchange.HomePage}"
             TextWrapping="Wrap" />
 
         <ItemsControl
-            Width="191"
-            Height="138"
-            Margin="324,146,0,0"
+            Width="394"
+            Height="30"
+            Margin="344,118,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             ItemsSource="{Binding TheExchange.Markets}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Visibility="{Binding Path=IsSubscribed, Converter={StaticResource BooleanToVisibilityConverter}}">
