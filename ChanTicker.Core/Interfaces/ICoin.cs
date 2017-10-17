@@ -1,4 +1,6 @@
-﻿namespace ChanTicker.Core.Interfaces
+﻿using ChanTicker.Core.Domain;
+
+namespace ChanTicker.Core.Interfaces
 {
     public interface ICoin
     {
@@ -8,25 +10,9 @@
         string Description { get; }
         string Name { get; }
 
-        string Algorithm { get; }
+        ICoinUrlSet Urls { get; }
 
-        string ImageUrlShort { get; }
-        string InfoUrlShort { get; }
-
-        string ImageUrlFull { get; }
-        string InfoUrlFull { get; }
-
-        string ImageFileName { get; }
-
-        bool IsFullyPremined { get; }
-        string PreMinedValue { get; }
-        string ProofType { get; }
-        string TotalCoinsFreeFloat { get; }
-        string TotalCoinSupply { get; }
-
-        
+        IMiningData Mining { get; }
 
     }
-
-
 }

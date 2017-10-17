@@ -17,7 +17,7 @@ namespace ChainTicker.DataSource.Coins.Tests
             var chaintickerfileService = new ChainTickerFileService(diskCache, fileIOService, new ChainTickerJsonSerializer());
             var allCoins = new CoinInfoService(new RestService(), chaintickerfileService);
             
-            var cls = new CoinLogoService(new IconDownloader(new FileIOService(new FolderService())), new FileIOService(new FolderService()));
+            var cls = new CoinLogoService(new ImageDownloader(new FileIOService(new FolderService())), new FileIOService(new FolderService()));
 
             await allCoins.PopulateAvailableCoinsAsync();
 

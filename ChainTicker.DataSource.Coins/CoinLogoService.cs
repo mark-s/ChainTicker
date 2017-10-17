@@ -7,12 +7,12 @@ namespace ChainTicker.DataSource.Coins
 {
     public class CoinLogoService : ICoinLogoService
     {
-        private readonly IconDownloader _iconDownloader;
+        private readonly ImageDownloader _imageDownloader;
         private readonly IFileIOService _fileIOService;
 
-        public CoinLogoService(IconDownloader iconDownloader, IFileIOService fileIOService)
+        public CoinLogoService(ImageDownloader imageDownloader, IFileIOService fileIOService)
         {
-            _iconDownloader = iconDownloader;
+            _imageDownloader = imageDownloader;
             _fileIOService = fileIOService;
         }
 
@@ -20,10 +20,10 @@ namespace ChainTicker.DataSource.Coins
         {
             var coinsWithNoImages = coins.Where(coin => _fileIOService.FileExists(GetCoinImageFilePath(coin)) == false);
 
-            await _iconDownloader.DownloadImagesAsync(coinsWithNoImages);
+            await _imageDownloader.DownloadImagesAsync(coinsWithNoImages);
         }
 
         public string GetCoinImageFilePath(ICoin coin)
-            => _iconDownloader.GetImageNameForDisk(coin);
+            => _imageDownloader.GetImageNameForDisk(coin.Urls.ImageFileName);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using ChainTicker.DataSource.Coins.DTO;
+using ChanTicker.Core.Domain;
 using ChanTicker.Core.Interfaces;
 
 namespace ChainTicker.DataSource.Coins.Domain
@@ -11,57 +12,36 @@ namespace ChainTicker.DataSource.Coins.Domain
     {
         public bool IsValid => true;
 
+
         public string Code { get; }
 
         public string Name { get; }
 
         public string Description { get; }
-        
-        public string ImageUrlShort { get; }
 
-        public string InfoUrlShort { get; }
 
-        public string ImageUrlFull { get; }
-
-        public string InfoUrlFull { get; }
-
-        public string ImageFileName { get; }
-
-        public string Algorithm { get; }
-
-        public string ProofType { get; }
-
-        public bool IsFullyPremined { get; }
-
-        public string TotalCoinSupply { get; }
-
-        public string PreMinedValue { get; }
-
-        public string TotalCoinsFreeFloat { get; }
+        public ICoinUrlSet Urls { get; }
+        public IMiningData Mining { get; }
 
 
         public Coin(CoinInfo coinInfo, string baseImageUrl, string baseLinkUrl)
         {
-
             Code = coinInfo.Name;
             Name = coinInfo.CoinName;
             Description = coinInfo.FullName;
 
-            InfoUrlFull = baseLinkUrl + coinInfo.Url;
-            ImageUrlFull = baseImageUrl + coinInfo.ImageUrl;
+            Urls = new CoinUrls(coinInfo.ImageUrl, 
+                                                   coinInfo.Url, 
+                                                   baseImageUrl + coinInfo.ImageUrl, 
+                                                   baseLinkUrl + coinInfo.Url, 
+                                                   coinInfo.ImageUrl?.Replace("/", ""));
 
-            InfoUrlShort = coinInfo.Url;
-            ImageUrlShort = coinInfo.ImageUrl;
-
-            ImageFileName = coinInfo.ImageUrl?.Replace("/", "");
-
-            Algorithm = coinInfo.Algorithm;
-            ProofType = coinInfo.ProofType;
-            IsFullyPremined = Convert.ToBoolean(Convert.ToInt32( coinInfo.FullyPremined));
-
-            TotalCoinSupply = coinInfo.TotalCoinSupply;
-            PreMinedValue = coinInfo.PreMinedValue;
-            TotalCoinsFreeFloat = coinInfo.TotalCoinsFreeFloat;
+            Mining = new MiningInfo(Convert.ToBoolean(Convert.ToInt32(coinInfo.FullyPremined)),
+                                                    coinInfo.PreMinedValue,
+                                                    coinInfo.ProofType,
+                                                    coinInfo.TotalCoinsFreeFloat,
+                                                    coinInfo.TotalCoinSupply,
+                                                    coinInfo.Algorithm);
         }
 
         

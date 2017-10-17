@@ -4,6 +4,7 @@ using ChainTicker.DataSource.FiatCurrencies.DTO;
 using ChainTicker.DataSource.FiatCurrencies.Properties;
 using ChanTicker.Core.Interfaces;
 using ChanTicker.Core.IO;
+using FiatCurrency = ChainTicker.DataSource.FiatCurrencies.Domain.FiatCurrency;
 
 namespace ChainTicker.DataSource.FiatCurrencies
 {
@@ -17,17 +18,17 @@ namespace ChainTicker.DataSource.FiatCurrencies
 
         public FiatCurrenciesService()
         {
-            var currencies = _serializer.Deserialize<List<FiatCurrency>>(Resources.FiatCurrencies);
+            var currencies = _serializer.Deserialize<List<DTO.FiatCurrency>>(Resources.FiatCurrencies);
 
             _fiatCurrencies = ConvertAllToCoins(currencies);
         }
 
-        private Dictionary<string, ICoin> ConvertAllToCoins(IReadOnlyCollection<FiatCurrency> currencies)
+        private Dictionary<string, ICoin> ConvertAllToCoins(IReadOnlyCollection<DTO.FiatCurrency> currencies)
         {
             var coinsToReturn = new Dictionary<string, ICoin>(currencies.Count);
 
             foreach (var fiatCurrency in currencies)
-                coinsToReturn[fiatCurrency.Code] = new FiatCoin(fiatCurrency);
+                coinsToReturn[fiatCurrency.Code] = new FiatCurrency(fiatCurrency);
 
             return coinsToReturn;
         }

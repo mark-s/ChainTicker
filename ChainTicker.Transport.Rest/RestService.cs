@@ -15,7 +15,7 @@ namespace ChainTicker.Transport.Rest
             {
                 try
                 {
-                    Debug.WriteLine("Rest Endpoint: " + restEndpointUrl);
+                    Debug.WriteLine("GET: From rest endpoint: " + restEndpointUrl);
 
                     var result = await client.GetStringAsync(restEndpointUrl);
                     var data = deserialize(result);
