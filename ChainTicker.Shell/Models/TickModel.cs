@@ -24,10 +24,6 @@ namespace ChainTicker.Shell.Models
 
         private DateTime _timeStamp;
 
-        public TickModel(decimal initialPrice)
-        {
-            Price = initialPrice;
-        }
 
         public DateTime TimeStamp
         {
@@ -41,6 +37,12 @@ namespace ChainTicker.Shell.Models
             SetPrice(tick.Price);
             TimeStamp = tick.TimeStamp.ToLocalTime().DateTime;
         }
+
+        public TickModel(decimal initialPrice)
+        {
+            Price = initialPrice;
+        }
+
 
         private void SetPrice(decimal? newPrice)
         {

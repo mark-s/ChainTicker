@@ -9,6 +9,9 @@ namespace ChainTicker.Shell.Helpers
             var previous = previousPrice.GetValueOrDefault();
             var current = currentPrice.GetValueOrDefault();
 
+            if (current == previous)
+                return previousPriceDirection;
+
             var currentDirection = current < previous ? PriceDirection.Down : PriceDirection.Up;
 
             if (previousPriceDirection != currentDirection)
