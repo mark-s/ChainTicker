@@ -44,7 +44,7 @@ namespace ChainTicker.Shell.Models
 
         private void SetPrice(decimal? newPrice)
         {
-            PriceDirection = PriceDirectionCalculator.GetPriceDirection(Price, newPrice);
+            PriceDirection = PriceDirectionCalculator.GetPriceDirection(Price, newPrice, PriceDirection);
             Price = newPrice;
         }
 

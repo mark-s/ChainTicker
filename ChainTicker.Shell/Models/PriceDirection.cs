@@ -2,8 +2,8 @@
 {
     public enum PriceDirection
     {
+        UNSET,
         Up,
-        Level,
         Down
     }
 }

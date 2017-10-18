@@ -10,6 +10,7 @@
     mc:Ignorable="d"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:viewModels="clr-namespace:ChainTicker.Shell.ViewModels"
+    xmlns:models="clr-namespace:ChainTicker.Shell.Models"
     d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel, IsDesignTimeCreatable=False}"
     prism:ViewModelLocator.AutoWireViewModel="True">
 
@@ -71,18 +72,42 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             ItemsSource="{Binding TheExchange.Markets}">
+
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
+
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Visibility="{Binding Path=IsSubscribed, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <TextBlock Text="{Binding DisplayName}" />
                         <TextBlock Text="   " />
-                        <TextBlock Text="{Binding CurrentTick.Price}" />
+
+                        <TextBlock>
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Text" Value="{Binding CurrentTick.Price}" />
+                                    <Style.Triggers>
+
+
+                                        <DataTrigger Binding="{Binding CurrentTick.PriceDirection}" Value="{x:Static models:PriceDirection.Up}" >
+                                            <Setter Property="Foreground" Value="Green" />
+                                        </DataTrigger>
+
+                                        <DataTrigger Binding="{Binding CurrentTick.PriceDirection}" Value="{x:Static models:PriceDirection.Down}">
+                                            <Setter Property="Foreground" Value="Red" />
+                                        </DataTrigger>
+
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
                     </StackPanel>
+
+
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
