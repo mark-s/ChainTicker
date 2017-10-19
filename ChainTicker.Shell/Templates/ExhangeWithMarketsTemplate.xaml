@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:models="clr-namespace:ChainTicker.Shell.Models">
+                    xmlns:models="clr-namespace:ChainTicker.Shell.Models"
+                    xmlns:dd="urn:gong-wpf-dragdrop">
 
 
     <DataTemplate
@@ -9,6 +10,8 @@
 
         <ItemsControl
             ItemsSource="{Binding Markets}"
+            dd:DragDrop.IsDragSource="True"
+            dd:DragDrop.IsDropTarget="True" 
             ItemTemplate="{StaticResource MarketTemplate}">
 
             <ItemsControl.ItemsPanel>

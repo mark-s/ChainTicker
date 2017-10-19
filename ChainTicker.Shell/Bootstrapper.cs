@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 using Prism.Unity;
 using ChainTicker.Shell.Views;
 using System.Windows;
@@ -12,7 +11,7 @@ using ChanTicker.Core.IO;
 
 namespace ChainTicker.Shell
 {
-    class Bootstrapper : UnityBootstrapper
+    internal class Bootstrapper : UnityBootstrapper
     {
 
         protected override void ConfigureContainer()

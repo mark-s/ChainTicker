@@ -23,9 +23,16 @@ namespace ChainTicker.Shell.Models
             set
             {
                 SetProperty(ref _isSubscribed, value);
-                SubscribeCommand.RaiseCanExecuteChanged();
-                UnsubscribeCommand.RaiseCanExecuteChanged();
+                HandleSubscribeChange(value);
             }
+        }
+
+        private void HandleSubscribeChange(bool subscribeRequested)
+        {
+            if (subscribeRequested)
+                Subscribe();
+            else
+                UnSubscribe();
         }
 
         public string DisplayName => _market.DisplayName;
@@ -33,10 +40,6 @@ namespace ChainTicker.Shell.Models
         public ICoin BaseCoin { get; }
         public ICoin CounterCoin { get; }
         public TickModel CurrentTick { get; } 
-
-        public DelegateCommand SubscribeCommand { get; }
-        public DelegateCommand UnsubscribeCommand { get; }
-
 
 
         internal MarketModel(Market market,
@@ -55,32 +58,21 @@ namespace ChainTicker.Shell.Models
 
             _subscriptionFunc = subscriptionFunc;
             _unSubscriptionFunc = unSubscriptionFunc;
-
-            SubscribeCommand = new DelegateCommand(Subscribe, () => IsSubscribed == false &&_market.HasLivePricesAvailable);
-
-            UnsubscribeCommand = new DelegateCommand(UnSubscribe, () => IsSubscribed);
         }
 
-        public void Subscribe()
+        private void Subscribe()
         {
-            if (IsSubscribed) return;
-
             _subscription = _subscriptionFunc(_market).ObserveOnDispatcher()
                                                                       .Subscribe(t => CurrentTick.Update(t),
                                                                                      ex => Debug.WriteLine(ex.Message),
                                                                                      () => Debug.WriteLine("OnCompleted"));
 
-            IsSubscribed = true;
         }
 
-        public void UnSubscribe()
+        private void UnSubscribe()
         {
-            if (IsSubscribed == false) return;
-
             _subscription.Dispose();
             _unSubscriptionFunc(_market);
-
-            IsSubscribed = false;
         }
 
     }

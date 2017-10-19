@@ -2,34 +2,40 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:models="clr-namespace:ChainTicker.Shell.Models">
 
-   
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-   
+
+
+    <Style x:Key="TextStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
 
     <DataTemplate
         x:Key="MarketTemplate"
         DataType="{x:Type models:MarketModel}">
 
-        <StackPanel Orientation="Horizontal" Visibility="{Binding Path=IsSubscribed, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <TextBlock Text="{Binding DisplayName}" />
-            <TextBlock Text="   " />
-            <TextBlock Text="{Binding CurrentTick.Price}" Name="priceText">
+        <StackPanel Orientation="Horizontal" Margin="2,0,2,0"
+                    Height="18"
+                    Visibility="{Binding Path=IsSubscribed, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+            <TextBlock Text="{Binding DisplayName}"  Margin="0,0,5,0" Style="{StaticResource TextStyle}"/>
+            
+            <TextBlock Text="{Binding CurrentTick.Price}" Name="priceText" Style="{StaticResource TextStyle}">
                 <TextBlock.Background>
-                    <SolidColorBrush Color="White" />
+                    <SolidColorBrush Color="Transparent" />
                 </TextBlock.Background>
                 <TextBlock.Foreground>
                     <SolidColorBrush Color="Black" />
                 </TextBlock.Foreground>
             </TextBlock>
-            <TextBlock Text="   " />
-            <TextBlock Text="{Binding CurrentTick.PriceDirection}" />
-
-
+           
         </StackPanel>
 
         <DataTemplate.Triggers>
 
-            <DataTrigger Binding="{Binding CurrentTick.PriceDirection}" Value="{x:Static models:PriceDirection.Up}" >
+
+                <DataTrigger Binding="{Binding CurrentTick.PriceDirection}" Value="{x:Static models:PriceDirection.Up}" >
+                <Setter TargetName="priceText" Property="Foreground" Value="Green" />
                 <DataTrigger.EnterActions>
                     <StopStoryboard BeginStoryboardName="bidUpStoryboard"/>
                     <StopStoryboard BeginStoryboardName="bidDownStoryboard"/>
@@ -48,6 +54,7 @@
             </DataTrigger>
 
             <DataTrigger Binding="{Binding CurrentTick.PriceDirection}" Value="{x:Static models:PriceDirection.Down}">
+                <Setter TargetName="priceText" Property="Foreground" Value="Red" />
                 <DataTrigger.EnterActions>
                     <StopStoryboard BeginStoryboardName="bidDownStoryboard"/>
                     <StopStoryboard BeginStoryboardName="bidUpStoryboard"/>
@@ -72,4 +79,4 @@
 
 
     
-</ResourceDictionary>
+</ResourceDictionary> 

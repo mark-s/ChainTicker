@@ -21,12 +21,9 @@ namespace ChainTicker.Shell.Models
 
         public DelegateCommand GetMarketsCommand { get; }
 
-        private ObservableCollection<MarketModel> _markets;
-        public ObservableCollection<MarketModel> Markets
-        {
-            get => _markets;
-            private set => SetProperty(ref _markets, value);
-        }
+        public ObservableCollection<MarketModel> Markets { get;  } = new ObservableCollection<MarketModel>();
+
+
 
 
 
@@ -54,7 +51,7 @@ namespace ChainTicker.Shell.Models
                                                        _exchange.UnsubscribeFromTicks));
             }
 
-            Markets =  new ObservableCollection<MarketModel>(displayMarkets);
+            Markets.AddRange(displayMarkets);
         }
 
         

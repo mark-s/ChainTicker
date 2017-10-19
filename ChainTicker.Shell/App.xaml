@@ -6,7 +6,7 @@
             <ResourceDictionary.MergedDictionaries>
                 
                 <ResourceDictionary Source="Templates/MarketTemplate.xaml"/>
-                <ResourceDictionary Source="Templates/ExchangeMarketsTemplate.xaml"/>
+                <ResourceDictionary Source="Templates/ExhangeWithMarketsTemplate.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
