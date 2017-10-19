@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:models="clr-namespace:ChainTicker.Shell.Models">
+
+
+    <DataTemplate
+        x:Key="ExhangeWithMarketsTemplate"
+        DataType="{x:Type models:ExchangeModel}">
+
+        <ItemsControl
+            ItemsSource="{Binding Markets}"
+            ItemTemplate="{StaticResource MarketTemplate}">
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+        </ItemsControl>
+
+    </DataTemplate>
+    
+</ResourceDictionary>

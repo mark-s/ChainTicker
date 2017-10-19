@@ -10,13 +10,10 @@
     mc:Ignorable="d"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:viewModels="clr-namespace:ChainTicker.Shell.ViewModels"
-    xmlns:models="clr-namespace:ChainTicker.Shell.Models"
     d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel, IsDesignTimeCreatable=False}"
     prism:ViewModelLocator.AutoWireViewModel="True">
 
-    <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    </Window.Resources>
+
 
     <Grid>
 
@@ -25,7 +22,7 @@
             Margin="26,10,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Command="{Binding TheExchange.GetMarketsCommand}"
+            Command="{Binding Exchanges[0].GetMarketsCommand}"
             Content="Get Markets" />
 
         <ListBox
@@ -34,7 +31,7 @@
             Margin="26,35,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            ItemsSource="{Binding TheExchange.Markets}">
+            ItemsSource="{Binding Exchanges[0].Markets}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -46,32 +43,16 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <TextBlock
-            Margin="263,118,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Text="{Binding TheExchange.Name}"
-            TextWrapping="Wrap" />
-        <TextBlock
-            Margin="504,20,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Text="{Binding TheExchange.Description}"
-            TextWrapping="Wrap" />
-        <TextBlock
-            Margin="424,17,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Text="{Binding TheExchange.HomePage}"
-            TextWrapping="Wrap" />
 
+       
         <ItemsControl
             Width="394"
             Height="30"
             Margin="244,193,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            ItemsSource="{Binding TheExchange.Markets}">
+            ItemsSource="{Binding Exchanges}"
+            ItemTemplate="{StaticResource ExhangeWithMarketsTemplate}">
 
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -79,73 +60,6 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
 
-            <ItemsControl.ItemTemplate>
-                
-                
-                <DataTemplate>
-                    
-                    <StackPanel Orientation="Horizontal" Visibility="{Binding Path=IsSubscribed, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <TextBlock Text="{Binding DisplayName}" />
-                        <TextBlock Text="   " />
-                        <TextBlock Text="{Binding CurrentTick.Price}" Name="priceText">
-                            <TextBlock.Background>
-                                <SolidColorBrush Color="White" />
-                            </TextBlock.Background>
-                            <TextBlock.Foreground>
-                                <SolidColorBrush Color="Black" />
-                            </TextBlock.Foreground>
-                        </TextBlock>
-                        <TextBlock Text="   " />
-                        <TextBlock Text="{Binding CurrentTick.PriceDirection}" />
-                        
-
-                    </StackPanel>
-    
-                    <DataTemplate.Triggers>
-
-                        <DataTrigger Binding="{Binding CurrentTick.PriceDirection}" Value="{x:Static models:PriceDirection.Up}" >
-                            <DataTrigger.EnterActions>
-                                <StopStoryboard BeginStoryboardName="bidUpStoryboard"/>
-                                <StopStoryboard BeginStoryboardName="bidDownStoryboard"/>
-                                <BeginStoryboard x:Name="bidUpStoryboard">
-                                    <Storyboard >
-                                        <ColorAnimation 
-                                            Duration="0:0:0.1" 
-                                            To="#4E008000" 
-                                            AutoReverse="True"
-                                            Storyboard.TargetName="priceText" 
-                                            Storyboard.TargetProperty="(TextBlock.Background).(SolidColorBrush.Color)">
-                                        </ColorAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </DataTrigger.EnterActions>
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CurrentTick.PriceDirection}" Value="{x:Static models:PriceDirection.Down}">
-                            <DataTrigger.EnterActions>
-                                <StopStoryboard BeginStoryboardName="bidDownStoryboard"/>
-                                <StopStoryboard BeginStoryboardName="bidUpStoryboard"/>
-                                <BeginStoryboard x:Name="bidDownStoryboard">
-                                    <Storyboard>
-                                        <ColorAnimation 
-                                            Duration="0:0:0.1" 
-                                            To="#4AFF0000" 
-                                            AutoReverse="True"
-                                            Storyboard.TargetName="priceText" 
-                                            Storyboard.TargetProperty="(TextBlock.Background).(SolidColorBrush.Color)">
-                                        </ColorAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </DataTrigger.EnterActions>
-                        </DataTrigger>
-
-                    </DataTemplate.Triggers>
-                        
-     
-                </DataTemplate>
-
-
-            </ItemsControl.ItemTemplate>
         </ItemsControl>
 
     </Grid>

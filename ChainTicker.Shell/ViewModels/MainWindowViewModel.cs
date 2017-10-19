@@ -1,6 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
 using System.Threading.Tasks;
 using ChainTicker.DataSource.Coins;
 using ChainTicker.DataSource.FiatCurrencies;
@@ -17,7 +15,8 @@ namespace ChainTicker.Shell.ViewModels
         private readonly IFiatCurrenciesService _fiatCurrenciesService;
         private readonly BitFlyerExchange _bitFlyerExchange;
 
-        public ExchangeModel TheExchange { get; }
+
+        public ObservableCollection<ExchangeModel> Exchanges { get; set; } = new ObservableCollection<ExchangeModel>();
 
 
         public MainWindowViewModel(ICoinInfoService coinInfoService,
@@ -28,7 +27,8 @@ namespace ChainTicker.Shell.ViewModels
             _fiatCurrenciesService = fiatCurrenciesService;
             _bitFlyerExchange = bitFlyerExchange;
 
-            TheExchange = new ExchangeModel(_bitFlyerExchange, CoinInfoFunc);
+            Exchanges.Add( new ExchangeModel(_bitFlyerExchange, CoinInfoFunc));
+            Exchanges.Add( new ExchangeModel(_bitFlyerExchange, CoinInfoFunc));
             
             InitAsync();
         }

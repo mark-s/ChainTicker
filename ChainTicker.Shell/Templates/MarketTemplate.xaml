@@ -1,0 +1,75 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:models="clr-namespace:ChainTicker.Shell.Models">
+
+   
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+   
+
+    <DataTemplate
+        x:Key="MarketTemplate"
+        DataType="{x:Type models:MarketModel}">
+
+        <StackPanel Orientation="Horizontal" Visibility="{Binding Path=IsSubscribed, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TextBlock Text="{Binding DisplayName}" />
+            <TextBlock Text="   " />
+            <TextBlock Text="{Binding CurrentTick.Price}" Name="priceText">
+                <TextBlock.Background>
+                    <SolidColorBrush Color="White" />
+                </TextBlock.Background>
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="Black" />
+                </TextBlock.Foreground>
+            </TextBlock>
+            <TextBlock Text="   " />
+            <TextBlock Text="{Binding CurrentTick.PriceDirection}" />
+
+
+        </StackPanel>
+
+        <DataTemplate.Triggers>
+
+            <DataTrigger Binding="{Binding CurrentTick.PriceDirection}" Value="{x:Static models:PriceDirection.Up}" >
+                <DataTrigger.EnterActions>
+                    <StopStoryboard BeginStoryboardName="bidUpStoryboard"/>
+                    <StopStoryboard BeginStoryboardName="bidDownStoryboard"/>
+                    <BeginStoryboard x:Name="bidUpStoryboard">
+                        <Storyboard >
+                            <ColorAnimation 
+                                Duration="0:0:0.1" 
+                                To="#4E008000" 
+                                AutoReverse="True"
+                                Storyboard.TargetName="priceText" 
+                                Storyboard.TargetProperty="(TextBlock.Background).(SolidColorBrush.Color)">
+                            </ColorAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding CurrentTick.PriceDirection}" Value="{x:Static models:PriceDirection.Down}">
+                <DataTrigger.EnterActions>
+                    <StopStoryboard BeginStoryboardName="bidDownStoryboard"/>
+                    <StopStoryboard BeginStoryboardName="bidUpStoryboard"/>
+                    <BeginStoryboard x:Name="bidDownStoryboard">
+                        <Storyboard>
+                            <ColorAnimation 
+                                Duration="0:0:0.1" 
+                                To="#4AFF0000" 
+                                AutoReverse="True"
+                                Storyboard.TargetName="priceText" 
+                                Storyboard.TargetProperty="(TextBlock.Background).(SolidColorBrush.Color)">
+                            </ColorAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+            </DataTrigger>
+
+        </DataTemplate.Triggers>
+
+
+    </DataTemplate>
+
+
+    
+</ResourceDictionary>
