@@ -46,6 +46,7 @@ namespace ChainTicker.Shell.Models
         {
             PriceDirection = PriceDirectionCalculator.GetPriceDirection(Price, newPrice, PriceDirection);
             Price = newPrice;
+
         }
 
     }
