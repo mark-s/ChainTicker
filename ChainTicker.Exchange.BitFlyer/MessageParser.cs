@@ -17,7 +17,11 @@ namespace ChainTicker.Exchange.BitFlyer
         public ITick ConvertToTick(PubnubMessage message)
         {
             var bitFlyerTick = _jsonSerializer.Deserialize<BitFlyerTick>(message.Content);
-            return new Tick(bitFlyerTick.LastTradedPrice, bitFlyerTick.TickTimeStamp);
+            return new Tick(bitFlyerTick.LastTradedPrice, 
+                                  bitFlyerTick.TickTimeStamp,
+                                  bitFlyerTick.BestAsk,
+                                  bitFlyerTick.BestBid,
+                                  bitFlyerTick.Volume);
         }
 
     }

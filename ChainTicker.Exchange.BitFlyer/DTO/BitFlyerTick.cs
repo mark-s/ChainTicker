@@ -16,10 +16,10 @@ namespace ChainTicker.Exchange.BitFlyer.DTO
         public double BestAskSize { get; set; }
 
         [JsonProperty("best_ask")]
-        public long BestAsk { get; set; }
+        public decimal BestAsk { get; set; }
 
         [JsonProperty("best_bid")]
-        public long BestBid { get; set; }
+        public decimal BestBid { get; set; }
 
         [JsonProperty("product_code")]
         public string ProductCode { get; set; }

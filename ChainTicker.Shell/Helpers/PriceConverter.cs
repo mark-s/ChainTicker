@@ -11,7 +11,7 @@ namespace ChainTicker.Shell.Helpers
         {
             var tick = value as decimal?;
 
-            return tick.GetValueOrDefault().ToString("#,#", CultureInfo.InvariantCulture);
+            return tick.GetValueOrDefault().ToString("#,0.#########", CultureInfo.InvariantCulture);
 
         }
 

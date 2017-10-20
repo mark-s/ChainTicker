@@ -18,7 +18,7 @@ namespace ChainTicker.Exchange.BitFlyer.Tests
             // Arrange
             var restService = new RestService();
 
-            var exchange = new BitFlyerExchange(restService);
+            var exchange = new BitFlyerExchange(restService,null);
 
             var markets = await exchange.GetAvailableMarketsAsync();
 
@@ -38,14 +38,14 @@ namespace ChainTicker.Exchange.BitFlyer.Tests
             // Arrange
             var restService = new RestService();
 
-            var exchange = new BitFlyerExchange(restService);
+            var exchange = new BitFlyerExchange(restService, null);
 
             var markets = await exchange.GetAvailableMarketsAsync();
 
             foreach (var market in markets)
             {
                 var cp = await exchange.GetCurrentPriceAsync(market);
-                Debug.WriteLine(market.Id + " " + cp.Price);
+                Debug.WriteLine(market.ProductCode + " " + cp.LastTradedPrice);
             }
 
 
@@ -61,7 +61,7 @@ namespace ChainTicker.Exchange.BitFlyer.Tests
         {
             // Arrange
             var restService = new RestService();
-            var exchange = new BitFlyerExchange(restService);
+            var exchange = new BitFlyerExchange(restService, null);
 
             var markets = await exchange.GetAvailableMarketsAsync();
 

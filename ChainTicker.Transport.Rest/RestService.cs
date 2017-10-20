@@ -8,16 +8,15 @@ namespace ChainTicker.Transport.Rest
 {
     public class RestService : IRestService
     {
-
-        public async Task<Response<T>> GetAsync<T>(string restEndpointUrl, Func<string,T> deserialize)
+        public async Task<Response<T>> GetAsync<T>(string restQueryAddress, Func<string,T> deserialize)
         {
             using (var client = new HttpClient())
             {
                 try
                 {
-                    Debug.WriteLine("GET: From rest endpoint: " + restEndpointUrl);
+                    Debug.WriteLine("GET: From rest endpoint: " + restQueryAddress);
 
-                    var result = await client.GetStringAsync(restEndpointUrl);
+                    var result = await client.GetStringAsync(restQueryAddress);
                     var data = deserialize(result);
                     return new Response<T>(data);
                 }

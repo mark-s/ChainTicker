@@ -30,10 +30,41 @@ namespace ChainTicker.Shell.Models
         }
 
 
+
+
+
+        private decimal _bestBid;
+        public decimal BestBid
+        {
+            get => _bestBid;
+            private set => SetProperty(ref _bestBid, value);
+        }
+
+
+        private decimal? _bestAsk;
+        public decimal? BestAsk
+        {
+            get => _bestAsk;
+            private set => SetProperty(ref _bestAsk, value);
+        }
+
+        private double _volume;
+        public double Volume
+        {
+            get => _volume;
+            private set => SetProperty(ref _volume, value);
+        }
+
+
+
+        
         public void Update(ITick tick)
         {
-            SetPrice(tick.Price);
+            SetPrice(tick.LastTradedPrice);
             TimeStamp = tick.TimeStamp.ToLocalTime().DateTime;
+            BestAsk = tick.BestAsk;
+            BestBid = tick.BestBid;
+            Volume = tick.Volume;
         }
 
         public TickModel(decimal initialPrice )

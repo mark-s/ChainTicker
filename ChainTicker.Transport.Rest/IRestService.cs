@@ -6,7 +6,7 @@ namespace ChainTicker.Transport.Rest
 {
     public interface IRestService
     {
-        Task<Response<T>> GetAsync<T>(string restEndpointUrl, Func<string, T> deserialize);
+        Task<Response<T>> GetAsync<T>(string restQueryAddress, Func<string, T> deserialize);
 
     }
 }

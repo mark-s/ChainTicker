@@ -51,7 +51,7 @@ namespace ChainTicker.Shell.Models
         public TickModel Tick { get; }
 
 
-        public bool HasLivePricesAvailable => _market.HasLivePricesAvailable;
+        public bool HasLivePricesAvailable => _market.HasRealTimeUpdates;
 
         internal MarketModel(Market market,
                                         ICoin baseCoinInfo,

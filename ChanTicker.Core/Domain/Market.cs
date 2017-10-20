@@ -1,26 +1,30 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 namespace ChanTicker.Core.Domain
 {
     [DebuggerDisplay("Name: {" + nameof(DisplayName) + "}")]
     public class Market 
     {
-        public string Id { get; }
+        public string ProductCode { get; }
         public string BaseCurrency { get; }
         public string CounterCurrency { get; }
         public string DisplayName { get;  }
-        public decimal MidMarketPriceSnapshot { get; }
+        public decimal MidMarketPriceSnapshot { get; private set; }
 
-        public bool HasLivePricesAvailable { get; }
+        public bool HasRealTimeUpdates { get; }
 
-        public Market(string id, string baseCurrency, string counterCurrency, string displayName, decimal midMarketPriceSnapshot, bool hasLivePricesAvailable)
+        public Market(string productCode, string baseCurrency, string counterCurrency, string displayName, decimal midMarketPriceSnapshot, bool hasRealTimeUpdates)
         {
-            Id = id;
+            ProductCode = productCode;
             BaseCurrency = baseCurrency;
             CounterCurrency = counterCurrency;
             DisplayName = displayName;
             MidMarketPriceSnapshot = midMarketPriceSnapshot;
-            HasLivePricesAvailable = hasLivePricesAvailable;
+            HasRealTimeUpdates = hasRealTimeUpdates;
         }
+
+        public void ClearMidMarketPriceSnapshot() 
+            => MidMarketPriceSnapshot = decimal.Zero;
     }
 }

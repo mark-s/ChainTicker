@@ -48,7 +48,6 @@ namespace ChainTicker.Shell
         {
             var ex = dispatcherUnhandledExceptionEventArgs.Exception;
             var errorMessage = $"ChainTicker has encountered an unexpected error{Environment.NewLine}{Environment.NewLine}{ex.Message}";
-            var caption = "Unexpected Error !";
 
             Debug.WriteLine(errorMessage);
 

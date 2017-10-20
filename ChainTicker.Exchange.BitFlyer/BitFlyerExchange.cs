@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ChainTicker.Exchange.BitFlyer.Services;
 using ChainTicker.Transport.Pubnub;
 using ChainTicker.Transport.Rest;
 using ChanTicker.Core.Domain;
@@ -14,22 +15,22 @@ namespace ChainTicker.Exchange.BitFlyer
         private readonly BitFlyerMarketDataService _marketDataService;
         private readonly BitFlyerMarketsService _bitFlyerMarketsService;
 
-        public ExchangeInfo Info { get; } = new ExchangeInfo("BitFlyer", 
-                                                                                 "https://bitflyer.jp", 
-                                                                                 "BitFlyer Japan", 
+        public ExchangeInfo Info { get; } = new ExchangeInfo("bitFlyer", 
+                                                                                 "https://bitflyer.jp",
+                                                                                 "bitFlyer Japan", 
                                                                                  true, 
                                                                                  "https://api.bitflyer.jp");
 
         private const string SUBSCRIBE_KEY = "sub-c-52a9ab50-291b-11e5-baaa-0619f8945a4f";
 
 
-        public BitFlyerExchange(IRestService restService)
+        public BitFlyerExchange(IRestService restService, IChainTickerFileService chainTickerFileService)
         {
 
             var pubnubTransport = new PubnubTransport(SUBSCRIBE_KEY, new DebugLogger());
-            _marketDataService = new BitFlyerMarketDataService(Info.ApiBaseUrl, restService, pubnubTransport);
+            _marketDataService = new BitFlyerMarketDataService(pubnubTransport, new CurrentPriceQueryService(restService, Info.ApiBaseUrl, TimeSpan.FromSeconds(10)));
 
-            _bitFlyerMarketsService = new BitFlyerMarketsService(Info.ApiBaseUrl, restService);
+            _bitFlyerMarketsService = new BitFlyerMarketsService(Info.ApiBaseUrl, restService, chainTickerFileService);
         }
 
 

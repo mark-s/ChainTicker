@@ -34,6 +34,7 @@ namespace ChainTicker.Shell
             container.RegisterType<IDiskCache, DiskCache>(new ContainerControlledLifetimeManager());
             container.RegisterType<ISerialize, ChainTickerJsonSerializer>(new ContainerControlledLifetimeManager());
             container.RegisterType<IChainTickerFileService,ChainTickerFileService>(new ContainerControlledLifetimeManager());
+            
 
         }
 

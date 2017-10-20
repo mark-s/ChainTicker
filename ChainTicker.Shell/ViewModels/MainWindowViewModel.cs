@@ -57,7 +57,7 @@ namespace ChainTicker.Shell.ViewModels
         //{
         //    //var market = listBox.SelectedItems[0] as MarketModel;
 
-        //    //market?.Subscribe();
+        //    //market?.StartListening();
 
 
         //}
