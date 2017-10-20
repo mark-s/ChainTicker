@@ -97,6 +97,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\MarketsSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Templates\ExhangeWithMarketsTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -115,6 +119,10 @@
     </Compile>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="CheckListBoxExtension.cs" />
+    <Compile Include="Controls\MarketsSelector.xaml.cs">
+      <DependentUpon>MarketsSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\PriceConverter.cs" />
     <Compile Include="Helpers\PriceDirectionCalculator.cs" />
     <Compile Include="Helpers\ReflectionHelpers.cs" />
     <Compile Include="Models\ExchangeModel.cs" />

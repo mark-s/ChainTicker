@@ -23,8 +23,6 @@ namespace ChainTicker.Shell.Models
         }
 
         private DateTime _timeStamp;
-
-
         public DateTime TimeStamp
         {
             get => _timeStamp;
@@ -38,7 +36,7 @@ namespace ChainTicker.Shell.Models
             TimeStamp = tick.TimeStamp.ToLocalTime().DateTime;
         }
 
-        public TickModel(decimal initialPrice)
+        public TickModel(decimal initialPrice )
         {
             Price = initialPrice;
         }

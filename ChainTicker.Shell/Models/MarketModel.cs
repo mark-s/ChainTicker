@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Reactive.Linq;
 using ChanTicker.Core.Domain;
 using ChanTicker.Core.Interfaces;
-using Prism.Commands;
 using Prism.Mvvm;
 
 namespace ChainTicker.Shell.Models
@@ -39,22 +38,36 @@ namespace ChainTicker.Shell.Models
 
         public ICoin BaseCoin { get; }
         public ICoin CounterCoin { get; }
-        public TickModel CurrentTick { get; } 
 
+
+        private string _exchangeName;
+        public string ExchangeName
+    {
+            get => _exchangeName;
+            set => SetProperty(ref _exchangeName, value);
+        }
+
+
+        public TickModel Tick { get; }
+
+
+        public bool HasLivePricesAvailable => _market.HasLivePricesAvailable;
 
         internal MarketModel(Market market,
                                         ICoin baseCoinInfo,
                                         ICoin counterCoinInfo,
                                         Func<Market, IObservable<ITick>> subscriptionFunc,
-                                        Action<Market> unSubscriptionFunc)
+                                        Action<Market> unSubscriptionFunc,
+                                        string exchangeName)
         {
 
             _market = market ?? throw new ArgumentNullException(nameof(market), "market is required!");
-
-            CurrentTick = new TickModel(_market.MidMarketPriceSnapshot);
+            
+            Tick = new TickModel(_market.MidMarketPriceSnapshot);
 
             BaseCoin = baseCoinInfo;
             CounterCoin = counterCoinInfo;
+            ExchangeName = exchangeName;
 
             _subscriptionFunc = subscriptionFunc;
             _unSubscriptionFunc = unSubscriptionFunc;
@@ -63,7 +76,7 @@ namespace ChainTicker.Shell.Models
         private void Subscribe()
         {
             _subscription = _subscriptionFunc(_market).ObserveOnDispatcher()
-                                                                      .Subscribe(t => CurrentTick.Update(t),
+                                                                      .Subscribe(t => Tick.Update(t),
                                                                                      ex => Debug.WriteLine(ex.Message),
                                                                                      () => Debug.WriteLine("OnCompleted"));
 

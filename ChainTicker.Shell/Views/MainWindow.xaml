@@ -5,15 +5,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:viewModels="clr-namespace:ChainTicker.Shell.ViewModels"
-    xmlns:dd="urn:gong-wpf-dragdrop"
+    xmlns:Controls="clr-namespace:ChainTicker.Shell.Controls"
     x:Class="ChainTicker.Shell.Views.MainWindow"
     Title="ChainTicker"
-    Width="776.127"
+    Width="1152.127"
     Height="447"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False, Type={x:Type viewModels:MainWindowViewModel}}"
     prism:ViewModelLocator.AutoWireViewModel="True">
-
 
 
     <Grid>
@@ -26,29 +25,11 @@
             Command="{Binding Exchanges[0].GetMarketsCommand}"
             Content="Get Markets" />
 
-        <ItemsControl
-            Width="191"
-            Height="332"
-            Margin="26,35,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            ItemsSource="{Binding Exchanges[0].Markets}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox IsChecked="{Binding IsSubscribed}" />
-                        <TextBlock Text="{Binding DisplayName}"  Margin="10,0,0,0"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-
-
 
         <ItemsControl
-            Width="394"
-            Height="18"
-            Margin="244,193,0,0"
+            Width="912"
+            Height="56"
+            Margin="222,123,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             ItemsSource="{Binding Exchanges}"
@@ -63,6 +44,11 @@
             </ItemsControl.ItemsPanel>
 
         </ItemsControl>
+
+        <Controls:MarketsSelector HorizontalAlignment="Left" 
+                                  DataContext="{Binding Exchanges[0]}"
+                                  Height="276" Margin="26,58,0,0"
+                                  VerticalAlignment="Top" Width="161"/>
 
     </Grid>
 

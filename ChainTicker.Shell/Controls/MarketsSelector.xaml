@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="ChainTicker.Shell.Controls.MarketsSelector"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:models="clr-namespace:ChainTicker.Shell.Models"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False, Type={x:Type models:ExchangeModel}}"
+             d:DesignHeight="300" d:DesignWidth="200">
+    
+    <StackPanel>
+    
+        <TextBlock Text="{Binding Description}"  Margin="10,0,0,10" />
+
+        <ItemsControl
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            ItemsSource="{Binding Markets}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding IsSubscribed}" IsEnabled="{Binding HasLivePricesAvailable}" />
+                        <TextBlock Text="{Binding DisplayName}"  Margin="10,0,0,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+
+    </StackPanel>
+
+</UserControl>
+

@@ -48,7 +48,8 @@ namespace ChainTicker.Shell.Models
                                                        _coinInfoFunc(market.BaseCurrency),
                                                        _coinInfoFunc(market.CounterCurrency),
                                                        _exchange.SubscribeToTicks,
-                                                       _exchange.UnsubscribeFromTicks));
+                                                       _exchange.UnsubscribeFromTicks,
+                                                       _exchange.Info.Name));
             }
 
             Markets.AddRange(displayMarkets);
