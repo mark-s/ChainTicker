@@ -38,7 +38,6 @@ namespace ChainTicker.Exchange.BitFlyer.Services
 
         private IObservable<ITick> SubscribeToTimedUpdated(Market market)
         {
-            _priceQueryService.StartListening();
             return _priceQueryService.Subscribe(market);
         }
 
@@ -58,6 +57,8 @@ namespace ChainTicker.Exchange.BitFlyer.Services
         {
             if (market.HasRealTimeUpdates)
                 _pubnubTransport.UnsubscribeFromChannel(GetChannelName(market));
+            else
+                _priceQueryService.Unubscribe(market);
         }
 
 

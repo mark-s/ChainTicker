@@ -14,6 +14,8 @@ namespace ChainTicker.Transport.Rest
         public IObservable<T> RecievedMessagesObservable => _messageSubject.AsObservable();
         private readonly Subject<T> _messageSubject = new Subject<T>();
 
+        private IDisposable _timerSubscription;
+
 
         public SubscribableRestService(IRestService restService, string restQuery, Func<string, T> deserializer, TimeSpan updateTimeSpan)
         {
@@ -27,14 +29,15 @@ namespace ChainTicker.Transport.Rest
 
         public void Subscribe()
         {
-            _observableTimer.Select(_ =>  _restService.GetAsync(_restQuery, _deserializer))
+            
+            _timerSubscription = _observableTimer.Select(_ =>  _restService.GetAsync(_restQuery, _deserializer))
                                    .Subscribe(m => _messageSubject.OnNext(m.Result.Data));
         }
 
 
         public void Unsubscribe()
         {
-            _messageSubject.Dispose();
+            _timerSubscription.Dispose();
         }
 
 

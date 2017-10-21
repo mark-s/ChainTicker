@@ -28,7 +28,7 @@ namespace ChainTicker.Exchange.BitFlyer
         {
 
             var pubnubTransport = new PubnubTransport(SUBSCRIBE_KEY, new DebugLogger());
-            _marketDataService = new BitFlyerMarketDataService(pubnubTransport, new CurrentPriceQueryService(restService, Info.ApiBaseUrl, TimeSpan.FromSeconds(10)));
+            _marketDataService = new BitFlyerMarketDataService(pubnubTransport, new CurrentPriceQueryService(restService, Info.ApiBaseUrl, TimeSpan.FromSeconds(3)));
 
             _bitFlyerMarketsService = new BitFlyerMarketsService(Info.ApiBaseUrl, restService, chainTickerFileService);
         }

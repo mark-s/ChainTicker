@@ -20,12 +20,13 @@ namespace ChainTicker.Exchange.BitFlyer.Services
         private readonly ISubscribableRestService<List<BitFlyerMarket>> _subscribableRestService;
 
         private readonly ChainTickerJsonSerializer _serialiser = new ChainTickerJsonSerializer();
-        private bool _isListening;
+
         private readonly RestQuery _getPricesQuery;
 
-
-
         private readonly Subject<MarketAndTick> _rawReceivedSubject = new Subject<MarketAndTick>();
+
+        private readonly HashSet<string> _subscriptions = new HashSet<string>();
+
 
         public CurrentPriceQueryService(IRestService restService, string endpointBaseUrl, TimeSpan updateTimeSpan)
         {
@@ -42,17 +43,27 @@ namespace ChainTicker.Exchange.BitFlyer.Services
         }
 
 
-        public void StartListening()
+        public void StartListeningIfNeeded()
         {
-            if (_isListening == false)
+            if (_subscriptions.Any() == false)
                 _subscribableRestService.Subscribe();
-
-            _isListening = true;
         }
 
         public IObservable<ITick> Subscribe(Market market)
         {
+            StartListeningIfNeeded();
+
+            _subscriptions.Add(market.ProductCode);
+
             return _rawReceivedSubject.Where(m => m.MarketId == market.ProductCode).Select(m => m.Tick).AsObservable();
+        }
+
+        public void Unubscribe(Market market)
+        {
+            _subscriptions.Remove(market.ProductCode);
+
+            if (_subscriptions.Any() == false)
+                _subscribableRestService.Unsubscribe();
         }
 
 

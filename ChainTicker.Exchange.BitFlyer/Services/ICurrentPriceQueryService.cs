@@ -8,7 +8,8 @@ namespace ChainTicker.Exchange.BitFlyer.Services
     public interface ICurrentPriceQueryService
     {
         Task<ITick> GetCurrentPriceAsync(Market market);
-        void StartListening();
+
         IObservable<ITick> Subscribe(Market market);
+        void Unubscribe(Market market);
     }
 }
