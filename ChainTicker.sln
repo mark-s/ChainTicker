@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.Ui.WpfAssets", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.Transport.WebSocket", "ChainTicker.Transport.WebSockets\ChainTicker.Transport.WebSocket.csproj", "{5403D108-9456-4CAA-8734-20190221AF3B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.Exchange.Gdax", "ChainTicker.Exchange.Gdax\ChainTicker.Exchange.Gdax.csproj", "{3AFC97BC-705E-4779-8AEB-E17DC6C0D36F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{5403D108-9456-4CAA-8734-20190221AF3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5403D108-9456-4CAA-8734-20190221AF3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5403D108-9456-4CAA-8734-20190221AF3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AFC97BC-705E-4779-8AEB-E17DC6C0D36F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AFC97BC-705E-4779-8AEB-E17DC6C0D36F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AFC97BC-705E-4779-8AEB-E17DC6C0D36F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AFC97BC-705E-4779-8AEB-E17DC6C0D36F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,6 +106,7 @@ Global
 		{80A7D018-28C5-4929-988E-49F0FB8F9932} = {586D29B4-CB3B-4B5C-A2F3-CD4EB26E1338}
 		{86CF3BAF-656F-4A54-AF9B-C315CF419F99} = {D90AB66E-91DC-483A-8D9B-D761E2A15F78}
 		{5403D108-9456-4CAA-8734-20190221AF3B} = {4EA4C279-209D-43D5-91CF-B65B0B1BA6AA}
+		{3AFC97BC-705E-4779-8AEB-E17DC6C0D36F} = {586D29B4-CB3B-4B5C-A2F3-CD4EB26E1338}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6006C29E-BE1B-47E2-AD7A-EAE0C62787E0}

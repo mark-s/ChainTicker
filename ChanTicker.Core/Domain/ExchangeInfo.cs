@@ -14,15 +14,16 @@ namespace ChanTicker.Core.Domain
 
         public bool IsEnabled { get; }
 
-        public string ApiBaseUrl { get; }
+        public ApiEndpointCollection ApiEndpoints { get;  }
 
-        public ExchangeInfo(string name, string homePageUrl, string description, bool isEnabled, string apiBaseUrl)
+        public ExchangeInfo(string name, string homePageUrl, string description, bool isEnabled, ApiEndpointCollection apiEndpoints)
         {
             Name = name;
             HomePageUrl = homePageUrl;
             Description = description;
             IsEnabled = isEnabled;
-            ApiBaseUrl = apiBaseUrl;
+            ApiEndpoints = apiEndpoints;
         }
+        
     }
 }

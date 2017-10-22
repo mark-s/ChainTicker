@@ -28,10 +28,10 @@ namespace ChainTicker.Exchange.BitFlyer.Services
         private readonly HashSet<string> _subscriptions = new HashSet<string>();
 
 
-        public CurrentPriceQueryService(IRestService restService, string endpointBaseUrl, TimeSpan updateTimeSpan)
+        public CurrentPriceQueryService(IRestService restService, ApiEndpointCollection apiEndpoints, TimeSpan updateTimeSpan)
         {
             _restService = restService;
-            _getPricesQuery = new RestQuery(endpointBaseUrl, "/v1/getprices");
+            _getPricesQuery = new RestQuery(apiEndpoints[ApiEndpointType.Rest], "/v1/getprices");
             _subscribableRestService = new SubscribableRestService<List<BitFlyerMarket>>(restService, 
                                                                                                                         _getPricesQuery.GetAddress(),
                                                                                                                         s => _serialiser.Deserialize<List<BitFlyerMarket>>(s),

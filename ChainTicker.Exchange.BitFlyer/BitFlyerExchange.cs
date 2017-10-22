@@ -15,22 +15,26 @@ namespace ChainTicker.Exchange.BitFlyer
         private readonly BitFlyerMarketDataService _marketDataService;
         private readonly BitFlyerMarketsService _bitFlyerMarketsService;
 
-        public ExchangeInfo Info { get; } = new ExchangeInfo("bitFlyer", 
-                                                                                 "https://bitflyer.jp",
-                                                                                 "bitFlyer Japan", 
-                                                                                 true, 
-                                                                                 "https://api.bitflyer.jp");
 
-        private const string SUBSCRIBE_KEY = "sub-c-52a9ab50-291b-11e5-baaa-0619f8945a4f";
-
+        public ExchangeInfo Info { get; } = new ExchangeInfo("bitFlyer",
+                                                             "https://bitflyer.jp",
+                                                             "bitFlyer Japan",
+                                                             true,
+                                                             new ApiEndpointCollection
+                                                                 {
+                                                                     [ApiEndpointType.WebSocket] = "wss://ws-feed.gdax.com",
+                                                                     [ApiEndpointType.Rest] = "https://api.bitflyer.jp",
+                                                                     [ApiEndpointType.Pubnub] = "sub-c-52a9ab50-291b-11e5-baaa-0619f8945a4f"
+                                                             });
+        
 
         public BitFlyerExchange(IRestService restService, IChainTickerFileService chainTickerFileService)
         {
 
-            var pubnubTransport = new PubnubTransport(SUBSCRIBE_KEY, new DebugLogger());
-            _marketDataService = new BitFlyerMarketDataService(pubnubTransport, new CurrentPriceQueryService(restService, Info.ApiBaseUrl, TimeSpan.FromSeconds(3)));
+            var pubnubTransport = new PubnubTransport(Info.ApiEndpoints[ApiEndpointType.Pubnub], new DebugLogger());
+            _marketDataService = new BitFlyerMarketDataService(pubnubTransport, new CurrentPriceQueryService(restService, Info.ApiEndpoints, TimeSpan.FromSeconds(3)));
 
-            _bitFlyerMarketsService = new BitFlyerMarketsService(Info.ApiBaseUrl, restService, chainTickerFileService);
+            _bitFlyerMarketsService = new BitFlyerMarketsService(Info.ApiEndpoints, restService, chainTickerFileService);
         }
 
 

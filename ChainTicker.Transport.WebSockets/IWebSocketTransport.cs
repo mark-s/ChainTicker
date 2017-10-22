@@ -5,7 +5,7 @@ namespace ChainTicker.Transport.WebSocket
     public interface IWebSocketTransport 
     {
 
-        IObservable<string> SubscribeToEndpoint(string endpointUri);
+        IObservable<string> ListenToEndpoint(string endpointUri);
 
 
     }

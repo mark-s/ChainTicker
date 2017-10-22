@@ -1,13 +1,14 @@
-﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B5F55D23-9191-4534-8FB9-887300B8EBA2}</ProjectGuid>
+    <ProjectGuid>{3AFC97BC-705E-4779-8AEB-E17DC6C0D36F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChanTicker.Core.Tests</RootNamespace>
-    <AssemblyName>ChanTicker.Core.Tests</AssemblyName>
+    <RootNamespace>ChainTicker.Exchange.Gdax</RootNamespace>
+    <AssemblyName>ChainTicker.Exchange.Gdax</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -29,30 +30,38 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FakeItEasy" Version="4.1.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-    <PackageReference Include="NUnit" Version="3.8.1" />
-    <PackageReference Include="Shouldly" Version="2.8.3" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IO\JsonHelpersTests.cs" />
-    <Compile Include="IO\DiskCacheTests.cs" />
+    <Compile Include="DTO\GdaxErrorResponse.cs" />
+    <Compile Include="DTO\GdaxMarket.cs" />
+    <Compile Include="DTO\GdaxSubscriptionInfo.cs" />
+    <Compile Include="DTO\GdaxTick.cs" />
+    <Compile Include="GdaxExchange.cs" />
+    <Compile Include="Services\GdaxMarketDataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <PackageReference Include="System.Reactive">
+      <Version>3.1.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ChainTicker.Transport.WebSockets\ChainTicker.Transport.WebSocket.csproj">
+      <Project>{5403D108-9456-4CAA-8734-20190221AF3B}</Project>
+      <Name>ChainTicker.Transport.WebSocket</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChanTicker.Core\ChanTicker.Core.csproj">
-      <Project>{31377670-13ef-4ae5-a42e-37eceac43cf5}</Project>
+      <Project>{31377670-13EF-4AE5-A42E-37ECEAC43CF5}</Project>
       <Name>ChanTicker.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
