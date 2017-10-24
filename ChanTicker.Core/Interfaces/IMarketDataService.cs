@@ -12,5 +12,7 @@ namespace ChanTicker.Core.Interfaces
 
         void UnsubscribeFromTicks(Market market);
 
+        bool IsSubscribedToTicks(Market market);
+
     }
 }

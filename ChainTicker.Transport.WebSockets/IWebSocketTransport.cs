@@ -2,10 +2,11 @@
 
 namespace ChainTicker.Transport.WebSocket
 {
-    public interface IWebSocketTransport 
+    public interface IWebSocketTransport
     {
+        IObservable<string> RecievedMessagesObservable { get;  }
 
-        IObservable<string> ListenToEndpoint(string endpointUri);
+        void Send(string message);
 
 
     }

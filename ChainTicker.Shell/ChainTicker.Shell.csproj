@@ -126,6 +126,7 @@
     <Compile Include="Controls\MarketsSelector.xaml.cs">
       <DependentUpon>MarketsSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ExchangeFactory.cs" />
     <Compile Include="Helpers\PriceConverter.cs" />
     <Compile Include="Helpers\PriceDirectionCalculator.cs" />
     <Compile Include="Helpers\ReflectionHelpers.cs" />
@@ -181,6 +182,10 @@
     <ProjectReference Include="..\ChainTicker.Exchange.BitFlyer\ChainTicker.Exchange.BitFlyer.csproj">
       <Project>{03c65da1-2fb6-4093-8876-5f52955910b7}</Project>
       <Name>ChainTicker.Exchange.BitFlyer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChainTicker.Exchange.Gdax\ChainTicker.Exchange.Gdax.csproj">
+      <Project>{3AFC97BC-705E-4779-8AEB-E17DC6C0D36F}</Project>
+      <Name>ChainTicker.Exchange.Gdax</Name>
     </ProjectReference>
     <ProjectReference Include="..\ChainTicker.Transport.PubNub\ChainTicker.Transport.Pubnub.csproj">
       <Project>{dfef79c4-744d-4ad8-ad6d-e757e53519d1}</Project>

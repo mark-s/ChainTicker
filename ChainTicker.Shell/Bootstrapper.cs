@@ -5,6 +5,8 @@ using System.Windows;
 using ChainTicker.DataSource.Coins;
 using ChainTicker.DataSource.FiatCurrencies;
 using ChainTicker.Exchange.BitFlyer;
+using ChainTicker.Exchange.Gdax;
+using ChainTicker.Shell.Helpers;
 using ChainTicker.Transport.Rest;
 using ChanTicker.Core.Interfaces;
 using ChanTicker.Core.IO;
@@ -47,6 +49,10 @@ namespace ChainTicker.Shell
         private void RegisterExchanges(IUnityContainer container)
         {
             container.RegisterType<BitFlyerExchange>(new ContainerControlledLifetimeManager());
+            container.RegisterType<GdaxExchange>(new ContainerControlledLifetimeManager());
+
+            var exchangeFactory = new ExchangeFactory(container);
+            container.RegisterInstance(exchangeFactory);
         }
 
 
