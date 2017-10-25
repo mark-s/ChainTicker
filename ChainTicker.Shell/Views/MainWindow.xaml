@@ -9,7 +9,7 @@
     xmlns:viewModels="clr-namespace:ChainTicker.Shell.ViewModels"
     Title="ChainTicker"
     Width="1152.127"
-    Height="447"
+    Height="726"
     d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False,
                                      Type={x:Type viewModels:MainWindowViewModel}}"
     prism:ViewModelLocator.AutoWireViewModel="True"
@@ -28,9 +28,9 @@
 
 
         <ItemsControl
-            Width="912"
+            Width="1124"
             Height="56"
-            Margin="222,123,0,0"
+            Margin="10,548,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             ItemTemplate="{StaticResource ExhangeWithMarketsTemplate}"
@@ -46,22 +46,22 @@
 
         <Controls:MarketsSelector
             Width="161"
-            Height="136"
-            Margin="26,58,0,0"
+            Height="469"
+            Margin="26,45,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             DataContext="{Binding Exchanges[0]}" />
-        
+
         <Controls:MarketsSelector
             Width="161"
-            Height="136"
-            Margin="26,217,0,0"
+            Height="469"
+            Margin="270,45,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             DataContext="{Binding Exchanges[1]}" />
         <Button
             Width="191"
-            Margin="0,358,0,0"
+            Margin="270,10,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Command="{Binding Exchanges[1].GetMarketsCommand}"

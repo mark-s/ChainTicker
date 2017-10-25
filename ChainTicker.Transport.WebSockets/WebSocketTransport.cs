@@ -15,12 +15,14 @@ namespace ChainTicker.Transport.WebSocket
         public WebSocketTransport(string endpointUri)
         {
             _websocket = new WebSocket4Net.WebSocket(endpointUri);
+            _websocket.Open();
         }
 
         public void StartListen()
         {
             if (_isListening) return;
             _isListening = true;
+            
 
             RecievedMessagesObservable = Observable.Using(() => _websocket,
                                              ws => Observable.FromEventPattern<EventHandler<MessageReceivedEventArgs>, MessageReceivedEventArgs>(
