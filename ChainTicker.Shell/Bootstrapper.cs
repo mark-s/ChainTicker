@@ -51,13 +51,11 @@ namespace ChainTicker.Shell
             container.RegisterType<BitFlyerExchange>(new ContainerControlledLifetimeManager());
             container.RegisterType<GdaxExchange>(new ContainerControlledLifetimeManager());
 
-            var exchangeFactory = new ExchangeFactory(container);
-            container.RegisterInstance(exchangeFactory);
         }
 
 
         protected override DependencyObject CreateShell()
-            => Container.Resolve<MainWindow>();
+            => Container.Resolve<MainBar>();
 
         protected override void InitializeShell()
             => Application.Current.MainWindow.Show();

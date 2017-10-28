@@ -1,4 +1,7 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using ChainTicker.Shell.Models;
 
 namespace ChainTicker.Shell.Controls
 {
@@ -11,6 +14,14 @@ namespace ChainTicker.Shell.Controls
         {
             InitializeComponent();
 
+        }
+
+        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (((FrameworkElement)e.OriginalSource).DataContext is MarketModel market)
+            {
+                market.IsSubscribed = !market.IsSubscribed;
+            }
         }
     }
 }

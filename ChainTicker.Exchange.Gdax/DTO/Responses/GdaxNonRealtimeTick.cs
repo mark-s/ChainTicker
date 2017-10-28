@@ -25,6 +25,6 @@ namespace ChainTicker.Exchange.Gdax.DTO.Responses
         public DateTimeOffset TimeStamp { get; set; }
 
         [JsonProperty("volume")]
-        public long Volume { get; set; }
+        public double Volume { get; set; }
     }
 }

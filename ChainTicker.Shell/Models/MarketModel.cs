@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Reactive.Linq;
 using ChanTicker.Core.Domain;
 using ChanTicker.Core.Interfaces;
+using Prism.Commands;
 using Prism.Mvvm;
 
 namespace ChainTicker.Shell.Models
@@ -22,16 +23,16 @@ namespace ChainTicker.Shell.Models
             set
             {
                 SetProperty(ref _isSubscribed, value);
-                HandleSubscribeChange(value);
+                OnSubscribeChange(value);
             }
         }
 
-        private void HandleSubscribeChange(bool subscribeRequested)
+        private void OnSubscribeChange(bool subscribeRequested)
         {
             if (subscribeRequested)
                 Subscribe();
             else
-                UnSubscribe();
+                Unsubscribe();
         }
 
         public string DisplayName => _market.DisplayName;
@@ -53,6 +54,8 @@ namespace ChainTicker.Shell.Models
 
         public bool HasLivePricesAvailable => _market.HasRealTimeUpdates;
 
+        public DelegateCommand ToggleSubscribeCommand { get;  }
+
         internal MarketModel(Market market,
                                         ICoin baseCoinInfo,
                                         ICoin counterCoinInfo,
@@ -71,18 +74,22 @@ namespace ChainTicker.Shell.Models
 
             _subscriptionFunc = subscriptionFunc;
             _unSubscriptionFunc = unSubscriptionFunc;
+
+            ToggleSubscribeCommand = new DelegateCommand(() => IsSubscribed =  !IsSubscribed, () => true);
+
         }
+
+        
 
         private void Subscribe()
         {
-            _subscription = _subscriptionFunc(_market).ObserveOnDispatcher()
-                                                                      .Subscribe(t => Tick.Update(t),
-                                                                                     ex => Debug.WriteLine(ex.Message),
-                                                                                     () => Debug.WriteLine("OnCompleted"));
-
+                _subscription = _subscriptionFunc(_market).ObserveOnDispatcher()
+                                                          .Subscribe(t => Tick.Update(t),
+                                                                     ex => Debug.WriteLine(ex.Message),
+                                                                     () => Debug.WriteLine("OnCompleted"));
         }
 
-        private void UnSubscribe()
+        private void Unsubscribe()
         {
             _subscription.Dispose();
             _unSubscriptionFunc(_market);

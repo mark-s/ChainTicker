@@ -24,7 +24,7 @@ namespace ChainTicker.Exchange.Gdax
                                                                  [ApiEndpointType.Rest] = "https://api.gdax.com"
                                                              });
 
-        public GdaxExchange(IRestService restService, IChainTickerFileService fileService, ISerialize serializer)
+        public GdaxExchange(IRestService restService, IChainTickerFileService fileService)
         {
             var webSocketTransport = new WebSocketTransport(Info.ApiEndpoints[ApiEndpointType.WebSocket]);
             var notRealTimeService = new NotRealTimePriceService(restService, Info.ApiEndpoints);

@@ -69,6 +69,8 @@
     <PackageReference Include="Unity" Version="4.0.1" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Syncfusion.SfRadialMenu.WPF, Version=15.3460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.SfShared.Wpf, Version=15.3460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Shared.Wpf, Version=15.3460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Tools.WPF, Version=15.3460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -105,6 +107,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Templates\ExchangeCollectionTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Templates\MarketTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -126,14 +132,16 @@
     <Compile Include="Controls\MarketsSelector.xaml.cs">
       <DependentUpon>MarketsSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ExchangeFactory.cs" />
     <Compile Include="Helpers\PriceConverter.cs" />
     <Compile Include="Helpers\PriceDirectionCalculator.cs" />
     <Compile Include="Helpers\ReflectionHelpers.cs" />
+    <Compile Include="Models\ExchangeCollectionModel.cs" />
     <Compile Include="Models\ExchangeModel.cs" />
     <Compile Include="Models\MarketModel.cs" />
     <Compile Include="Models\PriceDirection.cs" />
     <Compile Include="Models\TickModel.cs" />
+    <Compile Include="Services\ExchangesService.cs" />
+    <Compile Include="ViewModels\MainBarViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainBar.xaml.cs">
       <DependentUpon>MainBar.xaml</DependentUpon>

@@ -18,23 +18,16 @@
 
     <Grid>
 
-        <Button
-            Width="191"
-            Margin="26,10,0,0"
+        <ContentControl Content="{Binding AvailableExchanges}" ContentTemplate="{StaticResource ExchangeCollectionTemplate}" />
+
+        <!--<ItemsControl
+            Width="300"
+            Height="530"
+            Margin="10,40,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Command="{Binding Exchanges[0].GetMarketsCommand}"
-            Content="Get Markets" />
-
-
-        <ItemsControl
-            Width="1124"
-            Height="56"
-            Margin="10,548,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            ItemTemplate="{StaticResource ExhangeWithMarketsTemplate}"
-            ItemsSource="{Binding Exchanges}">
+            ItemTemplate="{StaticResource ExchangeCollectionTemplate}"
+            ItemsSource="{Binding AvailableExchanges}">
 
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -42,39 +35,12 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
 
-        </ItemsControl>
+        </ItemsControl>-->
 
-        <Controls:MarketsSelector
-            Width="161"
-            Height="469"
-            Margin="26,45,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            DataContext="{Binding Exchanges[0]}" />
 
-        <Controls:MarketsSelector
-            Width="161"
-            Height="469"
-            Margin="270,45,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            DataContext="{Binding Exchanges[1]}" />
-        <Button
-            Width="191"
-            Margin="270,10,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Command="{Binding Exchanges[1].GetMarketsCommand}"
-            Content="Get Markets" />
+
 
     </Grid>
 
 
 </Window>
-
-
-
-
-
-
-

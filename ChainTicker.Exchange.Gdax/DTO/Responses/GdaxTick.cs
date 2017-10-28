@@ -47,9 +47,9 @@ namespace ChainTicker.Exchange.Gdax.DTO.Responses
         public string ProductId { get; set; }
 
         [JsonProperty("volume_24h")]
-        public long Volume24h { get; set; }
+        public double Volume24h { get; set; }
 
         [JsonProperty("volume_30d")]
-        public long Volume30d { get; set; }
+        public double Volume30d { get; set; }
     }
 }

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using ChanTicker.Core.Interfaces;
-using Prism.Commands;
+
 using Prism.Mvvm;
 
 namespace ChainTicker.Shell.Models
 {
     public class ExchangeModel : BindableBase
     {
+
         private readonly IExchange _exchange;
         private readonly Func<string, ICoin> _coinInfoFunc;
 
@@ -18,22 +19,15 @@ namespace ChainTicker.Shell.Models
         public string Description => _exchange.Info.Description;
 
         public string HomePage => _exchange.Info.HomePageUrl;
-
-        public DelegateCommand GetMarketsCommand { get; }
+        
 
         public ObservableCollection<MarketModel> Markets { get;  } = new ObservableCollection<MarketModel>();
-
-
-
-
-
-
+        
         public ExchangeModel(IExchange exchange, Func<string, ICoin> coinInfoFunc)
         {
             _exchange = exchange;
             _coinInfoFunc = coinInfoFunc;
-
-            GetMarketsCommand = new DelegateCommand(async () => await GetAvailableMarketsAsync(), () => _exchange.Info.IsEnabled);
+  
         }
 
         public async Task GetAvailableMarketsAsync()

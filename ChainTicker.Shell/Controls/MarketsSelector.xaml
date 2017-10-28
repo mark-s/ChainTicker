@@ -11,26 +11,39 @@
     d:DesignWidth="200"
     mc:Ignorable="d">
 
-    <StackPanel>
 
-        <TextBlock Margin="10,0,0,10" Text="{Binding Description}" />
+    <HeaderedItemsControl
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch"
+        Header="{Binding Description}"
+        ItemsSource="{Binding Markets}"
+        MouseLeftButtonDown="OnMouseLeftButtonDown">
+        <HeaderedItemsControl.Template>
+            <ControlTemplate TargetType="{x:Type HeaderedItemsControl}">
+                <Border>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <ContentPresenter ContentSource="Header" />
+                        <Separator Grid.Row="1" />
+                        <ItemsPresenter Grid.Row="2" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </HeaderedItemsControl.Template>
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding IsSubscribed}" />
+                    <TextBlock Margin="10,0,0,0" Text="{Binding DisplayName}" />
+                </StackPanel>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </HeaderedItemsControl>
 
-        <ItemsControl
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch"
-            ItemsSource="{Binding Markets}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox IsChecked="{Binding IsSubscribed}" />
-                        <TextBlock Margin="10,0,0,0" Text="{Binding DisplayName}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-
-
-    </StackPanel>
 
 </UserControl>
 
