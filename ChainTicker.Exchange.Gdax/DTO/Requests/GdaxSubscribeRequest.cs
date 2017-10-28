@@ -1,27 +1,25 @@
 ﻿using System.Collections.Generic;
+using ChainTicker.Exchange.Gdax.DTO.Responses;
 using Newtonsoft.Json;
 
-namespace ChainTicker.Exchange.Gdax.DTO
+namespace ChainTicker.Exchange.Gdax.DTO.Requests
 {
-    public class GdaxSubscribeRequest
+    public class GdaxSubscribeRequest : GdaxTypedMessageBase
     {
         [JsonProperty("channels")]
         public List<Channel> Channels { get; }
 
-        [JsonProperty("type")]
-        public string Type { get; }
 
-
-        public GdaxSubscribeRequest(string marketCode)
+        public GdaxSubscribeRequest(string productCode)
         {
-            Type = "subscribe";
+            Type = GdaxMessageType.Subscribe.ToString().ToLowerInvariant();
 
             Channels = new List<Channel>
                            {
                                new Channel
                                    {
                                        Name = "ticker",
-                                       ProductIds = new List<string> {marketCode}
+                                       ProductIds = new List<string> { productCode }
                                    }
                            };
         }

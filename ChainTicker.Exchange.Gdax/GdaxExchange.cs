@@ -27,7 +27,9 @@ namespace ChainTicker.Exchange.Gdax
         public GdaxExchange(IRestService restService, IChainTickerFileService fileService, ISerialize serializer)
         {
             var webSocketTransport = new WebSocketTransport(Info.ApiEndpoints[ApiEndpointType.WebSocket]);
-            _marketDataService = new GdaxMarketDataService(webSocketTransport, Info.ApiEndpoints,serializer);
+            var notRealTimeService = new NotRealTimePriceService(restService, Info.ApiEndpoints);
+
+            _marketDataService = new GdaxMarketDataService(webSocketTransport, notRealTimeService);
             _gdaxMarketsService = new GdaxMarketsService(Info.ApiEndpoints, restService, fileService);
         }
 

@@ -5,7 +5,7 @@ using ChanTicker.Core.Interfaces;
 
 namespace ChainTicker.Exchange.BitFlyer
 {
-    public class MessageParser
+    internal class MessageParser
     {
         private readonly ISerialize _jsonSerializer;
 

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ChainTicker.Exchange.Gdax.DTO
+namespace ChainTicker.Exchange.Gdax.DTO.Responses
 {
     public class GdaxMarket
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using ChainTicker.Exchange.Gdax.DTO;
+using ChainTicker.Exchange.Gdax.DTO.Responses;
 using ChainTicker.Transport.Rest;
 using ChanTicker.Core.Domain;
 using ChanTicker.Core.Interfaces;

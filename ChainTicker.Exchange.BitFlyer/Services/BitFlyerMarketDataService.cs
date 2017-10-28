@@ -12,11 +12,11 @@ namespace ChainTicker.Exchange.BitFlyer.Services
     public class BitFlyerMarketDataService : IMarketDataService, IDisposable
     {
         private readonly IPubnubTransport _pubnubTransport;
-        private readonly ICurrentPriceQueryService _priceQueryService;
+        private readonly INotRealTimePriceService _priceQueryService;
         private readonly MessageParser _messageParser;
 
 
-        public BitFlyerMarketDataService(IPubnubTransport pubnubTransport, ICurrentPriceQueryService priceQueryService)
+        public BitFlyerMarketDataService(IPubnubTransport pubnubTransport, INotRealTimePriceService priceQueryService)
         {
             _pubnubTransport = pubnubTransport;
             _priceQueryService = priceQueryService;

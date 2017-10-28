@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using ChanTicker.Core.Interfaces;
+﻿using ChanTicker.Core.Interfaces;
 using Newtonsoft.Json;
 
 namespace ChanTicker.Core.IO

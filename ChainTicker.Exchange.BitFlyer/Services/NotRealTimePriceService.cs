@@ -14,7 +14,7 @@ using ChanTicker.Core.IO;
 
 namespace ChainTicker.Exchange.BitFlyer.Services
 {
-    public class CurrentPriceQueryService : ICurrentPriceQueryService
+    public class NotRealTimePriceService : INotRealTimePriceService
     {
         private readonly IRestService _restService;
         private readonly ISubscribableRestService<List<BitFlyerMarket>> _subscribableRestService;
@@ -28,7 +28,7 @@ namespace ChainTicker.Exchange.BitFlyer.Services
         private readonly HashSet<string> _subscriptions = new HashSet<string>();
 
 
-        public CurrentPriceQueryService(IRestService restService, ApiEndpointCollection apiEndpoints, TimeSpan updateTimeSpan)
+        public NotRealTimePriceService(IRestService restService, ApiEndpointCollection apiEndpoints, TimeSpan updateTimeSpan)
         {
             _restService = restService;
             _getPricesQuery = new RestQuery(apiEndpoints[ApiEndpointType.Rest], "/v1/getprices");

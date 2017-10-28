@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using ChainTicker.DataSource.FiatCurrencies.Domain;
-using ChainTicker.DataSource.FiatCurrencies.DTO;
 using ChainTicker.DataSource.FiatCurrencies.Properties;
 using ChanTicker.Core.Interfaces;
 using ChanTicker.Core.IO;

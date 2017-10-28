@@ -39,16 +39,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO\GdaxErrorResponse.cs" />
-    <Compile Include="DTO\GdaxMarket.cs" />
-    <Compile Include="DTO\GdaxSubscribeRequest.cs" />
-    <Compile Include="DTO\GdaxUnsubscribeRequest.cs" />
-    <Compile Include="DTO\GdaxSubscriptionInfo.cs" />
-    <Compile Include="DTO\GdaxTick.cs" />
+    <Compile Include="DTO\Responses\GdaxError.cs" />
+    <Compile Include="DTO\Responses\GdaxMarket.cs" />
+    <Compile Include="DTO\Requests\GdaxSubscribeRequest.cs" />
+    <Compile Include="DTO\Requests\GdaxUnsubscribeRequest.cs" />
+    <Compile Include="DTO\Responses\GdaxNonRealtimeTick.cs" />
+    <Compile Include="DTO\Responses\GdaxSubscriptionInfo.cs" />
+    <Compile Include="DTO\Responses\GdaxTick.cs" />
+    <Compile Include="DTO\Responses\GdaxTypedMessageBase.cs" />
     <Compile Include="GdaxExchange.cs" />
+    <Compile Include="GdaxMessageType.cs" />
+    <Compile Include="Services\NotRealTimePriceService.cs" />
     <Compile Include="Services\GdaxMarketDataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GdaxMarketsService.cs" />
+    <Compile Include="Services\MessageFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Reactive">

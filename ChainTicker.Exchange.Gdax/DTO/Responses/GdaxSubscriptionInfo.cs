@@ -1,15 +1,13 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace ChainTicker.Exchange.Gdax.DTO
+namespace ChainTicker.Exchange.Gdax.DTO.Responses
 {
-    public class GdaxSubscription
+    public class GdaxSubscription : GdaxTypedMessageBase
     {
         [JsonProperty("channels")]
         public List<Channel> Channels { get; set; }
-
-        [JsonProperty("type")]
-        public string Type { get; set; }
+        
     }
 
     public class Channel

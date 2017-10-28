@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using ChainTicker.DataSource.Coins;
 using ChainTicker.DataSource.FiatCurrencies;
-using ChainTicker.Exchange.BitFlyer;
 using ChainTicker.Shell.Helpers;
 using ChainTicker.Shell.Models;
 using ChanTicker.Core.Interfaces;

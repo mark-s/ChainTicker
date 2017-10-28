@@ -1,6 +1,4 @@
-﻿using ChanTicker.Core.Domain;
-
-namespace ChanTicker.Core.Interfaces
+﻿namespace ChanTicker.Core.Interfaces
 {
     public interface ICoin
     {
