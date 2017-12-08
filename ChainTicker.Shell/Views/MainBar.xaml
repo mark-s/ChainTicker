@@ -19,25 +19,23 @@
             <intr:InvokeCommandAction Command="{Binding InitDataCommand}"/>
         </intr:EventTrigger>
     </intr:Interaction.Triggers>
-    
+
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter" />
     </Window.Resources>
 
-    <StackPanel Orientation="Horizontal" VerticalAlignment="Top"  Background="Transparent">
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" >
 
-        <CheckBox x:Name="ShowMenuBox" IsChecked="True"> </CheckBox>
+        <CheckBox x:Name="ShowMenuBox" IsChecked="True"></CheckBox>
 
-        <ScrollViewer Height="250" Width="200"  Visibility="{Binding IsChecked, ElementName=ShowMenuBox, Converter={StaticResource boolToVisibilityConverter}}"
-                          Background="White">
+            <ContentPresenter Content="{Binding AvailableExchanges}" HorizontalAlignment="Stretch"
+                             ContentTemplate="{StaticResource ExchangeCollectionTemplate}"
+                              Visibility="{Binding IsChecked, ElementName=ShowMenuBox, Converter={StaticResource boolToVisibilityConverter}}" />
 
-                <ContentPresenter Content="{Binding AvailableExchanges}"
-                          ContentTemplate="{StaticResource ExchangeCollectionTemplate}"/>
-                
-        </ScrollViewer>
 
-        
-        
+
+
+
         <ItemsControl 
             ItemsSource="{Binding AvailableExchanges.Exchanges[0].Markets}"
                       ItemTemplate="{StaticResource MarketTemplate}"  >
@@ -48,8 +46,8 @@
             </ItemsControl.ItemsPanel>
 
         </ItemsControl>
-        
+
     </StackPanel>
-    
+
 </Window>
 

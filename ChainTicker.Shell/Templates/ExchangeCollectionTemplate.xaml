@@ -9,6 +9,12 @@
 
         <ItemsControl ItemsSource="{Binding Exchanges}">
 
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
             <ItemsControl.ItemTemplate>
 
                 <DataTemplate DataType="{x:Type models:ExchangeModel}">
@@ -16,7 +22,13 @@
                     <HeaderedItemsControl
                         Margin="0,0,0,10"
                         Header="{Binding Description}"
-                        ItemsSource="{Binding Markets}">
+                        ItemsSource="{Binding Markets}"
+                        Width="200"
+                        >
+
+                        
+                        
+
 
                         <HeaderedItemsControl.Template>
 
