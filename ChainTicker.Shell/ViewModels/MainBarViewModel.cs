@@ -3,22 +3,26 @@ using System.Threading.Tasks;
 using ChainTicker.DataSource.Coins;
 using ChainTicker.Shell.Models;
 using ChainTicker.Shell.Services;
+using Prism.Mvvm;
 
 namespace ChainTicker.Shell.ViewModels
 {
-    public class MainBarViewModel
+    public class MainBarViewModel : BindableBase
     {
         private readonly ICoinInfoService _coinInfoService;
-        
-        public ExchangeCollectionModel AvailableExchanges { get; }
+        private readonly ExchangesService _exchangesService;
+
+        public ExchangeCollectionModel AvailableExchanges { get; set; }
 
 
         public MainBarViewModel(ICoinInfoService coinInfoService, ExchangesService exchangesService)
         {
             _coinInfoService = coinInfoService;
+            _exchangesService = exchangesService;
 
             AvailableExchanges = new ExchangeCollectionModel("AvailableExchanges", 
                                                                                    new ObservableCollection<ExchangeModel>(exchangesService.GetExchanges()));
+            
 
             InitAsync();
         }
@@ -27,6 +31,8 @@ namespace ChainTicker.Shell.ViewModels
         private async Task InitAsync()
         {
             await _coinInfoService.PopulateAvailableCoinsAsync();
+            await _exchangesService.GetMarketsAsync(_exchangesService.GetExchanges());
+            
         }
 
 

@@ -29,20 +29,21 @@
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
 
-                                    <ContentPresenter ContentSource="Header" Grid.Row="0"
-                                                      TextElement.FontWeight="Bold"
-                                                      />
+                                    <ContentPresenter
+                                        Grid.Row="0"
+                                        ContentSource="Header"
+                                        TextElement.FontWeight="Bold" />
 
 
                                     <Separator Grid.Row="1" />
-                                    
+
                                     <ScrollViewer
                                         Grid.Row="2"
                                         MaxHeight="250"
                                         VerticalScrollBarVisibility="Auto">
                                         <ItemsPresenter />
                                     </ScrollViewer>
-                                    
+
                                 </Grid>
 
                             </ControlTemplate>
@@ -53,7 +54,7 @@
 
                             <DataTemplate>
 
-                                <Grid >
+                                <Grid>
 
                                     <Grid.Style>
                                         <Style TargetType="{x:Type Grid}">
@@ -82,13 +83,16 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Padding="5,0,0,0" Grid.Column="0" Text="{Binding DisplayName}" />
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Padding="5,0,0,0"
+                                        Text="{Binding DisplayName}" />
 
                                     <TextBlock
                                         Grid.Column="1"
                                         FontSize="11"
                                         Text="{Binding BaseCoin.Name}" />
-                                    
+
                                 </Grid>
 
                             </DataTemplate>

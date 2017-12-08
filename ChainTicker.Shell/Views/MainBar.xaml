@@ -10,16 +10,17 @@
     d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False,
                                      Type={x:Type viewModels:MainBarViewModel}}"
     mvvm:ViewModelLocator.AutoWireViewModel="True"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Height="150" Width="800">
 
 
     <ItemsControl
-        Height="50"
-        Margin="10,40,0,0"
+        Width="394"
+        Height="30"
+        Margin="244,193,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
-        ItemTemplate="{StaticResource ExchangeCollectionTemplate}"
-        ItemsSource="{Binding AvailableExchanges}">
+        ItemsSource="{Binding AvailableExchanges.Exchanges}"
+        ItemTemplate="{StaticResource ExhangeWithMarketsTemplate}">
 
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
@@ -28,5 +29,6 @@
         </ItemsControl.ItemsPanel>
 
     </ItemsControl>
+
 
 </Window>
