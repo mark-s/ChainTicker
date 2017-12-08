@@ -14,8 +14,7 @@ namespace ChainTicker.Shell.ViewModels
     {
         private readonly ICoinInfoService _coinInfoService;
         private readonly IFiatCurrenciesService _fiatCurrenciesService;
-
-
+        
         public ExchangeCollectionModel AvailableExchanges { get; } 
 
 

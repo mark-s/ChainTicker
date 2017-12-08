@@ -6,7 +6,6 @@ using ChainTicker.DataSource.Coins;
 using ChainTicker.DataSource.FiatCurrencies;
 using ChainTicker.Exchange.BitFlyer;
 using ChainTicker.Exchange.Gdax;
-using ChainTicker.Shell.Helpers;
 using ChainTicker.Transport.Rest;
 using ChanTicker.Core.Interfaces;
 using ChanTicker.Core.IO;

@@ -50,7 +50,7 @@ namespace ChainTicker.DataSource.Coins
 
         private async Task<CoinData> GetFromWebServiceAsync()
         {
-            var query = new RestQuery("https://www.cryptocompare.com/api", "/data/coinlist").GetAddress();
+            var query = new RestQuery("https://min-api.cryptocompare.com/", "data/all/coinlist").GetAddress();
 
             var response = await _restService.GetAsync(query, s => _serializer.Deserialize<AllCoinsResponse>(s));
 

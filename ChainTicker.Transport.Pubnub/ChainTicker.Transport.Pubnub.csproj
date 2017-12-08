@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-    <PackageReference Include="Pubnub" Version="4.0.5.2" />
+    <PackageReference Include="Pubnub" Version="4.0.9" />
     <PackageReference Include="System.Reactive" Version="3.1.1" />
   </ItemGroup>
 

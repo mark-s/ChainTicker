@@ -6,29 +6,26 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mvvm="http://prismlibrary.com/"
     xmlns:viewModels="clr-namespace:ChainTicker.Shell.ViewModels"
+    xmlns:intr="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+
     Title="ChainTicker"
     d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False,
                                      Type={x:Type viewModels:MainBarViewModel}}"
     mvvm:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d" Height="150" Width="800">
 
+    <intr:Interaction.Triggers>
+        <intr:EventTrigger EventName="Loaded">
+            <intr:InvokeCommandAction Command="{Binding InitDataCommand}"/>
+        </intr:EventTrigger>
+    </intr:Interaction.Triggers>
 
-    <ItemsControl
-        Width="394"
-        Height="30"
-        Margin="244,193,0,0"
-        HorizontalAlignment="Left"
-        VerticalAlignment="Top"
-        ItemsSource="{Binding AvailableExchanges.Exchanges}"
-        ItemTemplate="{StaticResource ExhangeWithMarketsTemplate}">
+    <StackPanel>
 
-        <ItemsControl.ItemsPanel>
-            <ItemsPanelTemplate>
-                <StackPanel Orientation="Horizontal" />
-            </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
+        <TextBlock Text="{Binding IsLoading}"></TextBlock>
 
-    </ItemsControl>
-
+        <ContentPresenter Content="{Binding AvailableExchanges}" ContentTemplate="{StaticResource ExchangeCollectionTemplate}" ></ContentPresenter>
+        
+    </StackPanel>
 
 </Window>

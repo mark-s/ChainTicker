@@ -22,7 +22,7 @@ namespace ChanTicker.Core.IO
 
         public async Task<T> LoadAndDeserializeAsync<T>(ChainTickerFolder folder, string fileName)
         {
-            var cachedRaw = await _fileIOService.LoadTextAsync(folder, fileName);
+            var cachedRaw = await _fileIOService.LoadTextAsync(folder, fileName).ConfigureAwait(false);
             return _serializer.Deserialize<T>(cachedRaw);
         }
 
