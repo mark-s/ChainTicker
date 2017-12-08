@@ -12,20 +12,44 @@
     d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False,
                                      Type={x:Type viewModels:MainBarViewModel}}"
     mvvm:ViewModelLocator.AutoWireViewModel="True"
-    mc:Ignorable="d" Height="150" Width="800">
+    mc:Ignorable="d" Height="354" Width="800">
 
     <intr:Interaction.Triggers>
         <intr:EventTrigger EventName="Loaded">
             <intr:InvokeCommandAction Command="{Binding InitDataCommand}"/>
         </intr:EventTrigger>
     </intr:Interaction.Triggers>
+    
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter" />
+    </Window.Resources>
 
-    <StackPanel>
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Top"  Background="Transparent">
 
-        <TextBlock Text="{Binding IsLoading}"></TextBlock>
+        <CheckBox x:Name="ShowMenuBox" IsChecked="True"> </CheckBox>
 
-        <ContentPresenter Content="{Binding AvailableExchanges}" ContentTemplate="{StaticResource ExchangeCollectionTemplate}" ></ContentPresenter>
+        <ScrollViewer Height="250" Width="200"  Visibility="{Binding IsChecked, ElementName=ShowMenuBox, Converter={StaticResource boolToVisibilityConverter}}"
+                          Background="White">
+
+                <ContentPresenter Content="{Binding AvailableExchanges}"
+                          ContentTemplate="{StaticResource ExchangeCollectionTemplate}"/>
+                
+        </ScrollViewer>
+
+        
+        
+        <ItemsControl 
+            ItemsSource="{Binding AvailableExchanges.Exchanges[0].Markets}"
+                      ItemTemplate="{StaticResource MarketTemplate}"  >
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+        </ItemsControl>
         
     </StackPanel>
-
+    
 </Window>
+

@@ -6,17 +6,17 @@
 
 
     <DataTemplate x:Key="ExchangeCollectionTemplate" DataType="{x:Type models:ExchangeCollectionModel}">
+
         <ItemsControl ItemsSource="{Binding Exchanges}">
+
             <ItemsControl.ItemTemplate>
 
                 <DataTemplate DataType="{x:Type models:ExchangeModel}">
+                    
                     <HeaderedItemsControl
                         Margin="0,0,0,10"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
                         Header="{Binding Description}"
                         ItemsSource="{Binding Markets}">
-
 
                         <HeaderedItemsControl.Template>
 
@@ -34,15 +34,10 @@
                                         ContentSource="Header"
                                         TextElement.FontWeight="Bold" />
 
-
                                     <Separator Grid.Row="1" />
 
-                                    <ScrollViewer
-                                        Grid.Row="2"
-                                        MaxHeight="250"
-                                        VerticalScrollBarVisibility="Auto">
-                                        <ItemsPresenter />
-                                    </ScrollViewer>
+                                    <ItemsPresenter Grid.Row="2" />
+                                    
 
                                 </Grid>
 
@@ -101,6 +96,7 @@
 
                     </HeaderedItemsControl>
                 </DataTemplate>
+                
             </ItemsControl.ItemTemplate>
 
         </ItemsControl>
