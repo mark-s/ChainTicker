@@ -3,11 +3,11 @@ using Prism.Mvvm;
 
 namespace ChainTicker.Shell.Models
 {
-    public class ExchangeCollectionModel :BindableBase
+    public class ExchangeCollectionModel : BindableBase
     {
-        public string Header { get;  }
+        public string Header { get; }
 
-        public ObservableCollection<ExchangeModel> Exchanges { get;  }
+        public ObservableCollection<ExchangeModel> Exchanges { get; }
 
         public ExchangeCollectionModel(string header, ObservableCollection<ExchangeModel> exchanges)
         {

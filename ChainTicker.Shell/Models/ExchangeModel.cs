@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using ChanTicker.Core.Interfaces;
 
@@ -22,6 +25,9 @@ namespace ChainTicker.Shell.Models
         
 
         public ObservableCollection<MarketModel> Markets { get;  } = new ObservableCollection<MarketModel>();
+
+        
+
         
         public ExchangeModel(IExchange exchange, Func<string, ICoin> coinInfoFunc)
         {
@@ -47,6 +53,12 @@ namespace ChainTicker.Shell.Models
             }
 
             Markets.AddRange(displayMarkets);
+            Markets.ToObservable().Subscribe(SubscribedMarketsObservable)
+
+            Markets.ToObservable().Subscribe(SubscribedMarketsObservable), 
+                                                                    e => {/*onError */},
+                                                                    () => {/*onCompleted*/);
+
         }
 
         

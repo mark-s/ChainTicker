@@ -12,7 +12,7 @@ namespace ChainTicker.DataSource.Coins.Tests
 {
 
     [TestFixture]
-    public class CoinInfoServiceTests
+    public sealed class CoinInfoServiceTests
     {
         private IDiskCache _cache;
         private RestService _restService;
@@ -21,11 +21,11 @@ namespace ChainTicker.DataSource.Coins.Tests
 
 
         [SetUp]
-        public virtual void SetUp()
+        public void SetUp()
         {
 
             _cache = A.Fake<IDiskCache>();
-            _restService = new RestService();
+            _restService = new RestService(new RandomUserAgentService());
             _filleIoService = A.Fake<IFileIOService>();
             
             _fileService = new ChainTickerFileService(_cache, _filleIoService, new ChainTickerJsonSerializer());

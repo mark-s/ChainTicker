@@ -8,6 +8,13 @@ namespace ChainTicker.Transport.Rest
 {
     public class RestService : IRestService
     {
+        private readonly RandomUserAgentService _uaService;
+
+        public RestService(RandomUserAgentService randomUserAgentService)
+        {
+            _uaService = randomUserAgentService;
+        }
+
         public async Task<Response<T>> GetAsync<T>(string restQueryAddress, Func<string,T> deserialize)
         {
             using (var client = new HttpClient())
@@ -16,7 +23,7 @@ namespace ChainTicker.Transport.Rest
                 {
                     Debug.WriteLine("GET: From rest endpoint: " + restQueryAddress);
 
-                    client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0");
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", _uaService.GetUserAgent());
                     var result = await client.GetStringAsync(restQueryAddress);
 
                     var data = deserialize(result);

@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using ChainTicker.DataSource.Coins;
 using ChainTicker.Shell.Models;
@@ -34,6 +35,8 @@ namespace ChainTicker.Shell.ViewModels
             get => _availableExchanges;
             set => SetProperty(ref _availableExchanges, value);
         }
+
+
 
 
         public MainBarViewModel(ICoinInfoService coinInfoService, ExchangesService exchangesService)

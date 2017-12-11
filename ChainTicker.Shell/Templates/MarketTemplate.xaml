@@ -65,7 +65,7 @@
 
             <StackPanel Orientation="Vertical">
 
-                <TextBlock Style="{StaticResource BidStyle}" Text="{Binding Tick.BestBid, Converter={StaticResource PriceConverter}}" />
+                <TextBlock Style="{StaticResource AskStyle}" Text="{Binding Tick.BestAsk, Converter={StaticResource PriceConverter}}" />
 
                 <TextBlock
                     Name="priceText"
@@ -78,9 +78,9 @@
                         <SolidColorBrush Color="Black" />
                     </TextBlock.Foreground>
                 </TextBlock>
-
-                <TextBlock Style="{StaticResource AskStyle}" Text="{Binding Tick.BestAsk, Converter={StaticResource PriceConverter}}" />
-
+                
+                <TextBlock Style="{StaticResource BidStyle}" Text="{Binding Tick.BestBid, Converter={StaticResource PriceConverter}}" />
+                
             </StackPanel>
 
         </StackPanel>

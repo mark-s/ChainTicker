@@ -16,7 +16,7 @@ namespace ChainTicker.Exchange.BitFlyer.Tests
         public async Task METHODUNDERTEST_PARTUNDERTEST_EXPECTEDRESULT()
         {
             // Arrange
-            var restService = new RestService();
+            var restService = new RestService(new RandomUserAgentService());
 
             var exchange = new BitFlyerExchange(restService,null);
 
@@ -36,7 +36,7 @@ namespace ChainTicker.Exchange.BitFlyer.Tests
         public async Task Price_PARTUNDERTEST_EXPECTEDRESULT()
         {
             // Arrange
-            var restService = new RestService();
+            var restService = new RestService(new RandomUserAgentService());
 
             var exchange = new BitFlyerExchange(restService, null);
 
@@ -60,7 +60,7 @@ namespace ChainTicker.Exchange.BitFlyer.Tests
         public async Task CanSubscribe()
         {
             // Arrange
-            var restService = new RestService();
+            var restService = new RestService(new RandomUserAgentService());
             var exchange = new BitFlyerExchange(restService, null);
 
             var markets = await exchange.GetAvailableMarketsAsync();

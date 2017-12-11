@@ -91,7 +91,6 @@ namespace ChainTicker.Shell.Models
 
         private void Unsubscribe()
         {
-            _subscription.Dispose();
             _unSubscriptionFunc(_market);
         }
 

@@ -4,10 +4,9 @@ using WebSocket4Net;
 
 namespace ChainTicker.Transport.WebSocket
 {
-    public class WebSocketTransport : IWebSocketTransport
+    public class WebSocketTransport : IWebSocketTransport, IDisposable
     {
         private readonly WebSocket4Net.WebSocket _websocket;
-        private bool _isListening = false;
 
         public IObservable<string> RecievedMessagesObservable { get; private set; }
 
@@ -34,5 +33,9 @@ namespace ChainTicker.Transport.WebSocket
         }
 
 
+        public void Dispose()
+        {
+            _websocket?.Dispose();
+        }
     }
 }

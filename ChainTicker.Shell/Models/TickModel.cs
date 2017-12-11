@@ -15,12 +15,14 @@ namespace ChainTicker.Shell.Models
             private set => SetProperty(ref _priceDirection, value);
         }
 
+
         private decimal? _price;
         public decimal? Price
         {
             get => _price;
             private set => SetProperty(ref _price, value);
         }
+
 
         private DateTime _timeStamp;
         public DateTime TimeStamp
@@ -29,10 +31,7 @@ namespace ChainTicker.Shell.Models
             private set => SetProperty(ref _timeStamp, value);
         }
 
-
-
-
-
+        
         private decimal _bestBid;
         public decimal BestBid
         {
@@ -47,6 +46,7 @@ namespace ChainTicker.Shell.Models
             get => _bestAsk;
             private set => SetProperty(ref _bestAsk, value);
         }
+
 
         private double _volume;
         public double Volume

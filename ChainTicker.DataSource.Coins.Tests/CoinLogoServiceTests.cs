@@ -15,7 +15,7 @@ namespace ChainTicker.DataSource.Coins.Tests
             var fileIOService = new FileIOService(new FolderService());
             var diskCache = new DiskCache(fileIOService);
             var chaintickerfileService = new ChainTickerFileService(diskCache, fileIOService, new ChainTickerJsonSerializer());
-            var allCoins = new CoinInfoService(new RestService(), chaintickerfileService);
+            var allCoins = new CoinInfoService(new RestService(new RandomUserAgentService()), chaintickerfileService);
             
             var cls = new CoinLogoService(new ImageDownloader(new FileIOService(new FolderService())), new FileIOService(new FolderService()));
 
