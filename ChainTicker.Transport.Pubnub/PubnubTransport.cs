@@ -21,8 +21,8 @@ namespace ChainTicker.Transport.Pubnub
             _pubnubConnector = new PubnubApi.Pubnub(config);
 
             var listenerSubscribeCallback = new SubscribeCallbackExt((pubnubObj, message) => MessageReceivedCallback(message),
-                                                                                         (pubnubObj, presence) => PresenceCallback(presence),
-                                                                                         StatusCallback);
+                                                                                                         (pubnubObj, presence) => PresenceCallback(presence),
+                                                                                                         (pubnubObj, status) => StatusCallback(pubnubObj, status));
 
             _pubnubConnector.AddListener(listenerSubscribeCallback);
         }

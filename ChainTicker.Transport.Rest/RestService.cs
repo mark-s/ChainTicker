@@ -27,12 +27,12 @@ namespace ChainTicker.Transport.Rest
                     var result = await client.GetStringAsync(restQueryAddress);
 
                     var data = deserialize(result);
-                    return new Response<T>(data);
+                    return Response<T>.Success(data);
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex.Message);
-                    return new Response<T>(ex.Message);
+                    return Response<T>.Failure(ex.Message);
                 }
             }
 

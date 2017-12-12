@@ -15,7 +15,7 @@ namespace ChainTicker.Shell.Models
         private readonly Action<Market> _unSubscriptionFunc;
 
         private IDisposable _subscription;
-        
+
         private bool _isSubscribed;
         public bool IsSubscribed
         {
@@ -43,7 +43,7 @@ namespace ChainTicker.Shell.Models
 
         private string _exchangeName;
         public string ExchangeName
-    {
+        {
             get => _exchangeName;
             set => SetProperty(ref _exchangeName, value);
         }
@@ -54,7 +54,7 @@ namespace ChainTicker.Shell.Models
 
         public bool HasLivePricesAvailable => _market.HasRealTimeUpdates;
 
-        public DelegateCommand ToggleSubscribeCommand { get;  }
+        public DelegateCommand ToggleSubscribeCommand { get; }
 
         internal MarketModel(Market market,
                                         ICoin baseCoinInfo,
@@ -65,7 +65,7 @@ namespace ChainTicker.Shell.Models
         {
 
             _market = market ?? throw new ArgumentNullException(nameof(market), "market is required!");
-            
+
             Tick = new TickModel(_market.MidMarketPriceSnapshot);
 
             BaseCoin = baseCoinInfo;
@@ -75,16 +75,17 @@ namespace ChainTicker.Shell.Models
             _subscriptionFunc = subscriptionFunc;
             _unSubscriptionFunc = unSubscriptionFunc;
 
-            ToggleSubscribeCommand = new DelegateCommand(() => IsSubscribed =  !IsSubscribed, () => true);
+            ToggleSubscribeCommand = new DelegateCommand(() => IsSubscribed = !IsSubscribed, () => true);
 
         }
 
-        
+
 
         private void Subscribe()
         {
-                _subscription = _subscriptionFunc(_market).ObserveOnDispatcher()
-                                                          .Subscribe(t => Tick.Update(t),
+            _subscription = _subscriptionFunc(_market)
+                                                    .ObserveOnDispatcher()
+                                                    .Subscribe(t => Tick.Update(t),
                                                                      ex => Debug.WriteLine(ex.Message),
                                                                      () => Debug.WriteLine("OnCompleted"));
         }
