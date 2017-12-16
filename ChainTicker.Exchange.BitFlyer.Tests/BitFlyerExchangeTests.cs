@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using ChainTicker.Transport.Rest;
+using ChanTicker.Core.IO;
 using NUnit.Framework;
 using Shouldly;
 
@@ -18,7 +19,7 @@ namespace ChainTicker.Exchange.BitFlyer.Tests
             // Arrange
             var restService = new RestService(new RandomUserAgentService());
 
-            var exchange = new BitFlyerExchange(restService,null);
+            var exchange = new BitFlyerExchange(restService,null, new ChainTickerJsonSerializer());
 
             var markets = await exchange.GetAvailableMarketsAsync();
 
@@ -38,7 +39,7 @@ namespace ChainTicker.Exchange.BitFlyer.Tests
             // Arrange
             var restService = new RestService(new RandomUserAgentService());
 
-            var exchange = new BitFlyerExchange(restService, null);
+            var exchange = new BitFlyerExchange(restService, null, new ChainTickerJsonSerializer());
 
             var markets = await exchange.GetAvailableMarketsAsync();
 
@@ -61,7 +62,7 @@ namespace ChainTicker.Exchange.BitFlyer.Tests
         {
             // Arrange
             var restService = new RestService(new RandomUserAgentService());
-            var exchange = new BitFlyerExchange(restService, null);
+            var exchange = new BitFlyerExchange(restService, null, new ChainTickerJsonSerializer());
 
             var markets = await exchange.GetAvailableMarketsAsync();
 

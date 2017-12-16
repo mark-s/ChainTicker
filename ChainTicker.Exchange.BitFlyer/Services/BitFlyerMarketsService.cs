@@ -13,24 +13,25 @@ namespace ChainTicker.Exchange.BitFlyer.Services
 {
     public class BitFlyerMarketsService
     {
-        private readonly ISerialize _serialiser;
+        private readonly ISerialize _jsonSerialiser;
 
         private readonly ApiEndpointCollection _apiEndpoints;
         private readonly IRestService _restService;
         private readonly IChainTickerFileService _fileService;
+
 
         private const string CACHE_FILE_NAME = "BitFlyerAvailableMarkets.json";
         private readonly TimeSpan _maxCacheAge = TimeSpan.FromHours(3);
 
         public BitFlyerMarketsService(ApiEndpointCollection apiEndpoints,
                                                 IRestService restService,
-                                                IChainTickerFileService fileService)
+                                                IChainTickerFileService fileService,
+                                                ISerialize jsonSerialiser)
         {
-            _serialiser = new ChainTickerJsonSerializer();
-
             _apiEndpoints = apiEndpoints;
             _restService = restService;
             _fileService = fileService;
+            _jsonSerialiser = jsonSerialiser;
         }
 
         public async Task<List<Market>> GetAvailableMarketsAsync()
@@ -47,11 +48,11 @@ namespace ChainTicker.Exchange.BitFlyer.Services
 
             // note: Using 'getprices' here as it returns nicer data than 'getmarkets'
             var getPricesQuery = new RestQuery(_apiEndpoints[ApiEndpointType.Rest], "/v1/getprices");
-            var getPricesResponse = await _restService.GetAsync(getPricesQuery.GetAddress(), s => _serialiser.Deserialize<List<BitFlyerMarket>>(s));
+            var getPricesResponse = await _restService.GetAsync(getPricesQuery.GetAddress(), s => _jsonSerialiser.Deserialize<List<BitFlyerMarket>>(s));
 
             // but it returns All markets - even ones that can't be subscribed to... So need to flag them
             var getMarketsQuery = new RestQuery(_apiEndpoints[ApiEndpointType.Rest], "/v1/getmarkets");
-            var getMarketsResponse = await _restService.GetAsync(getMarketsQuery.GetAddress(), s => _serialiser.Deserialize<List<PlainMarket>>(s));
+            var getMarketsResponse = await _restService.GetAsync(getMarketsQuery.GetAddress(), s => _jsonSerialiser.Deserialize<List<PlainMarket>>(s));
 
             if (getPricesResponse.IsSuccess && getMarketsResponse.IsSuccess)
             {

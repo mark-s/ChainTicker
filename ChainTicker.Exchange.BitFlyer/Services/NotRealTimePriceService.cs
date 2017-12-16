@@ -17,9 +17,9 @@ namespace ChainTicker.Exchange.BitFlyer.Services
     public class NotRealTimePriceService : INotRealTimePriceService
     {
         private readonly IRestService _restService;
+        private readonly ISerialize _jsonSerializer;
         private readonly ISubscribableRestService<List<BitFlyerMarket>> _subscribableRestService;
 
-        private readonly ChainTickerJsonSerializer _serialiser = new ChainTickerJsonSerializer();
 
         private readonly RestQuery _getPricesQuery;
 
@@ -28,13 +28,14 @@ namespace ChainTicker.Exchange.BitFlyer.Services
         private readonly HashSet<string> _subscriptions = new HashSet<string>();
 
 
-        public NotRealTimePriceService(IRestService restService, ApiEndpointCollection apiEndpoints, TimeSpan updateTimeSpan)
+        public NotRealTimePriceService(IRestService restService, ApiEndpointCollection apiEndpoints, TimeSpan updateTimeSpan, ISerialize jsonSerializer)
         {
             _restService = restService;
+            _jsonSerializer = jsonSerializer;
             _getPricesQuery = new RestQuery(apiEndpoints[ApiEndpointType.Rest], "/v1/getprices");
             _subscribableRestService = new SubscribableRestService<List<BitFlyerMarket>>(restService, 
                                                                                                                         _getPricesQuery.GetAddress(),
-                                                                                                                        s => _serialiser.Deserialize<List<BitFlyerMarket>>(s),
+                                                                                                                        s => _jsonSerializer.Deserialize<List<BitFlyerMarket>>(s),
                                                                                                                         updateTimeSpan);
             _subscribableRestService.RecievedMessagesObservable
                                                     .ObserveOn(Scheduler.Default)
@@ -79,7 +80,7 @@ namespace ChainTicker.Exchange.BitFlyer.Services
 
         public async Task<ITick> GetCurrentPriceAsync(Market market)
         {
-            var getPricesResponse = await _restService.GetAsync(_getPricesQuery.GetAddress(), s => _serialiser.Deserialize<List<BitFlyerMarket>>(s)).ConfigureAwait(false);
+            var getPricesResponse = await _restService.GetAsync(_getPricesQuery.GetAddress(), s => _jsonSerializer.Deserialize<List<BitFlyerMarket>>(s)).ConfigureAwait(false);
             if (getPricesResponse.IsSuccess)
             {
                 var thismarket = getPricesResponse.Data.FirstOrDefault(m => m.ProductCode == market.ProductCode);

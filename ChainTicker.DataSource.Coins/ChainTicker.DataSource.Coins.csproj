@@ -41,7 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoinLogoService.cs" />
-    <Compile Include="Domain\CoinData.cs" />
+    <Compile Include="Domain\CoinBase.cs" />
+    <Compile Include="Domain\CoinsCollection.cs" />
     <Compile Include="Domain\Coin.cs" />
     <Compile Include="Domain\UnknownCoin.cs" />
     <Compile Include="DTO\AllCoinsResponse.cs" />

@@ -18,16 +18,15 @@
             <ItemsControl.ItemTemplate>
 
                 <DataTemplate DataType="{x:Type models:ExchangeModel}">
-                    
+
                     <HeaderedItemsControl
+                        Width="200"
                         Margin="0,0,0,10"
                         Header="{Binding Description}"
-                        ItemsSource="{Binding Markets}"
-                        Width="200"
-                        >
+                        ItemsSource="{Binding Markets}">
 
-                        
-                        
+
+
 
 
                         <HeaderedItemsControl.Template>
@@ -49,7 +48,7 @@
                                     <Separator Grid.Row="1" />
 
                                     <ItemsPresenter Grid.Row="2" />
-                                    
+
 
                                 </Grid>
 
@@ -108,7 +107,7 @@
 
                     </HeaderedItemsControl>
                 </DataTemplate>
-                
+
             </ItemsControl.ItemTemplate>
 
         </ItemsControl>

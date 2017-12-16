@@ -5,7 +5,6 @@ using ChainTicker.Exchange.Gdax.DTO.Responses;
 using ChainTicker.Transport.Rest;
 using ChanTicker.Core.Domain;
 using ChanTicker.Core.Interfaces;
-using ChanTicker.Core.IO;
 
 namespace ChainTicker.Exchange.Gdax.Services
 {
@@ -13,20 +12,20 @@ namespace ChainTicker.Exchange.Gdax.Services
     {
         private readonly IRestService _restService;
         private readonly ApiEndpointCollection _infoApiEndpoints;
+        private readonly ISerialize _jsonSerialiser;
 
-        private readonly ISerialize _serialiser = new ChainTickerJsonSerializer();
-
-        public NotRealTimePriceService(IRestService restService, ApiEndpointCollection infoApiEndpoints)
+        public NotRealTimePriceService(IRestService restService, ApiEndpointCollection infoApiEndpoints, ISerialize jsonSerialiser)
         {
             _restService = restService;
             _infoApiEndpoints = infoApiEndpoints;
+            _jsonSerialiser = jsonSerialiser;
         }
 
 
         public async Task<ITick> GetCurrentPriceAsync(Market market)
         {
             var productPriceResponse = await _restService.GetAsync(GetProductTickerUrl(market.ProductCode),
-                                                                   s => _serialiser.Deserialize<GdaxNonRealtimeTick>(s)).ConfigureAwait(false);
+                                                                   s => _jsonSerialiser.Deserialize<GdaxNonRealtimeTick>(s)).ConfigureAwait(false);
 
             if (productPriceResponse.IsSuccess)
             {

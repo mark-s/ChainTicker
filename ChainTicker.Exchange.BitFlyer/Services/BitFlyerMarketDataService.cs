@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using ChainTicker.Transport.Pubnub;
 using ChanTicker.Core.Domain;
 using ChanTicker.Core.Interfaces;
-using ChanTicker.Core.IO;
 
 namespace ChainTicker.Exchange.BitFlyer.Services
 {
@@ -16,16 +15,13 @@ namespace ChainTicker.Exchange.BitFlyer.Services
         private readonly MessageParser _messageParser;
 
 
-        public BitFlyerMarketDataService(IPubnubTransport pubnubTransport, INotRealTimePriceService priceQueryService)
+        public BitFlyerMarketDataService(IPubnubTransport pubnubTransport, INotRealTimePriceService priceQueryService, ISerialize jsonSerializer)
         {
             _pubnubTransport = pubnubTransport;
             _priceQueryService = priceQueryService;
-            var serialiser = new ChainTickerJsonSerializer();
-            _messageParser = new MessageParser(serialiser);
-            
+            _messageParser = new MessageParser(jsonSerializer);       
         }
-
-
+        
 
         public IObservable<ITick> SubscribeToTicks(Market market)
         {

@@ -28,13 +28,13 @@ namespace ChainTicker.Exchange.BitFlyer
                                                              });
         
 
-        public BitFlyerExchange(IRestService restService, IChainTickerFileService chainTickerFileService)
+        public BitFlyerExchange(IRestService restService, IChainTickerFileService chainTickerFileService, ISerialize jsonSerializer)
         {
 
             var pubnubTransport = new PubnubTransport(Info.ApiEndpoints[ApiEndpointType.Pubnub], new DebugLogger());
-            _marketDataService = new BitFlyerMarketDataService(pubnubTransport, new NotRealTimePriceService(restService, Info.ApiEndpoints, TimeSpan.FromSeconds(3)));
+            _marketDataService = new BitFlyerMarketDataService(pubnubTransport, new NotRealTimePriceService(restService, Info.ApiEndpoints, TimeSpan.FromSeconds(3), jsonSerializer), jsonSerializer);
 
-            _bitFlyerMarketsService = new BitFlyerMarketsService(Info.ApiEndpoints, restService, chainTickerFileService);
+            _bitFlyerMarketsService = new BitFlyerMarketsService(Info.ApiEndpoints, restService, chainTickerFileService, jsonSerializer);
         }
 
 

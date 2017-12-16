@@ -8,24 +8,12 @@ namespace ChainTicker.DataSource.Coins.Domain
 {
 
     [DebuggerDisplay("{" + nameof(Description) + "}")]
-    internal class Coin : ICoin
+    internal sealed class Coin : CoinBase, ICoin
     {
-        public bool IsValid => true;
-
-
-        public string Code { get; }
-
-        public string Name { get; }
-
-        public string Description { get; }
-
-
-        public ICoinUrlSet Urls { get; }
-        public IMiningData Mining { get; }
-
-
         public Coin(CoinInfo coinInfo, string baseImageUrl, string baseLinkUrl)
         {
+            IsValid = true;
+
             Code = coinInfo.Name;
             Name = coinInfo.CoinName;
             Description = coinInfo.FullName;

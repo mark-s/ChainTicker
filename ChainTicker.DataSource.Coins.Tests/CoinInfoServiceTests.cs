@@ -41,7 +41,7 @@ namespace ChainTicker.DataSource.Coins.Tests
                             ).Returns(GetCoinsJson());
 
 
-            var coinInfoService = new CoinInfoService(_restService, _fileService);
+            var coinInfoService = new CoinInfoService(_restService, _fileService, new ChainTickerJsonSerializer());
 
             await coinInfoService.PopulateAvailableCoinsAsync();
 

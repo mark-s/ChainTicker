@@ -2,22 +2,19 @@
 using ChainTicker.DataSource.FiatCurrencies.Domain;
 using ChainTicker.DataSource.FiatCurrencies.Properties;
 using ChanTicker.Core.Interfaces;
-using ChanTicker.Core.IO;
 using FiatCurrency = ChainTicker.DataSource.FiatCurrencies.Domain.FiatCurrency;
 
 namespace ChainTicker.DataSource.FiatCurrencies
 {
     public class FiatCurrenciesService : IFiatCurrenciesService
     {
-        private readonly ISerialize _serializer = new ChainTickerJsonSerializer();
-
         // code - Coin
         private readonly Dictionary<string, ICoin> _fiatCurrencies;
 
 
-        public FiatCurrenciesService()
+        public FiatCurrenciesService(ISerialize jsonSerializer)
         {
-            var currencies = _serializer.Deserialize<List<DTO.FiatCurrency>>(Resources.FiatCurrencies);
+            var currencies = jsonSerializer.Deserialize<List<DTO.FiatCurrency>>(Resources.FiatCurrencies);
 
             _fiatCurrencies = ConvertAllToCoins(currencies);
         }

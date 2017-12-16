@@ -78,9 +78,9 @@
                         <SolidColorBrush Color="Black" />
                     </TextBlock.Foreground>
                 </TextBlock>
-                
+
                 <TextBlock Style="{StaticResource BidStyle}" Text="{Binding Tick.BestBid, Converter={StaticResource PriceConverter}}" />
-                
+
             </StackPanel>
 
         </StackPanel>

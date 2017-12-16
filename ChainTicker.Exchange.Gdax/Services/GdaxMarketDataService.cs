@@ -16,18 +16,18 @@ namespace ChainTicker.Exchange.Gdax.Services
         private readonly IWebSocketTransport _webSocketTransport;
         private readonly INotRealTimePriceService _priceQueryService;
         private readonly MessageFactory _messageFactory;
-        private readonly ChainTickerJsonSerializer _serialiser;
+        private readonly ISerialize _jsonSerializer;
 
         private readonly HashSet<string> _subscribedProducts = new HashSet<string>();
 
-        public GdaxMarketDataService(IWebSocketTransport webSocketTransport, INotRealTimePriceService priceQueryService)
+        public GdaxMarketDataService(IWebSocketTransport webSocketTransport, INotRealTimePriceService priceQueryService, ISerialize jsonSerializer)
         {
             _webSocketTransport = webSocketTransport;
             _priceQueryService = priceQueryService;
 
-            _serialiser = new ChainTickerJsonSerializer();
+            _jsonSerializer = jsonSerializer;
 
-            _messageFactory = new MessageFactory(_serialiser);
+            _messageFactory = new MessageFactory(_jsonSerializer);
         }
 
         public IObservable<ITick> SubscribeToTicks(Market market)
@@ -38,7 +38,7 @@ namespace ChainTicker.Exchange.Gdax.Services
 
             return _webSocketTransport.RecievedMessagesObservable
                                       .Where(m => JsonHelpers.GetType<GdaxMessageType>(m) == GdaxMessageType.Ticker)
-                                      .Select(m => _serialiser.Deserialize<GdaxTick>(m))
+                                      .Select(m => _jsonSerializer.Deserialize<GdaxTick>(m))
                                       .Where(gt => gt.ProductId == market.ProductCode)
                                       .Select(ConvertToTick);
         }

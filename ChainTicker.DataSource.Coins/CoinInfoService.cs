@@ -14,45 +14,45 @@ namespace ChainTicker.DataSource.Coins
     {
         private readonly IRestService _restService;
         private readonly IChainTickerFileService _fileService;
-        private readonly ISerialize _serializer;
+        private readonly ISerialize _jsonSerializer;
 
-        private const string CACHE_FILE_NAME = "coins.json";
-        private readonly TimeSpan _maxCacheAge = TimeSpan.FromDays(5);
-        private CoinData _coinData;
+        private CoinsCollection _coinsCollection;
+
+        private readonly CachedFile _cacheFile = new CachedFile( "coins.json", TimeSpan.FromDays(5));
 
 
-        public CoinInfoService(IRestService restService,IChainTickerFileService fileService)
+        public CoinInfoService(IRestService restService, IChainTickerFileService fileService, ISerialize jsonSerializer)
         {
             _restService = restService;
             _fileService = fileService;
+            _jsonSerializer = jsonSerializer;
 
-            _serializer = new ChainTickerJsonSerializer();
         }
 
         public async Task PopulateAvailableCoinsAsync()
         {
-            if (_fileService.IsCacheStale(new CachedFile(CACHE_FILE_NAME, _maxCacheAge)))
-                _coinData = await GetFromWebServiceAsync();
+            if (_fileService.IsCacheStale(_cacheFile))
+                _coinsCollection = await GetFromWebServiceAsync();
             else
-                _coinData = await GetFromCacheAsync();
-            
+                _coinsCollection = await GetFromCacheAsync();
+
         }
 
         public IEnumerable<ICoin> GetAllCoins()
-            => _coinData.GetAllCoins();
+            => _coinsCollection.GetAllCoins();
 
-        public IEnumerable<string> GetAllCoinCodes() 
-            => _coinData.GetAllCoinCodes();
+        public IEnumerable<string> GetAllCoinCodes()
+            => _coinsCollection.GetAllCoinCodes();
 
-        public ICoin GetCoinInfo(string coinCode) 
-            => _coinData.GetCoinInfo(coinCode);
+        public ICoin GetCoinInfo(string coinCode)
+            => _coinsCollection.GetCoin(coinCode);
 
 
-        private async Task<CoinData> GetFromWebServiceAsync()
+        private async Task<CoinsCollection> GetFromWebServiceAsync()
         {
             var query = new RestQuery("https://min-api.cryptocompare.com/", "data/all/coinlist").GetAddress();
 
-            var response = await _restService.GetAsync(query, s => _serializer.Deserialize<AllCoinsResponse>(s));
+            var response = await _restService.GetAsync(query, s => _jsonSerializer.Deserialize<AllCoinsResponse>(s));
 
             if (response.IsSuccess)
                 return await SaveToCacheAndParse(response.Data);
@@ -60,29 +60,29 @@ namespace ChainTicker.DataSource.Coins
                 return await HandleErrorAsync(response);
         }
 
-        private async Task<CoinData> GetFromCacheAsync()
+        private async Task<CoinsCollection> GetFromCacheAsync()
         {
-            var cachedAllCoinsResponse = await _fileService.LoadAndDeserializeAsync<AllCoinsResponse>(ChainTickerFolder.Cache, CACHE_FILE_NAME);
+            var cachedAllCoinsResponse = await _fileService.LoadAndDeserializeAsync<AllCoinsResponse>(ChainTickerFolder.Cache, _cacheFile.FileName);
             return Parse(cachedAllCoinsResponse);
         }
 
 
-        private async Task<CoinData> SaveToCacheAndParse(AllCoinsResponse response)
+        private async Task<CoinsCollection> SaveToCacheAndParse(AllCoinsResponse response)
         {
             // Save to the cache so we don't need to do this expensive call all the time
-            await _fileService.SaveAndSerializeAsync(ChainTickerFolder.Cache, CACHE_FILE_NAME,response).ConfigureAwait(false); 
+            await _fileService.SaveAndSerializeAsync(ChainTickerFolder.Cache, _cacheFile.FileName, response).ConfigureAwait(false);
             return Parse(response);
         }
 
-        private async Task<CoinData> HandleErrorAsync(Response<AllCoinsResponse> response)
+        private async Task<CoinsCollection> HandleErrorAsync(Response<AllCoinsResponse> response)
         {
             Debug.WriteLine(response.ErrorMessage);
-            return await GetFromCacheAsync().ConfigureAwait(false); ;
+            return await GetFromCacheAsync();
         }
 
 
-        private CoinData Parse(AllCoinsResponse allCoinsResponse)
-            => new CoinData(allCoinsResponse);
+        private CoinsCollection Parse(AllCoinsResponse allCoinsResponse)
+            => new CoinsCollection(allCoinsResponse);
 
     }
 }
