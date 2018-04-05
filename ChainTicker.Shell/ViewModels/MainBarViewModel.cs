@@ -1,7 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Drawing.Text;
-using System.Linq;
 using System.Threading.Tasks;
 using ChainTicker.DataSource.Coins;
 using ChainTicker.Shell.Models;
@@ -50,7 +48,7 @@ namespace ChainTicker.Shell.ViewModels
 
 
         private async Task GetCoinsAsync()
-            => await _coinInfoService.PopulateAvailableCoinsAsync();
+            => await _coinInfoService.GetAvailableCoinsAsync();
 
 
         private async Task GetExchangesAsync()

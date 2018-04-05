@@ -41,13 +41,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoinLogoService.cs" />
+    <Compile Include="DTO\AllCoinsResponse.cs" />
+    <Compile Include="DTO\CoinInfo.cs" />
+    <Compile Include="DTO\DefaultWatchlist.cs" />
+    <Compile Include="DTO\Deserialiser.cs" />
+    <Compile Include="Domain\AllCoinsResponseMapper.cs" />
     <Compile Include="Domain\CoinBase.cs" />
     <Compile Include="Domain\CoinsCollection.cs" />
     <Compile Include="Domain\Coin.cs" />
     <Compile Include="Domain\UnknownCoin.cs" />
-    <Compile Include="DTO\AllCoinsResponse.cs" />
     <Compile Include="CoinInfoService.cs" />
-    <Compile Include="DTO\CoinInfo.cs" />
+    <Compile Include="DTO\Serialize.cs" />
     <Compile Include="ICoinInfoService.cs" />
     <Compile Include="ICoinLogoService.cs" />
     <Compile Include="ImageDownloader.cs" />

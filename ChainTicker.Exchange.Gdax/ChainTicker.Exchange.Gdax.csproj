@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\Responses\GdaxChannel.cs" />
     <Compile Include="DTO\Responses\GdaxError.cs" />
     <Compile Include="DTO\Responses\GdaxMarket.cs" />
     <Compile Include="DTO\Requests\GdaxSubscribeRequest.cs" />

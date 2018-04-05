@@ -29,7 +29,7 @@ namespace ChainTicker.DataSource.Coins
 
         }
 
-        public async Task PopulateAvailableCoinsAsync()
+        public async Task GetAvailableCoinsAsync()
         {
             if (_fileService.IsCacheStale(_cacheFile))
                 _coinsCollection = await GetFromWebServiceAsync();
@@ -50,12 +50,12 @@ namespace ChainTicker.DataSource.Coins
 
         private async Task<CoinsCollection> GetFromWebServiceAsync()
         {
-            var query = new RestQuery("https://min-api.cryptocompare.com/", "data/all/coinlist").GetAddress();
+            var endpointAddress = new RestQuery("https://min-api.cryptocompare.com/", "data/all/coinlist").GetAddress();
 
-            var response = await _restService.GetAsync(query, s => _jsonSerializer.Deserialize<AllCoinsResponse>(s));
+            var response = await _restService.GetAsync(endpointAddress, AllCoinsResponse.FromJson);
 
             if (response.IsSuccess)
-                return await SaveToCacheAndParse(response.Data);
+                return await HandleSuccessAsync(response.Data);
             else
                 return await HandleErrorAsync(response);
         }
@@ -63,15 +63,15 @@ namespace ChainTicker.DataSource.Coins
         private async Task<CoinsCollection> GetFromCacheAsync()
         {
             var cachedAllCoinsResponse = await _fileService.LoadAndDeserializeAsync<AllCoinsResponse>(ChainTickerFolder.Cache, _cacheFile.FileName);
-            return Parse(cachedAllCoinsResponse);
+            return AllCoinsResponseMapper.ToCoinsCollection(cachedAllCoinsResponse);
         }
 
 
-        private async Task<CoinsCollection> SaveToCacheAndParse(AllCoinsResponse response)
+        private async Task<CoinsCollection> HandleSuccessAsync(AllCoinsResponse response)
         {
             // Save to the cache so we don't need to do this expensive call all the time
             await _fileService.SaveAndSerializeAsync(ChainTickerFolder.Cache, _cacheFile.FileName, response).ConfigureAwait(false);
-            return Parse(response);
+            return AllCoinsResponseMapper.ToCoinsCollection(response);
         }
 
         private async Task<CoinsCollection> HandleErrorAsync(Response<AllCoinsResponse> response)
@@ -79,10 +79,6 @@ namespace ChainTicker.DataSource.Coins
             Debug.WriteLine(response.ErrorMessage);
             return await GetFromCacheAsync();
         }
-
-
-        private CoinsCollection Parse(AllCoinsResponse allCoinsResponse)
-            => new CoinsCollection(allCoinsResponse);
 
     }
 }

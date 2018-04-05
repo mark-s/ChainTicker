@@ -12,7 +12,7 @@ namespace ChainTicker.Shell.Models
     {
 
         private readonly IExchange _exchange;
-        private readonly Func<string, ICoin> _coinInfoFunc;
+        private readonly Func<string, ICoin> _getCoinInfoFunc;
 
         public string Name => _exchange.Info.Name;
 
@@ -23,10 +23,10 @@ namespace ChainTicker.Shell.Models
 
         public ObservableCollection<MarketModel> Markets { get; } = new ObservableCollection<MarketModel>();
 
-        public ExchangeModel(IExchange exchange, Func<string, ICoin> coinInfoFunc)
+        public ExchangeModel(IExchange exchange, Func<string, ICoin> getCoinInfoFunc)
         {
             _exchange = exchange;
-            _coinInfoFunc = coinInfoFunc;
+            _getCoinInfoFunc = getCoinInfoFunc;
 
         }
 
@@ -38,8 +38,8 @@ namespace ChainTicker.Shell.Models
             foreach (var market in await _exchange.GetAvailableMarketsAsync())
             {
                 displayMarkets.Add(new MarketModel(market,
-                                                                            _coinInfoFunc(market.BaseCurrency),
-                                                                            _coinInfoFunc(market.CounterCurrency),
+                                                                            _getCoinInfoFunc(market.BaseCurrency),
+                                                                            _getCoinInfoFunc(market.CounterCurrency),
                                                                             _exchange.SubscribeToTicks,
                                                                             _exchange.UnsubscribeFromTicks,
                                                                             _exchange.Info.Name));

@@ -7,16 +7,16 @@ namespace ChainTicker.Exchange.Gdax.DTO.Requests
     public class GdaxUnsubscribeRequest : GdaxTypedMessageBase
     {
         [JsonProperty("channels")]
-        public List<Channel> Channels { get; }
+        public List<GdaxChannel> Channels { get; }
 
         
         public GdaxUnsubscribeRequest(string productCode)
         {
             Type = GdaxMessageType.Unsubscribe.ToString().ToLowerInvariant();
 
-            Channels = new List<Channel>(1)
+            Channels = new List<GdaxChannel>(1)
                            {
-                               new Channel
+                               new GdaxChannel
                                    {
                                        Name = "ticker",
                                        ProductIds = new List<string> {productCode}

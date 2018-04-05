@@ -1,11 +1,6 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using ChainTicker.DataSource.Coins;
+﻿using ChainTicker.DataSource.Coins;
 using ChainTicker.DataSource.FiatCurrencies;
-using ChainTicker.Shell.Helpers;
 using ChainTicker.Shell.Models;
-using ChanTicker.Core.Interfaces;
 using Prism.Mvvm;
 
 namespace ChainTicker.Shell.ViewModels

@@ -19,7 +19,7 @@ namespace ChainTicker.DataSource.Coins.Tests
             
             var cls = new CoinLogoService(new ImageDownloader(new FileIOService(new FolderService())), new FileIOService(new FolderService()));
 
-            await allCoins.PopulateAvailableCoinsAsync();
+            await allCoins.GetAvailableCoinsAsync();
 
             var coins = allCoins.GetAllCoins();
 

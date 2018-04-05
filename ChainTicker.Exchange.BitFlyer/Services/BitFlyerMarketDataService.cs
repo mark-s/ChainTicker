@@ -32,10 +32,8 @@ namespace ChainTicker.Exchange.BitFlyer.Services
 
         }
 
-        private IObservable<ITick> SubscribeToTimedUpdated(Market market)
-        {
-            return _priceQueryService.Subscribe(market);
-        }
+        private IObservable<ITick> SubscribeToTimedUpdated(Market market) 
+            => _priceQueryService.Subscribe(market);
 
         // This is for markets that have realtime updates available
         private IObservable<ITick> SubscribeToLiveMarket(Market market)
@@ -65,10 +63,8 @@ namespace ChainTicker.Exchange.BitFlyer.Services
             => await _priceQueryService.GetCurrentPriceAsync(market);
 
 
-        public void Dispose()
-        {
-            _pubnubTransport?.Dispose();
-        }
+        public void Dispose() 
+            => _pubnubTransport?.Dispose();
 
         public bool IsSubscribedToTicks(Market market)
         {

@@ -6,7 +6,7 @@ namespace ChainTicker.DataSource.Coins
 {
     public interface ICoinInfoService
     {
-        Task PopulateAvailableCoinsAsync();
+        Task GetAvailableCoinsAsync();
 
         IEnumerable<string> GetAllCoinCodes();
 

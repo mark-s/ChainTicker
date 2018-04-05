@@ -6,9 +6,13 @@ namespace ChanTicker.Core.Domain
     public class Market 
     {
         public string ProductCode { get; }
+
         public string BaseCurrency { get; }
+
         public string CounterCurrency { get; }
+
         public string DisplayName { get;  }
+
         public decimal MidMarketPriceSnapshot { get; private set; }
 
         public bool HasRealTimeUpdates { get; }

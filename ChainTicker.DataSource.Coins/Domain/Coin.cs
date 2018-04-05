@@ -24,12 +24,12 @@ namespace ChainTicker.DataSource.Coins.Domain
                                                    baseLinkUrl + coinInfo.Url, 
                                                    coinInfo.ImageUrl?.Replace("/", ""));
 
-            Mining = new MiningInfo(Convert.ToBoolean(Convert.ToInt32(coinInfo.FullyPremined)),
-                                                    coinInfo.PreMinedValue,
-                                                    coinInfo.ProofType,
-                                                    coinInfo.TotalCoinsFreeFloat,
-                                                    coinInfo.TotalCoinSupply,
-                                                    coinInfo.Algorithm);
+            //Mining = new MiningInfo(Convert.ToBoolean(Convert.ToInt32(coinInfo.FullyPremined)),
+            //                                        coinInfo.PreMinedValue,
+            //                                        coinInfo.ProofType,
+            //                                        coinInfo.TotalCoinsFreeFloat,
+            //                                        coinInfo.TotalCoinSupply,
+            //                                        coinInfo.Algorithm);
         }
 
         
