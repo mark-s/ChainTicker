@@ -18,7 +18,7 @@ namespace ChainTicker.DataSource.Coins
 
         private CoinsCollection _coinsCollection;
 
-        private readonly CachedFile _cacheFile = new CachedFile( "coins.json", TimeSpan.FromDays(5));
+        private readonly CachedFile _cacheFile = new CachedFile("coins.json", TimeSpan.FromDays(5));
 
 
         public CoinInfoService(IRestService restService, IChainTickerFileService fileService, ISerialize jsonSerializer)
@@ -52,7 +52,7 @@ namespace ChainTicker.DataSource.Coins
         {
             var endpointAddress = new RestQuery("https://min-api.cryptocompare.com/", "data/all/coinlist").GetAddress();
 
-            var response = await _restService.GetAsync(endpointAddress, AllCoinsResponse.FromJson);
+            var response = await _restService.GetAsync(endpointAddress, _jsonSerializer.Deserialize<AllCoinsResponse>);
 
             if (response.IsSuccess)
                 return await HandleSuccessAsync(response.Data);

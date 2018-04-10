@@ -68,7 +68,7 @@
                 <TextBlock Style="{StaticResource AskStyle}" Text="{Binding Tick.BestAsk, Converter={StaticResource PriceConverter}}" />
 
                 <TextBlock
-                    Name="priceText"
+                    x:Name="priceText"
                     Style="{StaticResource PriceStyle}"
                     Text="{Binding Tick.Price, Converter={StaticResource PriceConverter}}">
                     <TextBlock.Background>

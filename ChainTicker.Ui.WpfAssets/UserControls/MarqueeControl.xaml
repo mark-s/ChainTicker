@@ -1,0 +1,15 @@
+﻿<UserControl
+    x:Class="ChainTicker.Ui.WpfAssets.UserControls.MarqueeControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="Marquee"
+    Loaded="UserControl_Loaded"
+    mc:Ignorable="d">
+
+    <Canvas x:Name="CanvasMain" ClipToBounds="True">
+        <ContentControl x:Name="MainContent" Content="{Binding InnerContent, ElementName=Marquee, NotifyOnSourceUpdated=True}" />
+    </Canvas>
+
+</UserControl>

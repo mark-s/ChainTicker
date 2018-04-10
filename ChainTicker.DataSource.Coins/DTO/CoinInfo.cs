@@ -29,19 +29,19 @@ namespace ChainTicker.DataSource.Coins.DTO
         public string Algorithm { get; set; }
 
         [JsonProperty("ProofType")]
-        public ProofType ProofType { get; set; }
+        public string ProofType { get; set; }
 
         [JsonProperty("FullyPremined")]
-        public FullyPremined FullyPremined { get; set; }
+        public string FullyPremined { get; set; }
 
         [JsonProperty("TotalCoinSupply")]
         public string TotalCoinSupply { get; set; }
 
         [JsonProperty("PreMinedValue")]
-        public PreMinedValue PreMinedValue { get; set; }
+        public string PreMinedValue { get; set; }
 
         [JsonProperty("TotalCoinsFreeFloat")]
-        public PreMinedValue TotalCoinsFreeFloat { get; set; }
+        public string TotalCoinsFreeFloat { get; set; }
 
         [JsonProperty("SortOrder")]
         public string SortOrder { get; set; }

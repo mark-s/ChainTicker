@@ -1,6 +1,8 @@
-﻿namespace ChanTicker.Core.Domain
+﻿using ChanTicker.Core.Interfaces;
+
+namespace ChanTicker.Core.Domain
 {
-    public class CoinUrls : Interfaces.ICoinUrlSet
+    public class CoinUrls : ICoinUrlSet
     {
         public string ImageUrlShort { get; }
         public string InfoUrlShort { get; }
