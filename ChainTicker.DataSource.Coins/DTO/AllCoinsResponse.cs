@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace ChainTicker.DataSource.Coins.DTO
 {
-    public partial class AllCoinsResponse
+    internal class AllCoinsResponse
     {
         [JsonProperty("Response")]
         public string Response { get; set; }

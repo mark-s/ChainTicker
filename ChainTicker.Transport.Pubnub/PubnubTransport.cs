@@ -10,7 +10,7 @@ namespace ChainTicker.Transport.Pubnub
     public class PubnubTransport : IPubnubTransport
     {
         private readonly PubnubApi.Pubnub _pubnubConnector;
-        public IObservable<PubnubMessage> RecievedMessagesObservable => _messageSubject.AsObservable();
+        public IObservable<PubnubMessage> RecievedMessages => _messageSubject.AsObservable();
         private readonly Subject<PubnubMessage> _messageSubject = new Subject<PubnubMessage>();
 
 

@@ -8,8 +8,6 @@ namespace ChainTicker.DataSource.Coins
     {
         Task GetAvailableCoinsAsync();
 
-        IEnumerable<string> GetAllCoinCodes();
-
         IEnumerable<ICoin> GetAllCoins();
 
         ICoin GetCoinInfo(string coinCode);

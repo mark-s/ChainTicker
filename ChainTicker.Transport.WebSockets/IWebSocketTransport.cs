@@ -7,7 +7,5 @@ namespace ChainTicker.Transport.WebSocket
         IObservable<string> RecievedMessagesObservable { get;  }
 
         void Send(string message);
-
-
     }
 }

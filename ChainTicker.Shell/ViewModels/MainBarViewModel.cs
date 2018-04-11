@@ -54,7 +54,7 @@ namespace ChainTicker.Shell.ViewModels
         private async Task GetExchangesAsync()
         {
             var exchanges = _exchangesService.GetExchanges();
-            await _exchangesService.GetMarketsAsync(exchanges);
+            await _exchangesService.GetMarketsAsync();
 
             AvailableExchanges = new ExchangeCollectionModel("AvailableExchanges", new ObservableCollection<ExchangeModel>(exchanges));
         }

@@ -29,7 +29,6 @@ namespace ChainTicker.Transport.Rest
 
         public void Subscribe()
         {
-            
             _timerSubscription = _observableTimer.Select(_ =>  _restService.GetAsync(_restQuery, _deserializer))
                                    .Subscribe(m => _messageSubject.OnNext(m.Result.Data));
         }
@@ -39,9 +38,6 @@ namespace ChainTicker.Transport.Rest
         {
             _timerSubscription.Dispose();
         }
-
-
-
 
     }
 }

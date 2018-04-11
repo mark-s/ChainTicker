@@ -16,6 +16,7 @@ namespace ChainTicker.Shell.Services
         private readonly IUnityContainer _container;
         private readonly IFiatCurrenciesService _fiatCurrenciesService;
         private readonly ICoinInfoService _coinInfoService;
+        private List<IExchange> _exchanges;
 
         public ExchangesService(IUnityContainer container, IFiatCurrenciesService fiatCurrenciesService, ICoinInfoService coinInfoService)
         {
@@ -26,18 +27,18 @@ namespace ChainTicker.Shell.Services
 
         public List<ExchangeModel> GetExchanges()
         {
-            var exchanges =  new List<IExchange>
+            _exchanges = new List<IExchange>
                        {
                            _container.Resolve<BitFlyerExchange>(),
                            _container.Resolve<GdaxExchange>()
                        };
 
-           return exchanges.Select(e => new ExchangeModel(e, CoinInfoFunc)).ToList();
+            return _exchanges.Select(e => new ExchangeModel(e, CoinInfoFunc)).ToList();
         }
 
-        public async Task GetMarketsAsync(List<ExchangeModel> exchanges)
+        public async Task GetMarketsAsync()
         {
-            foreach (var exchange in exchanges)
+            foreach (var exchange in _exchanges)
             {
                 await exchange.GetAvailableMarketsAsync();
             }

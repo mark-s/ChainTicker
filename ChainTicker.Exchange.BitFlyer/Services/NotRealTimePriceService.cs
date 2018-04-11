@@ -10,7 +10,6 @@ using ChainTicker.Exchange.BitFlyer.DTO;
 using ChainTicker.Transport.Rest;
 using ChanTicker.Core.Domain;
 using ChanTicker.Core.Interfaces;
-using ChanTicker.Core.IO;
 
 namespace ChainTicker.Exchange.BitFlyer.Services
 {
@@ -19,8 +18,7 @@ namespace ChainTicker.Exchange.BitFlyer.Services
         private readonly IRestService _restService;
         private readonly ISerialize _jsonSerializer;
         private readonly ISubscribableRestService<List<BitFlyerMarket>> _subscribableRestService;
-
-
+        
         private readonly RestQuery _getPricesQuery;
 
         private readonly Subject<MarketAndTick> _rawReceivedSubject = new Subject<MarketAndTick>();

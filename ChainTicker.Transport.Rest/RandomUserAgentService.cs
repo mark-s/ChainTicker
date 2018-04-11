@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace ChainTicker.Transport.Rest
 {
@@ -30,16 +29,10 @@ namespace ChainTicker.Transport.Rest
 
         private readonly Random _random = new Random();
 
-        private int GetRandomIndex() 
-            => _random.Next(0, _userAgents.Length-1);
+        private int GetRandomIndex()
+            => _random.Next(0, _userAgents.Length - 1);
 
         public string GetUserAgent()
-        {
-            var ua =  _userAgents[GetRandomIndex()];
-            Debug.WriteLine(ua);
-
-            return ua;
-
-        }
+            => _userAgents[GetRandomIndex()];
     }
 }

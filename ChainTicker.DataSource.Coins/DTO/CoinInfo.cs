@@ -2,7 +2,7 @@
 
 namespace ChainTicker.DataSource.Coins.DTO
 {
-    public class CoinInfo
+    internal class CoinInfo
     {
         [JsonProperty("Id")]
         public string Id { get; set; }

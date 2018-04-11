@@ -17,15 +17,14 @@ namespace ChainTicker.Exchange.BitFlyer
 
 
         public ExchangeInfo Info { get; } = new ExchangeInfo("bitFlyer",
-                                                             "https://bitflyer.jp",
-                                                             "bitFlyer Japan",
-                                                             true,
-                                                             new ApiEndpointCollection
-                                                                 {
-                                                                     [ApiEndpointType.WebSocket] = "wss://ws-feed.gdax.com",
-                                                                     [ApiEndpointType.Rest] = "https://api.bitflyer.jp",
-                                                                     [ApiEndpointType.Pubnub] = "sub-c-52a9ab50-291b-11e5-baaa-0619f8945a4f"
-                                                             });
+                                                                                             "https://bitflyer.jp",
+                                                                                             "bitFlyer Japan",
+                                                                                             true,
+                                                                                             new ApiEndpointCollection
+                                                                                                 {
+                                                                                                     [ApiEndpointType.Rest] = "https://api.bitflyer.jp",
+                                                                                                     [ApiEndpointType.Pubnub] = "sub-c-52a9ab50-291b-11e5-baaa-0619f8945a4f"
+                                                                                                 });
         
 
         public BitFlyerExchange(IRestService restService, IChainTickerFileService chainTickerFileService, ISerialize jsonSerializer)

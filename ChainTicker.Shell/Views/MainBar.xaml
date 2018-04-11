@@ -35,15 +35,14 @@
             ContentTemplate="{StaticResource ExchangeCollectionTemplate}"
             Visibility="{Binding IsChecked, ElementName=ShowMenuBox, Converter={StaticResource boolToVisibilityConverter}}" />
 
+        <ItemsControl ItemTemplate="{StaticResource MarketTemplate}" ItemsSource="{Binding AvailableExchanges.Exchanges[0].Markets}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Width="{Binding Path=Width, RelativeSource={RelativeSource AncestorType=Window}}" Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
 
-            <ItemsControl ItemTemplate="{StaticResource MarketTemplate}" ItemsSource="{Binding AvailableExchanges.Exchanges[0].Markets}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-
-            </ItemsControl>
+        </ItemsControl>
 
     </StackPanel>
 

@@ -5,7 +5,7 @@ namespace ChainTicker.Transport.Pubnub
 {
     public interface IPubnubTransport : IDisposable
     {
-        IObservable<PubnubMessage> RecievedMessagesObservable { get; }
+        IObservable<PubnubMessage> RecievedMessages { get; }
 
         void SubscribeToChannel(string channelName);
 

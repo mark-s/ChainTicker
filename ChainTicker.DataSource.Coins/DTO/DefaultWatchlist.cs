@@ -2,7 +2,7 @@
 
 namespace ChainTicker.DataSource.Coins.DTO
 {
-    public class DefaultWatchlist
+    internal class DefaultWatchlist
     {
         [JsonProperty("CoinIs")]
         public string CoinIs { get; set; }

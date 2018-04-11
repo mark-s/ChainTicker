@@ -42,7 +42,7 @@ namespace ChainTicker.Exchange.BitFlyer.Services
 
             _pubnubTransport.SubscribeToChannel(channelName);
 
-            return _pubnubTransport.RecievedMessagesObservable.ObserveOn(Scheduler.Default)
+            return _pubnubTransport.RecievedMessages.ObserveOn(Scheduler.Default)
                                                                                      .Where(m => m.ChannelName == channelName)
                                                                                      .Select(m => _messageParser.ConvertToTick(m));
         }

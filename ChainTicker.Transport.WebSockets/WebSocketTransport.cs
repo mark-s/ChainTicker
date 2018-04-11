@@ -27,15 +27,12 @@ namespace ChainTicker.Transport.WebSocket
                                                                                                         .Select(m => m?.EventArgs?.Message);
         }
 
-        public void Send(string message)
-        {
-            _websocket.Send(message);
-        }
+        public void Send(string message) 
+            => _websocket.Send(message);
 
 
-        public void Dispose()
-        {
-            _websocket?.Dispose();
-        }
+        public void Dispose() 
+            => _websocket?.Dispose();
+
     }
 }

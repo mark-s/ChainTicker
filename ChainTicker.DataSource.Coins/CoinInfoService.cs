@@ -29,20 +29,17 @@ namespace ChainTicker.DataSource.Coins
 
         }
 
+
         public async Task GetAvailableCoinsAsync()
         {
             if (_fileService.IsCacheStale(_cacheFile))
                 _coinsCollection = await GetFromWebServiceAsync();
             else
                 _coinsCollection = await GetFromCacheAsync();
-
         }
 
         public IEnumerable<ICoin> GetAllCoins()
             => _coinsCollection.GetAllCoins();
-
-        public IEnumerable<string> GetAllCoinCodes()
-            => _coinsCollection.GetAllCoinCodes();
 
         public ICoin GetCoinInfo(string coinCode)
             => _coinsCollection.GetCoin(coinCode);

@@ -49,7 +49,6 @@ namespace ChainTicker.Shell
         {
             container.RegisterType<BitFlyerExchange>(new ContainerControlledLifetimeManager());
             container.RegisterType<GdaxExchange>(new ContainerControlledLifetimeManager());
-
         }
 
 
