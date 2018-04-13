@@ -20,15 +20,12 @@ namespace ChainTicker.Exchange.BitFlyer.Tests
             var restService = new RestService(new RandomUserAgentService());
 
             var exchange = new BitFlyerExchange(restService,null, new ChainTickerJsonSerializer());
-
+            
+            // Act
             var markets = await exchange.GetAvailableMarketsAsync();
 
-            markets.Count.ShouldBe(10);
-
-
-            // Act
-
             // Assert
+            markets.Count.ShouldBe(10);
 
         }
 

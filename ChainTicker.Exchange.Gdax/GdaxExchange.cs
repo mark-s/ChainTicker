@@ -11,7 +11,7 @@ namespace ChainTicker.Exchange.Gdax
 {
     public class GdaxExchange : IExchange, IDisposable
     {
-        private readonly GdaxMarketDataService _marketDataService;
+        private readonly GdaxPriceDataService _priceDataService;
         private readonly GdaxMarketsService _gdaxMarketsService;
 
         public ExchangeInfo Info { get; } = new ExchangeInfo("Gdax",
@@ -27,9 +27,9 @@ namespace ChainTicker.Exchange.Gdax
         public GdaxExchange(IRestService restService, IChainTickerFileService fileService, ISerialize jsonSerializer)
         {
             var webSocketTransport = new WebSocketTransport(Info.ApiEndpoints[ApiEndpointType.WebSocket]);
-            var notRealTimeService = new NotRealTimePriceService(restService, Info.ApiEndpoints, jsonSerializer);
+            var notRealTimeService = new PollingPriceService(restService, Info.ApiEndpoints, jsonSerializer);
 
-            _marketDataService = new GdaxMarketDataService(webSocketTransport, notRealTimeService, jsonSerializer);
+            _priceDataService = new GdaxPriceDataService(webSocketTransport, notRealTimeService, jsonSerializer);
             _gdaxMarketsService = new GdaxMarketsService(Info.ApiEndpoints, restService, fileService);
         }
 
@@ -37,16 +37,16 @@ namespace ChainTicker.Exchange.Gdax
             => _gdaxMarketsService.GetAvailableMarketsAsync();
 
         public Task<ITick> GetCurrentPriceAsync(Market market)
-            => _marketDataService.GetCurrentPriceAsync(market);
+            => _priceDataService.GetCurrentPriceAsync(market);
 
         public bool IsSubscribedToTicks(Market market)
-            => _marketDataService.IsSubscribedToTicks(market);
+            => _priceDataService.IsSubscribedToTicks(market);
 
         public IObservable<ITick> SubscribeToTicks(Market market) 
-            => _marketDataService.SubscribeToTicks(market);
+            => _priceDataService.SubscribeToTicks(market);
 
         public void UnsubscribeFromTicks(Market market)
-            => _marketDataService.UnsubscribeFromTicks(market);
+            => _priceDataService.UnsubscribeFromTicks(market);
 
         public void Dispose()
         {

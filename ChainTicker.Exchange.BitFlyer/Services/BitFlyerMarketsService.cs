@@ -14,24 +14,26 @@ namespace ChainTicker.Exchange.BitFlyer.Services
     public class BitFlyerMarketsService
     {
         private readonly ISerialize _jsonSerialiser;
+        private readonly IPriceDataService _priceDataService;
 
         private readonly ApiEndpointCollection _apiEndpoints;
         private readonly IRestService _restService;
         private readonly IChainTickerFileService _fileService;
 
-
         private const string CACHE_FILE_NAME = "BitFlyerAvailableMarkets.json";
         private readonly TimeSpan _maxCacheAge = TimeSpan.FromHours(3);
 
         public BitFlyerMarketsService(ApiEndpointCollection apiEndpoints,
-                                                IRestService restService,
-                                                IChainTickerFileService fileService,
-                                                ISerialize jsonSerialiser)
+                                                        IRestService restService,
+                                                        IChainTickerFileService fileService,
+                                                        ISerialize jsonSerialiser,
+                                                        IPriceDataService priceDataService)
         {
             _apiEndpoints = apiEndpoints;
             _restService = restService;
             _fileService = fileService;
             _jsonSerialiser = jsonSerialiser;
+            _priceDataService = priceDataService;
         }
 
         public async Task<List<Market>> GetAvailableMarketsAsync()
@@ -57,7 +59,16 @@ namespace ChainTicker.Exchange.BitFlyer.Services
             if (getPricesResponse.IsSuccess && getMarketsResponse.IsSuccess)
             {
                 var marketsWithLivePrices = getMarketsResponse.Data;
-                availableMarkets.AddRange(getPricesResponse.Data.Select(m => new Market(m.ProductCode, m.MainCurrency, m.SubCurrency, m.ProductCode, m.CurrentPrice, Enumerable.Any<PlainMarket>(marketsWithLivePrices, p => p.ProductCode == m.ProductCode))));
+                availableMarkets.AddRange(getPricesResponse.Data.Select(m => 
+                                                                new Market(m.ProductCode,
+                                                                    m.MainCurrency, 
+                                                                    m.SubCurrency,
+                                                                    m.ProductCode, 
+                                                                    m.CurrentPrice, 
+                                                                    marketsWithLivePrices.Any(p => p.ProductCode == m.ProductCode))));
+
+                foreach (var market in availableMarkets)
+                    market.SetPriceDataService(_priceDataService);
 
                 await _fileService.SaveAndSerializeAsync(ChainTickerFolder.Cache, CACHE_FILE_NAME, availableMarkets);
             }
@@ -72,13 +83,16 @@ namespace ChainTicker.Exchange.BitFlyer.Services
 
         private async Task<List<Market>> GetFromCacheAsync()
         {
-            var markets= await  _fileService.LoadAndDeserializeAsync<List<Market>>(ChainTickerFolder.Cache, CACHE_FILE_NAME);
+            var marketsFromCache = await  _fileService.LoadAndDeserializeAsync<List<Market>>(ChainTickerFolder.Cache, CACHE_FILE_NAME);
 
             // if we're restoring from the cached file the prices will be stale, reset them here
-            foreach (var market in markets)
+            foreach (var market in marketsFromCache)
+            {
                 market.ClearMidMarketPriceSnapshot();
+                market.SetPriceDataService(_priceDataService);
+            }
 
-            return markets;
+            return marketsFromCache;
         }
     }
 }

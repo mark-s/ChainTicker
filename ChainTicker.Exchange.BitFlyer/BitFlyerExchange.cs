@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using ChainTicker.Exchange.BitFlyer.Services;
-using ChainTicker.Transport.Pubnub;
 using ChainTicker.Transport.Rest;
 using ChanTicker.Core.Domain;
 using ChanTicker.Core.Interfaces;
@@ -10,51 +8,22 @@ using ChanTicker.Core.Interfaces;
 
 namespace ChainTicker.Exchange.BitFlyer
 {
-    public class BitFlyerExchange : IExchange, IDisposable
+    public class BitFlyerExchange : IExchange
     {
-        private readonly BitFlyerMarketDataService _marketDataService;
         private readonly BitFlyerMarketsService _bitFlyerMarketsService;
 
+        public List<Market> Markets { get; private set; }
 
-        public ExchangeInfo Info { get; } = new ExchangeInfo("bitFlyer",
-                                                                                             "https://bitflyer.jp",
-                                                                                             "bitFlyer Japan",
-                                                                                             true,
-                                                                                             new ApiEndpointCollection
-                                                                                                 {
-                                                                                                     [ApiEndpointType.Rest] = "https://api.bitflyer.jp",
-                                                                                                     [ApiEndpointType.Pubnub] = "sub-c-52a9ab50-291b-11e5-baaa-0619f8945a4f"
-                                                                                                 });
-        
+        public ExchangeInfo Info => Config.Info;
 
-        public BitFlyerExchange(IRestService restService, IChainTickerFileService chainTickerFileService, ISerialize jsonSerializer)
+        public BitFlyerExchange(IRestService restService, IChainTickerFileService chainTickerFileService, ISerialize jsonSerializer, BitFlyerPriceDataService priceDataService)
         {
-
-            var pubnubTransport = new PubnubTransport(Info.ApiEndpoints[ApiEndpointType.Pubnub], new DebugLogger());
-            _marketDataService = new BitFlyerMarketDataService(pubnubTransport, new NotRealTimePriceService(restService, Info.ApiEndpoints, TimeSpan.FromSeconds(3), jsonSerializer), jsonSerializer);
-
-            _bitFlyerMarketsService = new BitFlyerMarketsService(Info.ApiEndpoints, restService, chainTickerFileService, jsonSerializer);
+            _bitFlyerMarketsService = new BitFlyerMarketsService(Info.ApiEndpoints, restService, chainTickerFileService, jsonSerializer, priceDataService);
         }
 
 
-        public Task<ITick> GetCurrentPriceAsync(Market market)
-            => _marketDataService.GetCurrentPriceAsync(market);
+        public async Task PopulateAvailableMarketsAsync()
+            => Markets = await _bitFlyerMarketsService.GetAvailableMarketsAsync();
 
-        public bool IsSubscribedToTicks(Market market)
-            => _marketDataService.IsSubscribedToTicks(market);
-
-        public IObservable<ITick> SubscribeToTicks(Market market)
-            => _marketDataService.SubscribeToTicks(market);
-
-        public void UnsubscribeFromTicks(Market market) 
-            => _marketDataService.UnsubscribeFromTicks(market);
-
-        public Task<List<Market>> GetAvailableMarketsAsync()
-            => _bitFlyerMarketsService.GetAvailableMarketsAsync();
-
-        public void Dispose()
-        {
-            _marketDataService?.Dispose();
-        }
     }
 }
