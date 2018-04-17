@@ -4,7 +4,7 @@ using ChainTicker.Core.Domain;
 
 namespace ChainTicker.Core.Interfaces
 {
-    public interface IPriceService : IDisposable
+    public interface IPriceService
     {
         Task<ITick> GetCurrentPriceAsync(Market market);
 

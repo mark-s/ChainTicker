@@ -49,7 +49,7 @@
     <Compile Include="DTO\Responses\GdaxSubscriptionInfo.cs" />
     <Compile Include="DTO\Responses\GdaxTick.cs" />
     <Compile Include="DTO\Responses\GdaxTypedMessageBase.cs" />
-    <Compile Include="ExchangeFactory.cs" />
+    <Compile Include="GdaxExchangeFactory.cs" />
     <Compile Include="GdaxExchange.cs" />
     <Compile Include="GdaxMessageType.cs" />
     <Compile Include="Services\PollingPriceService.cs" />

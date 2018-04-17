@@ -20,20 +20,20 @@ namespace ChainTicker.Exchange.BitFlyer.Services
         private readonly ISubscribableRestService<List<BitFlyerMarket>> _subscribableRestService;
 
 
-        private readonly RestQuery _getPricesQuery;
+        private readonly string _getPricesQuery;
 
         private readonly Subject<MarketAndTick> _rawReceivedSubject = new Subject<MarketAndTick>();
 
         private readonly HashSet<string> _subscriptions = new HashSet<string>();
 
 
-        public PollingPriceService(IRestService restService, ApiEndpointCollection apiEndpoints, TimeSpan updateTimeSpan, IJsonSerializer jsonSerializer)
+        public PollingPriceService(IRestService restService, string apiEndpoint, TimeSpan updateTimeSpan, IJsonSerializer jsonSerializer)
         {
             _restService = restService;
             _jsonSerializer = jsonSerializer;
-            _getPricesQuery = new RestQuery(apiEndpoints[ApiEndpointType.Rest], "/v1/getprices");
+            _getPricesQuery = new RestQuery(apiEndpoint, "/v1/getprices").GetAddress();
             _subscribableRestService = new SubscribableRestService<List<BitFlyerMarket>>(restService, 
-                                                                                                                        _getPricesQuery.GetAddress(),
+                                                                                                                        _getPricesQuery,
                                                                                                                         s => _jsonSerializer.Deserialize<List<BitFlyerMarket>>(s),
                                                                                                                         updateTimeSpan);
             _subscribableRestService.RecievedMessagesObservable
@@ -79,7 +79,7 @@ namespace ChainTicker.Exchange.BitFlyer.Services
 
         public async Task<ITick> GetCurrentPriceAsync(Market market)
         {
-            var getPricesResponse = await _restService.GetAsync(_getPricesQuery.GetAddress(), s => _jsonSerializer.Deserialize<List<BitFlyerMarket>>(s)).ConfigureAwait(false);
+            var getPricesResponse = await _restService.GetAsync(_getPricesQuery, s => _jsonSerializer.Deserialize<List<BitFlyerMarket>>(s)).ConfigureAwait(false);
             if (getPricesResponse.IsSuccess)
             {
                 var thismarket = getPricesResponse.Data.FirstOrDefault(m => m.ProductCode == market.ProductCode);

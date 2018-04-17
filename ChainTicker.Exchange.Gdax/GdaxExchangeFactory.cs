@@ -7,7 +7,7 @@ using ChainTicker.Transport.WebSocket;
 
 namespace ChainTicker.Exchange.Gdax
 {
-    public class ExchangeFactory : IExchangeFactory
+    public class GdaxExchangeFactory : IExchangeFactory
     {
         private readonly IRestService _restService;
         private readonly IChainTickerFileService _chainTickerFileService;
@@ -21,7 +21,7 @@ namespace ChainTicker.Exchange.Gdax
             });
 
 
-        public ExchangeFactory(IRestService restService, IChainTickerFileService chainTickerFileService, IJsonSerializer jsonSerializer)
+        public GdaxExchangeFactory(IRestService restService, IChainTickerFileService chainTickerFileService, IJsonSerializer jsonSerializer)
         {
             _restService = restService;
             _chainTickerFileService = chainTickerFileService;

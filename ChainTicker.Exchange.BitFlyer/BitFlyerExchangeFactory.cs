@@ -8,7 +8,7 @@ using ChainTicker.Transport.Rest;
 
 namespace ChainTicker.Exchange.BitFlyer
 {
-    public class ExchangeFactory : IExchangeFactory
+    public class BitFlyerExchangeFactory : IExchangeFactory
     {
         private readonly IRestService _restService;
         private readonly IChainTickerFileService _chainTickerFileService;
@@ -22,7 +22,7 @@ namespace ChainTicker.Exchange.BitFlyer
                 [ApiEndpointType.Pubnub] = "sub-c-52a9ab50-291b-11e5-baaa-0619f8945a4f"
             });
 
-        public ExchangeFactory(IRestService restService, IChainTickerFileService chainTickerFileService, IJsonSerializer jsonSerializer)
+        public BitFlyerExchangeFactory(IRestService restService, IChainTickerFileService chainTickerFileService, IJsonSerializer jsonSerializer)
         {
             _restService = restService;
             _chainTickerFileService = chainTickerFileService;
@@ -33,7 +33,7 @@ namespace ChainTicker.Exchange.BitFlyer
         public async Task<IExchange> GetExchangeAsync()
         {
             var pubnubTransport = new PubnubTransport(_exchangeInfo.ApiEndpoints[ApiEndpointType.Pubnub], new DebugLogger());
-            var pollingPriceService = new PollingPriceService(_restService, _exchangeInfo.ApiEndpoints, TimeSpan.FromSeconds(3), _jsonSerializer);
+            var pollingPriceService = new PollingPriceService(_restService, _exchangeInfo.ApiEndpoints[ApiEndpointType.Rest], TimeSpan.FromSeconds(3), _jsonSerializer);
             var messageParser = new MessageParser(_jsonSerializer);
             var priceService = new PriceService(pubnubTransport, pollingPriceService, messageParser);
             var marketsService = new MarketsService(_exchangeInfo.ApiEndpoints, _restService, _chainTickerFileService, _jsonSerializer);

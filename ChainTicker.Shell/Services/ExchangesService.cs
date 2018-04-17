@@ -3,45 +3,38 @@ using System.Linq;
 using System.Threading.Tasks;
 using ChainTicker.DataSource.Coins;
 using ChainTicker.DataSource.FiatCurrencies;
-using ChainTicker.Exchange.BitFlyer;
-using ChainTicker.Exchange.Gdax;
 using ChainTicker.Shell.Models;
 using ChainTicker.Core.Interfaces;
-using Microsoft.Practices.Unity;
 
 namespace ChainTicker.Shell.Services
 {
     public class ExchangesService
     {
-        private readonly IUnityContainer _container;
         private readonly IFiatCurrenciesService _fiatCurrenciesService;
         private readonly ICoinInfoService _coinInfoService;
+        private readonly IEnumerable<IExchangeFactory> _exchangeFactories;
 
-        public ExchangesService(IUnityContainer container, IFiatCurrenciesService fiatCurrenciesService, ICoinInfoService coinInfoService)
+        public ExchangesService(IFiatCurrenciesService fiatCurrenciesService, ICoinInfoService coinInfoService,
+            IEnumerable<IExchangeFactory> exchangeFactories)
         {
-            _container = container;
             _fiatCurrenciesService = fiatCurrenciesService;
             _coinInfoService = coinInfoService;
+            _exchangeFactories = exchangeFactories;
         }
 
-        public List<ExchangeModel> GetExchanges()
+        public async Task<List<ExchangeModel>> GetExchangesAsync()
         {
-            var exchanges =  new List<IExchange>
-                       {
-                           _container.Resolve<BitFlyerExchange>(),
-                           _container.Resolve<GdaxExchange>()
-                       };
+
+            var exchanges = new List<IExchange>();
+
+            foreach (var factory in _exchangeFactories)
+            {
+                exchanges.Add(await factory.GetExchangeAsync());
+            }
 
            return exchanges.Select(e => new ExchangeModel(e, CoinInfoFunc)).ToList();
         }
 
-        public async Task GetMarketsAsync(List<ExchangeModel> exchanges)
-        {
-            foreach (var exchange in exchanges)
-            {
-                await exchange.GetAvailableMarketsAsync();
-            }
-        }
 
         private ICoin CoinInfoFunc(string coinOrCurrencyCode)
         {

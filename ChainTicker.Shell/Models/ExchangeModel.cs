@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using ChainTicker.Core.Interfaces;
 
 using Prism.Mvvm;
@@ -12,7 +11,6 @@ namespace ChainTicker.Shell.Models
     {
 
         private readonly IExchange _exchange;
-        private readonly Func<string, ICoin> _getCoinInfoFunc;
 
         public string Name => _exchange.Info.Name;
 
@@ -26,20 +24,20 @@ namespace ChainTicker.Shell.Models
         public ExchangeModel(IExchange exchange, Func<string, ICoin> getCoinInfoFunc)
         {
             _exchange = exchange;
-            _getCoinInfoFunc = getCoinInfoFunc;
 
+            GetAvailableMarkets(getCoinInfoFunc);
         }
 
-        public async Task GetAvailableMarketsAsync()
+        private void GetAvailableMarkets(Func<string, ICoin> getCoinInfoFunc)
         {
 
             var displayMarkets = new List<MarketModel>();
 
-            foreach (var market in await _exchange.GetAvailableMarketsAsync())
+            foreach (var market in _exchange.Markets)
             {
                 displayMarkets.Add(new MarketModel(market,
-                                                                            _getCoinInfoFunc(market.BaseCurrency),
-                                                                            _getCoinInfoFunc(market.CounterCurrency),
+                                                                            getCoinInfoFunc(market.BaseCurrency),
+                                                                            getCoinInfoFunc(market.CounterCurrency),
                                                                             _exchange.SubscribeToTicks,
                                                                             _exchange.UnsubscribeFromTicks,
                                                                             _exchange.Info.Name));
