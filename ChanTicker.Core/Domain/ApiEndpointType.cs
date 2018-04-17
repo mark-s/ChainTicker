@@ -1,4 +1,4 @@
-﻿namespace ChanTicker.Core.Domain
+﻿namespace ChainTicker.Core.Domain
 {
     public enum ApiEndpointType
     {

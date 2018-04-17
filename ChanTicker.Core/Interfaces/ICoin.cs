@@ -1,4 +1,4 @@
-﻿namespace ChanTicker.Core.Interfaces
+﻿namespace ChainTicker.Core.Interfaces
 {
     public interface ICoin
     {
@@ -9,8 +9,6 @@
         string Name { get; }
 
         ICoinUrlSet Urls { get; }
-
-        IMiningData Mining { get; }
 
     }
 }

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using ChainTicker.DataSource.Coins.Domain;
 using ChainTicker.DataSource.Coins.DTO;
 using ChainTicker.Transport.Rest;
-using ChanTicker.Core.Interfaces;
-using ChanTicker.Core.IO;
+using ChainTicker.Core.Interfaces;
+using ChainTicker.Core.IO;
 
 namespace ChainTicker.DataSource.Coins
 {
@@ -14,14 +14,14 @@ namespace ChainTicker.DataSource.Coins
     {
         private readonly IRestService _restService;
         private readonly IChainTickerFileService _fileService;
-        private readonly ISerialize _jsonSerializer;
+        private readonly IJsonSerializer _jsonSerializer;
 
         private CoinsCollection _coinsCollection;
 
         private readonly CachedFile _cacheFile = new CachedFile("coins.json", TimeSpan.FromDays(5));
 
 
-        public CoinInfoService(IRestService restService, IChainTickerFileService fileService, ISerialize jsonSerializer)
+        public CoinInfoService(IRestService restService, IChainTickerFileService fileService, IJsonSerializer jsonSerializer)
         {
             _restService = restService;
             _fileService = fileService;

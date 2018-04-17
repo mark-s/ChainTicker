@@ -1,17 +1,14 @@
-﻿using ChanTicker.Core.Interfaces;
+﻿using ChainTicker.Core.Interfaces;
 using Newtonsoft.Json;
 
-namespace ChanTicker.Core.IO
+namespace ChainTicker.Core.IO
 {
-    public class ChainTickerJsonSerializer : ISerialize
+    public class ChainTickerJsonSerializer : IJsonSerializer
     {
 
-        public T Deserialize<T>(string jsonText)
-        {
-            var rrr = JsonConvert.DeserializeObject<T>(jsonText);
-            return rrr;
-        }
+        public T Deserialize<T>(string jsonText) => JsonConvert.DeserializeObject<T>(jsonText);
 
         public string Serialize<T>(T value) => JsonConvert.SerializeObject(value);
+
     }
 }

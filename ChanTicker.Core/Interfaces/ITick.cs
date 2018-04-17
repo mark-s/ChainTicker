@@ -1,6 +1,6 @@
 using System;
 
-namespace ChanTicker.Core.Interfaces
+namespace ChainTicker.Core.Interfaces
 {
     public interface ITick
     {
@@ -11,6 +11,7 @@ namespace ChanTicker.Core.Interfaces
         decimal  BestAsk { get; }
 
         decimal  BestBid { get;  }
+
         double Volume { get;  }
     }
 }

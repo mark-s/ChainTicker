@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
-using ChanTicker.Core.Domain;
-using ChanTicker.Core.Interfaces;
+using ChainTicker.Core.Domain;
+using ChainTicker.Core.Interfaces;
 
 namespace ChainTicker.DataSource.FiatCurrencies.Domain
 {
@@ -14,7 +14,7 @@ namespace ChainTicker.DataSource.FiatCurrencies.Domain
         public string Name { get; }
 
         public ICoinUrlSet Urls { get; }
-        public IMiningData Mining { get; }
+
 
         public UnknownFiatCurrency(string currencyCode)
         {
@@ -22,8 +22,7 @@ namespace ChainTicker.DataSource.FiatCurrencies.Domain
             Name = currencyCode;
             Description = currencyCode;
 
-            Urls = new CoinUrlsUnknown();
-            Mining = new MiningInfoUnknown();
+           Urls = new CoinUrlsUnknown();
         }
 
 

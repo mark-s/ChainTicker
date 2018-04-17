@@ -1,6 +1,6 @@
 ﻿using System;
 using ChainTicker.Shell.Helpers;
-using ChanTicker.Core.Interfaces;
+using ChainTicker.Core.Interfaces;
 using Prism.Mvvm;
 
 namespace ChainTicker.Shell.Models

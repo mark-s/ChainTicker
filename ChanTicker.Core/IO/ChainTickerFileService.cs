@@ -1,15 +1,15 @@
 ﻿using System.Threading.Tasks;
-using ChanTicker.Core.Interfaces;
+using ChainTicker.Core.Interfaces;
 
-namespace ChanTicker.Core.IO
+namespace ChainTicker.Core.IO
 {
     public class ChainTickerFileService : IChainTickerFileService
     {
         private readonly IDiskCache _cache;
         private readonly IFileIOService _fileIOService;
-        private readonly ISerialize _serializer;
+        private readonly IJsonSerializer _serializer;
 
-        public ChainTickerFileService(IDiskCache cache, IFileIOService fileIOService, ISerialize serializer)
+        public ChainTickerFileService(IDiskCache cache, IFileIOService fileIOService, IJsonSerializer serializer)
         {
             _cache = cache;
             _fileIOService = fileIOService;

@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using ChainTicker.Transport.Rest;
-using ChanTicker.Core.IO;
+using ChainTicker.Core.IO;
 using NUnit.Framework;
 using Shouldly;
 

@@ -3,23 +3,23 @@ using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using ChainTicker.Transport.Pubnub;
-using ChanTicker.Core.Domain;
-using ChanTicker.Core.Interfaces;
+using ChainTicker.Core.Domain;
+using ChainTicker.Core.Interfaces;
 
 namespace ChainTicker.Exchange.BitFlyer.Services
 {
-    public class BitFlyerMarketDataService : IMarketDataService, IDisposable
+    public class PriceService : IPriceService, IDisposable
     {
         private readonly IPubnubTransport _pubnubTransport;
-        private readonly INotRealTimePriceService _priceQueryService;
+        private readonly IPollingPriceService _priceQueryService;
         private readonly MessageParser _messageParser;
 
 
-        public BitFlyerMarketDataService(IPubnubTransport pubnubTransport, INotRealTimePriceService priceQueryService, ISerialize jsonSerializer)
+        public PriceService(IPubnubTransport pubnubTransport, IPollingPriceService priceQueryService, MessageParser messageParser)
         {
             _pubnubTransport = pubnubTransport;
             _priceQueryService = priceQueryService;
-            _messageParser = new MessageParser(jsonSerializer);       
+            _messageParser = messageParser;
         }
         
 

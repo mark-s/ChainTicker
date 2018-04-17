@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using ChanTicker.Core.Domain;
-using ChanTicker.Core.Interfaces;
-using ChanTicker.Core.IO;
+using ChainTicker.Core.Domain;
+using ChainTicker.Core.Interfaces;
+using ChainTicker.Core.IO;
 
 namespace ChainTicker.DataSource.Coins
 {

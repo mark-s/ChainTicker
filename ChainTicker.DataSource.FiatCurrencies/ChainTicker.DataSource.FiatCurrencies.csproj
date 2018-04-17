@@ -29,7 +29,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Ensure.That">
+      <Version>7.2.1</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -54,9 +57,9 @@
     <Compile Include="Domain\UnknownFiatCurrency.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ChanTicker.Core\ChanTicker.Core.csproj">
+    <ProjectReference Include="..\ChanTicker.Core\ChainTicker.Core.csproj">
       <Project>{31377670-13EF-4AE5-A42E-37ECEAC43CF5}</Project>
-      <Name>ChanTicker.Core</Name>
+      <Name>ChainTicker.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="DTO\Responses\GdaxChannel.cs" />
     <Compile Include="DTO\Responses\GdaxError.cs" />
     <Compile Include="DTO\Responses\GdaxMarket.cs" />
@@ -48,15 +49,19 @@
     <Compile Include="DTO\Responses\GdaxSubscriptionInfo.cs" />
     <Compile Include="DTO\Responses\GdaxTick.cs" />
     <Compile Include="DTO\Responses\GdaxTypedMessageBase.cs" />
+    <Compile Include="ExchangeFactory.cs" />
     <Compile Include="GdaxExchange.cs" />
     <Compile Include="GdaxMessageType.cs" />
-    <Compile Include="Services\NotRealTimePriceService.cs" />
-    <Compile Include="Services\GdaxMarketDataService.cs" />
+    <Compile Include="Services\PollingPriceService.cs" />
+    <Compile Include="Services\PriceService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\GdaxMarketsService.cs" />
+    <Compile Include="Services\MarketsService.cs" />
     <Compile Include="Services\MessageFactory.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Ensure.That">
+      <Version>7.2.1</Version>
+    </PackageReference>
     <PackageReference Include="System.Reactive">
       <Version>3.1.1</Version>
     </PackageReference>
@@ -70,9 +75,9 @@
       <Project>{5403D108-9456-4CAA-8734-20190221AF3B}</Project>
       <Name>ChainTicker.Transport.WebSocket</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ChanTicker.Core\ChanTicker.Core.csproj">
+    <ProjectReference Include="..\ChanTicker.Core\ChainTicker.Core.csproj">
       <Project>{31377670-13EF-4AE5-A42E-37ECEAC43CF5}</Project>
-      <Name>ChanTicker.Core</Name>
+      <Name>ChainTicker.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

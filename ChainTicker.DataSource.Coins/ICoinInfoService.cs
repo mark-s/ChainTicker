@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using ChanTicker.Core.Interfaces;
+using ChainTicker.Core.Interfaces;
 
 namespace ChainTicker.DataSource.Coins
 {

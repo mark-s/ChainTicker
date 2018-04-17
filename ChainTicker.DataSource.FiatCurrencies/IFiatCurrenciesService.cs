@@ -1,4 +1,4 @@
-﻿using ChanTicker.Core.Interfaces;
+﻿using ChainTicker.Core.Interfaces;
 
 namespace ChainTicker.DataSource.FiatCurrencies
 {

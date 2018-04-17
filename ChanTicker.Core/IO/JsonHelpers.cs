@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace ChanTicker.Core.IO
+namespace ChainTicker.Core.IO
 {
     public static class JsonHelpers
     {

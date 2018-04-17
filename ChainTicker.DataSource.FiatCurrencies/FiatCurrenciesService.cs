@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ChainTicker.DataSource.FiatCurrencies.Domain;
 using ChainTicker.DataSource.FiatCurrencies.Properties;
-using ChanTicker.Core.Interfaces;
+using ChainTicker.Core.Interfaces;
 using FiatCurrency = ChainTicker.DataSource.FiatCurrencies.Domain.FiatCurrency;
 
 namespace ChainTicker.DataSource.FiatCurrencies
@@ -12,7 +12,7 @@ namespace ChainTicker.DataSource.FiatCurrencies
         private readonly Dictionary<string, ICoin> _fiatCurrencies;
 
 
-        public FiatCurrenciesService(ISerialize jsonSerializer)
+        public FiatCurrenciesService(IJsonSerializer jsonSerializer)
         {
             var currencies = jsonSerializer.Deserialize<List<DTO.FiatCurrency>>(Resources.FiatCurrencies);
 

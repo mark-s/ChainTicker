@@ -1,15 +1,15 @@
 ﻿using ChainTicker.Exchange.BitFlyer.DTO;
 using ChainTicker.Transport.Pubnub;
-using ChanTicker.Core.Domain;
-using ChanTicker.Core.Interfaces;
+using ChainTicker.Core.Domain;
+using ChainTicker.Core.Interfaces;
 
 namespace ChainTicker.Exchange.BitFlyer
 {
-    internal class MessageParser
+    public class MessageParser
     {
-        private readonly ISerialize _jsonSerializer;
+        private readonly IJsonSerializer _jsonSerializer;
 
-        public MessageParser(ISerialize jsonSerializer)
+        public MessageParser(IJsonSerializer jsonSerializer)
         {
             _jsonSerializer = jsonSerializer;
         }

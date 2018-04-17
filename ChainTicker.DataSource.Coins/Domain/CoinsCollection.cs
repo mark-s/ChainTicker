@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ChanTicker.Core.Interfaces;
+using ChainTicker.Core.Interfaces;
+using EnsureThat;
 
 namespace ChainTicker.DataSource.Coins.Domain
 {
@@ -18,8 +19,12 @@ namespace ChainTicker.DataSource.Coins.Domain
             => _coins.TryGetValue(coinCode, out var coin) ? coin : new UnknownCoin(coinCode);
 
         internal void AddCoin(string coinCode, ICoin coin)
-            => _coins[coinCode] = coin;
+        {
+            EnsureArg.IsNotNullOrEmpty(coinCode, nameof(coinCode));
+            EnsureArg.IsNotNull(coin, nameof(coin));
 
+            _coins[coinCode] = coin;
+        }
     }
 }
 

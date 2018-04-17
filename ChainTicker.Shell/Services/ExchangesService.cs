@@ -6,7 +6,7 @@ using ChainTicker.DataSource.FiatCurrencies;
 using ChainTicker.Exchange.BitFlyer;
 using ChainTicker.Exchange.Gdax;
 using ChainTicker.Shell.Models;
-using ChanTicker.Core.Interfaces;
+using ChainTicker.Core.Interfaces;
 using Microsoft.Practices.Unity;
 
 namespace ChainTicker.Shell.Services

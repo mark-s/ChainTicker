@@ -1,7 +1,7 @@
 ﻿using System;
-using ChanTicker.Core.IO;
+using ChainTicker.Core.IO;
 
-namespace ChanTicker.Core.Interfaces
+namespace ChainTicker.Core.Interfaces
 {
     public interface IDiskCache
     {

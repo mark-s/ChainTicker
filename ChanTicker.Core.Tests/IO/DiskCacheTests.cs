@@ -1,11 +1,11 @@
 ﻿using System;
-using ChanTicker.Core.Interfaces;
-using ChanTicker.Core.IO;
+using ChainTicker.Core.Interfaces;
+using ChainTicker.Core.IO;
 using FakeItEasy;
 using NUnit.Framework;
 using Shouldly;
 
-namespace ChanTicker.Core.Tests.IO
+namespace ChainTicker.Core.Tests.IO
 {
     [TestFixture]
     public class DiskCacheTests

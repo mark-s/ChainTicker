@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using ChanTicker.Core.Interfaces;
+using ChainTicker.Core.Interfaces;
 
-namespace ChanTicker.Core.IO
+namespace ChainTicker.Core.IO
 {
     public class FolderService : IFolderService
     {

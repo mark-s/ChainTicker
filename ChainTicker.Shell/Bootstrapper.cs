@@ -7,8 +7,8 @@ using ChainTicker.DataSource.FiatCurrencies;
 using ChainTicker.Exchange.BitFlyer;
 using ChainTicker.Exchange.Gdax;
 using ChainTicker.Transport.Rest;
-using ChanTicker.Core.Interfaces;
-using ChanTicker.Core.IO;
+using ChainTicker.Core.Interfaces;
+using ChainTicker.Core.IO;
 
 namespace ChainTicker.Shell
 {
@@ -33,7 +33,7 @@ namespace ChainTicker.Shell
             container.RegisterType<IFileIOService, FileIOService>(new ContainerControlledLifetimeManager());
 
             container.RegisterType<IDiskCache, DiskCache>(new ContainerControlledLifetimeManager());
-            container.RegisterType<ISerialize, ChainTickerJsonSerializer>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IJsonSerializer, ChainTickerJsonSerializer>(new ContainerControlledLifetimeManager());
             container.RegisterType<IChainTickerFileService,ChainTickerFileService>(new ContainerControlledLifetimeManager());
             
 

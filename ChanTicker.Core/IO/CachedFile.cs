@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChanTicker.Core.IO
+namespace ChainTicker.Core.IO
 {
     public class CachedFile
     {

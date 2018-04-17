@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ChanTicker.Core.Domain;
+using ChainTicker.Core.Domain;
 
-namespace ChanTicker.Core.Interfaces
+namespace ChainTicker.Core.Interfaces
 {
-    public interface IExchange
+    public interface IExchange 
     {
 
         ExchangeInfo Info { get; }
 
-        Task<List<Market>> GetAvailableMarketsAsync();
+        List<Market> Markets { get; }
 
 
-         Task<ITick> GetCurrentPriceAsync(Market market);
+        Task<ITick> GetCurrentPriceAsync(Market market);
             
-
-         bool IsSubscribedToTicks(Market market);
+        bool IsSubscribedToTicks(Market market);
             
-
-         IObservable<ITick> SubscribeToTicks(Market market);
+        IObservable<ITick> SubscribeToTicks(Market market);
 
          void UnsubscribeFromTicks(Market market);
 

@@ -2,9 +2,9 @@
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using ChanTicker.Core.Interfaces;
+using ChainTicker.Core.Interfaces;
 
-namespace ChanTicker.Core.IO
+namespace ChainTicker.Core.IO
 {
     public class FileIOService : IFileIOService
     {

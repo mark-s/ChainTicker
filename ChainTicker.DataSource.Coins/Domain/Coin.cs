@@ -1,8 +1,8 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using ChainTicker.DataSource.Coins.DTO;
-using ChanTicker.Core.Domain;
-using ChanTicker.Core.Interfaces;
+using ChainTicker.Core.Domain;
+using ChainTicker.Core.Interfaces;
+using EnsureThat;
 
 namespace ChainTicker.DataSource.Coins.Domain
 {
@@ -12,6 +12,10 @@ namespace ChainTicker.DataSource.Coins.Domain
     {
         public Coin(CoinInfo coinInfo, string baseImageUrl, string baseLinkUrl)
         {
+            EnsureArg.IsNotNull(coinInfo, nameof(coinInfo));
+            EnsureArg.IsNotNullOrEmpty(baseImageUrl, nameof(baseImageUrl));
+            EnsureArg.IsNotNullOrEmpty(baseLinkUrl, nameof(baseLinkUrl));
+
             IsValid = true;
 
             Code = coinInfo.Name;
@@ -23,13 +27,6 @@ namespace ChainTicker.DataSource.Coins.Domain
                                                    baseImageUrl + coinInfo.ImageUrl, 
                                                    baseLinkUrl + coinInfo.Url, 
                                                    coinInfo.ImageUrl?.Replace("/", ""));
-
-            //Mining = new MiningInfo(Convert.ToBoolean(Convert.ToInt32(coinInfo.FullyPremined)),
-            //                                        coinInfo.PreMinedValue,
-            //                                        coinInfo.ProofType,
-            //                                        coinInfo.TotalCoinsFreeFloat,
-            //                                        coinInfo.TotalCoinSupply,
-            //                                        coinInfo.Algorithm);
         }
 
         

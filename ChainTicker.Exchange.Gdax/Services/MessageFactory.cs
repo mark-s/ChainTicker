@@ -1,13 +1,13 @@
 ﻿using ChainTicker.Exchange.Gdax.DTO.Requests;
-using ChanTicker.Core.Interfaces;
+using ChainTicker.Core.Interfaces;
 
 namespace ChainTicker.Exchange.Gdax.Services
 {
     internal class MessageFactory
     {
-        private readonly ISerialize _jsonSerializer;
+        private readonly IJsonSerializer _jsonSerializer;
 
-        public MessageFactory(ISerialize jsonSerializer)
+        public MessageFactory(IJsonSerializer jsonSerializer)
         {
             _jsonSerializer = jsonSerializer;
         }

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Reactive.Linq;
-using ChanTicker.Core.Domain;
-using ChanTicker.Core.Interfaces;
+using ChainTicker.Core.Domain;
+using ChainTicker.Core.Interfaces;
 using Prism.Commands;
 using Prism.Mvvm;
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using ChanTicker.Core.Interfaces;
+using ChainTicker.Core.Interfaces;
 
 using Prism.Mvvm;
 

@@ -1,4 +1,4 @@
-﻿namespace ChanTicker.Core.Interfaces
+﻿namespace ChainTicker.Core.Interfaces
 {
     public interface ICoinUrlSet
     {

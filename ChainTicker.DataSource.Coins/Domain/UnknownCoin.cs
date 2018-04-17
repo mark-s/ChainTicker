@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
-using ChanTicker.Core.Domain;
-using ChanTicker.Core.Interfaces;
+using ChainTicker.Core.Domain;
+using ChainTicker.Core.Interfaces;
 
 namespace ChainTicker.DataSource.Coins.Domain
 {
@@ -15,7 +15,6 @@ namespace ChainTicker.DataSource.Coins.Domain
 
             Urls = new CoinUrlsUnknown();
 
-            Mining = new MiningInfoUnknown();
         }
     }
 }

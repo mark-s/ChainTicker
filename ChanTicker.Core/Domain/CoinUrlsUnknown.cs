@@ -1,6 +1,6 @@
-﻿using ChanTicker.Core.Interfaces;
+﻿using ChainTicker.Core.Interfaces;
 
-namespace ChanTicker.Core.Domain
+namespace ChainTicker.Core.Domain
 {
     public sealed class CoinUrlsUnknown : ICoinUrlSet
     {

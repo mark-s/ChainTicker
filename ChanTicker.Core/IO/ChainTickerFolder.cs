@@ -1,4 +1,4 @@
-﻿namespace ChanTicker.Core.IO
+﻿namespace ChainTicker.Core.IO
 {
     public enum ChainTickerFolder
     {

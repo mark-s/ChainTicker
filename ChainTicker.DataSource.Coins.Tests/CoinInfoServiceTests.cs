@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using ChainTicker.Transport.Rest;
-using ChanTicker.Core.Interfaces;
-using ChanTicker.Core.IO;
+using ChainTicker.Core.Interfaces;
+using ChainTicker.Core.IO;
 using FakeItEasy;
 using NUnit.Framework;
 using Shouldly;

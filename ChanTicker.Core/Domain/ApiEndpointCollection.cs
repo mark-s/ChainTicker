@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ChanTicker.Core.Domain
+namespace ChainTicker.Core.Domain
 {
     public class ApiEndpointCollection
     {

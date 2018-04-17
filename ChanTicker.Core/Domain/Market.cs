@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace ChanTicker.Core.Domain
+namespace ChainTicker.Core.Domain
 {
     [DebuggerDisplay("Name: {" + nameof(DisplayName) + "}")]
     public class Market 

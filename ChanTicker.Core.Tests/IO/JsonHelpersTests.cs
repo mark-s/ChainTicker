@@ -1,8 +1,8 @@
-﻿using ChanTicker.Core.IO;
+﻿using ChainTicker.Core.IO;
 using NUnit.Framework;
 using Shouldly;
 
-namespace ChanTicker.Core.Tests.IO
+namespace ChainTicker.Core.Tests.IO
 {
     [TestFixture]
     public class JsonHelpersTests
