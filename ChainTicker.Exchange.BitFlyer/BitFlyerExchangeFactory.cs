@@ -33,15 +33,19 @@ namespace ChainTicker.Exchange.BitFlyer
         public async Task<IExchange> GetExchangeAsync()
         {
             var pubnubTransport = new PubnubTransport(_exchangeInfo.ApiEndpoints[ApiEndpointType.Pubnub], new DebugLogger());
-            var pollingPriceService = new PollingPriceService(_restService, _exchangeInfo.ApiEndpoints[ApiEndpointType.Rest], TimeSpan.FromSeconds(3), _jsonSerializer);
+            var pollingPriceService = new PollingPriceService(_restService, _exchangeInfo.ApiEndpoints[ApiEndpointType.Rest], TimeSpan.FromSeconds(3));
             var messageParser = new MessageParser(_jsonSerializer);
             var priceService = new PriceService(pubnubTransport, pollingPriceService, messageParser);
-            var marketsService = new MarketsService(_exchangeInfo.ApiEndpoints, _restService, _chainTickerFileService, _jsonSerializer);
+            var marketFactory = new BitFlyerMarketFactory(priceService);
+            var marketsService = new MarketsService(_exchangeInfo.ApiEndpoints, _restService, _chainTickerFileService, marketFactory);
 
             var markets = await marketsService.GetAvailableMarketsAsync();
 
-            return new BitFlyerExchange(_exchangeInfo, markets, priceService);
+            return new BitFlyerExchange(_exchangeInfo, markets);
         }
 
     }
+
+
+
 }

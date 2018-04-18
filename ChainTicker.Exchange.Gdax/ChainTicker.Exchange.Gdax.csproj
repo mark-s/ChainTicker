@@ -39,7 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="DTO\Responses\GdaxChannel.cs" />
     <Compile Include="DTO\Responses\GdaxError.cs" />
     <Compile Include="DTO\Responses\GdaxMarket.cs" />
@@ -52,6 +51,8 @@
     <Compile Include="GdaxExchangeFactory.cs" />
     <Compile Include="GdaxExchange.cs" />
     <Compile Include="GdaxMessageType.cs" />
+    <Compile Include="GdaxMarketFactory.cs" />
+    <Compile Include="Market.cs" />
     <Compile Include="Services\PollingPriceService.cs" />
     <Compile Include="Services\PriceService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

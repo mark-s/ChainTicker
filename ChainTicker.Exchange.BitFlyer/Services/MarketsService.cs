@@ -14,12 +14,11 @@ namespace ChainTicker.Exchange.BitFlyer.Services
 
     public class MarketsService : IMarketsService
     {
-        private readonly IJsonSerializer _jsonSerialiser;
 
         private readonly ApiEndpointCollection _apiEndpoints;
         private readonly IRestService _restService;
         private readonly IChainTickerFileService _fileService;
-
+        private readonly BitFlyerMarketFactory _marketFactory;
 
         private const string CACHE_FILE_NAME = "BitFlyerAvailableMarkets.json";
         private readonly TimeSpan _maxCacheAge = TimeSpan.FromHours(3);
@@ -27,15 +26,15 @@ namespace ChainTicker.Exchange.BitFlyer.Services
         public MarketsService(ApiEndpointCollection apiEndpoints,
                                                 IRestService restService,
                                                 IChainTickerFileService fileService,
-                                                IJsonSerializer jsonSerialiser)
+                                                BitFlyerMarketFactory marketFactory)
         {
             _apiEndpoints = apiEndpoints;
             _restService = restService;
             _fileService = fileService;
-            _jsonSerialiser = jsonSerialiser;
+            _marketFactory = marketFactory;
         }
 
-        public async Task<List<Market>> GetAvailableMarketsAsync()
+        public async Task<List<IMarket>> GetAvailableMarketsAsync()
         {
             if (_fileService.IsCacheStale(new CachedFile(CACHE_FILE_NAME, _maxCacheAge)))
                 return await GetFromWebServiceAsync();
@@ -43,22 +42,23 @@ namespace ChainTicker.Exchange.BitFlyer.Services
                 return await GetFromCacheAsync();
         }
 
-        private async Task<List<Market>> GetFromWebServiceAsync()
+        private async Task<List<IMarket>> GetFromWebServiceAsync()
         {
-            var availableMarkets = new List<Market>();
+            var availableMarkets = new List<IMarket>();
 
             // note: Using 'getprices' here as it returns nicer data than 'getmarkets'
             var getPricesQuery = new RestQuery(_apiEndpoints[ApiEndpointType.Rest], "/v1/getprices");
-            var getPricesResponse = await _restService.GetAsync(getPricesQuery.GetAddress(), s => _jsonSerialiser.Deserialize<List<BitFlyerMarket>>(s));
+            var getPricesResponse = await _restService.GetAsync<List<BitFlyerMarket>>(getPricesQuery.Address());
 
             // but it returns All markets - even ones that can't be subscribed to... So need to flag them
             var getMarketsQuery = new RestQuery(_apiEndpoints[ApiEndpointType.Rest], "/v1/getmarkets");
-            var getMarketsResponse = await _restService.GetAsync(getMarketsQuery.GetAddress(), s => _jsonSerialiser.Deserialize<List<PlainMarket>>(s));
+            var getMarketsResponse = await _restService.GetAsync<List<BitFlyerMarket>>(getMarketsQuery.Address());
 
             if (getPricesResponse.IsSuccess && getMarketsResponse.IsSuccess)
             {
                 var marketsWithLivePrices = getMarketsResponse.Data;
-                availableMarkets.AddRange(getPricesResponse.Data.Select(m => new Market(m.ProductCode, m.MainCurrency, m.SubCurrency, m.ProductCode, m.CurrentPrice, Enumerable.Any<PlainMarket>(marketsWithLivePrices, p => p.ProductCode == m.ProductCode))));
+                availableMarkets.AddRange(getPricesResponse.Data.Select(m =>
+                _marketFactory.GetMarket(m, marketsWithLivePrices.Any(p => p.ProductCode == m.ProductCode))));
 
                 await _fileService.SaveAndSerializeAsync(ChainTickerFolder.Cache, CACHE_FILE_NAME, availableMarkets);
             }
@@ -71,15 +71,18 @@ namespace ChainTicker.Exchange.BitFlyer.Services
             return availableMarkets;
         }
 
-        private async Task<List<Market>> GetFromCacheAsync()
+        private async Task<List<IMarket>> GetFromCacheAsync()
         {
-            var markets= await  _fileService.LoadAndDeserializeAsync<List<Market>>(ChainTickerFolder.Cache, CACHE_FILE_NAME);
+            var toReturn = new List<IMarket>();
 
-            // if we're restoring from the cached file the prices will be stale, reset them here
-            foreach (var market in markets)
-                market.ClearMidMarketPriceSnapshot();
+            var fromCache = await _fileService.LoadAndDeserializeAsync<List<CachedMarket>>(ChainTickerFolder.Cache, CACHE_FILE_NAME);
 
-            return markets;
+            foreach (var cachedMarket in fromCache)
+            {
+                toReturn.Add(_marketFactory.GetMarket(cachedMarket));
+            }
+
+            return toReturn;
         }
     }
 }

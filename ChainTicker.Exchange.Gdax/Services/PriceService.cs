@@ -30,7 +30,7 @@ namespace ChainTicker.Exchange.Gdax.Services
             _messageFactory = new MessageFactory(_jsonSerializer);
         }
 
-        public IObservable<ITick> SubscribeToTicks(Market market)
+        public IObservable<ITick> SubscribeToTicks(IMarket market)
         {
             _webSocketTransport.Send(_messageFactory.CreateSubscribeMessage(market.ProductCode));
 
@@ -44,10 +44,10 @@ namespace ChainTicker.Exchange.Gdax.Services
         }
 
 
-        public Task<ITick> GetCurrentPriceAsync(Market market) 
+        public Task<ITick> GetCurrentPriceAsync(IMarket market) 
             => _priceQueryService.GetCurrentPriceAsync(market);
 
-        public void UnsubscribeFromTicks(Market market)
+        public void UnsubscribeFromTicks(IMarket market)
         {
             if (_subscribedProducts.Contains(market.ProductCode))
             {
@@ -60,7 +60,7 @@ namespace ChainTicker.Exchange.Gdax.Services
             }
         }
 
-        public bool IsSubscribedToTicks(Market market) 
+        public bool IsSubscribedToTicks(IMarket market) 
             => _subscribedProducts.Contains(market.ProductCode);
 
         private ITick ConvertToTick(GdaxTick gdaxTick)

@@ -19,10 +19,10 @@
         }
 
 
-        public string GetAddress(string queryStringArgs)
+        public string Address(string queryStringArgs)
             => $"{_serviceBaseUri}/{_path}?{_queryString}={queryStringArgs}";
 
-        public string GetAddress()
+        public string Address()
             => $"{_serviceBaseUri}/{_path}";
     }
 }

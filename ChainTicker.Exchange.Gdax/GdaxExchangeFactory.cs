@@ -31,13 +31,15 @@ namespace ChainTicker.Exchange.Gdax
         public async Task<IExchange> GetExchangeAsync()
         {
             var webSocketTransport = new WebSocketTransport(_exchangeInfo.ApiEndpoints[ApiEndpointType.WebSocket]);
-            var notRealTimeService = new PollingPriceService(_restService, _exchangeInfo.ApiEndpoints, _jsonSerializer);
+            var notRealTimeService = new PollingPriceService(_restService, _exchangeInfo.ApiEndpoints);
             var priceService = new PriceService(webSocketTransport, notRealTimeService, _jsonSerializer);
-            var marketsService = new MarketsService(_exchangeInfo.ApiEndpoints, _restService, _chainTickerFileService);
+            var marketFactory = new GdaxMarketFactory(priceService);
+            
+            var marketsService = new MarketsService(_exchangeInfo.ApiEndpoints, _restService, _chainTickerFileService, marketFactory);
 
             var markets = await marketsService.GetAvailableMarketsAsync();
 
-            return new GdaxExchange(_exchangeInfo, markets, priceService);
+            return new GdaxExchange(_exchangeInfo, markets);
 
         }
     }

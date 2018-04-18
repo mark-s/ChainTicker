@@ -14,27 +14,26 @@ namespace ChainTicker.Exchange.Gdax.Services
     public class MarketsService : IMarketsService
     {
 
-        private readonly IJsonSerializer _serialiser;
-
         private readonly ApiEndpointCollection _apiEndpoints;
         private readonly IRestService _restService;
         private readonly IChainTickerFileService _fileService;
+        private readonly GdaxMarketFactory _marketFactory;
 
         private const string CACHE_FILE_NAME = "GdaxAvailableMarkets.json";
         private readonly TimeSpan _maxCacheAge = TimeSpan.FromHours(3);
 
         public MarketsService(ApiEndpointCollection apiEndpoints,
                                                 IRestService restService,
-                                                IChainTickerFileService fileService)
+                                                IChainTickerFileService fileService,
+                                                GdaxMarketFactory marketFactory)
         {
-            _serialiser = new ChainTickerJsonSerializer();
-
             _apiEndpoints = apiEndpoints;
             _restService = restService;
             _fileService = fileService;
+            _marketFactory = marketFactory;
         }
 
-        public async Task<List<Market>> GetAvailableMarketsAsync()
+        public async Task<List<IMarket>> GetAvailableMarketsAsync()
         {
             if (_fileService.IsCacheStale(new CachedFile(CACHE_FILE_NAME, _maxCacheAge)))
                 return await GetFromWebServiceAsync();
@@ -42,16 +41,19 @@ namespace ChainTicker.Exchange.Gdax.Services
                 return await GetFromCacheAsync();
         }
 
-        private async Task<List<Market>> GetFromWebServiceAsync()
+        private async Task<List<IMarket>> GetFromWebServiceAsync()
         {
-            var availableMarkets = new List<Market>();
+            var availableMarkets = new List<IMarket>();
 
             var getPricesQuery = new RestQuery(_apiEndpoints[ApiEndpointType.Rest], "/products");
-            var getPricesResponse = await _restService.GetAsync(getPricesQuery.GetAddress(), s => _serialiser.Deserialize<List<GdaxMarket>>(s));
+            var getPricesResponse = await _restService.GetAsync<List<GdaxMarket>>(getPricesQuery.Address());
 
-             if (getPricesResponse.IsSuccess)
+            if (getPricesResponse.IsSuccess)
             {
-                availableMarkets.AddRange(getPricesResponse.Data.Select(m => new Market(m.Id, m.BaseCurrency, m.QuoteCurrency, m.Id, decimal.Zero, true)));
+                availableMarkets.AddRange(getPricesResponse.Data.Select(m =>
+                    _marketFactory.GetMarket(m.Id, m.BaseCurrency, m.QuoteCurrency, m.Id, true)
+
+                ));
 
                 await _fileService.SaveAndSerializeAsync(ChainTickerFolder.Cache, CACHE_FILE_NAME, availableMarkets);
             }
@@ -64,17 +66,19 @@ namespace ChainTicker.Exchange.Gdax.Services
             return availableMarkets;
         }
 
-        private async Task<List<Market>> GetFromCacheAsync()
+        private async Task<List<IMarket>> GetFromCacheAsync()
         {
-            var markets = await _fileService.LoadAndDeserializeAsync<List<Market>>(ChainTickerFolder.Cache, CACHE_FILE_NAME);
+            var toReturn = new List<IMarket>();
 
-            // if we're restoring from the cached file the prices will be stale, reset them here
-            foreach (var market in markets)
-                market.ClearMidMarketPriceSnapshot();
+            var fromCache = await _fileService.LoadAndDeserializeAsync<List<CachedMarket>>(ChainTickerFolder.Cache, CACHE_FILE_NAME);
 
-            return markets;
+            foreach (var cachedMarket in fromCache)
+            {
+                toReturn.Add(_marketFactory.GetMarket(cachedMarket));
+            }
+
+            return toReturn;
         }
     }
-
 }
 

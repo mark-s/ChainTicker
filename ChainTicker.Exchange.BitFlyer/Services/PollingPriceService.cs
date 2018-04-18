@@ -16,7 +16,6 @@ namespace ChainTicker.Exchange.BitFlyer.Services
     public class PollingPriceService : IPollingPriceService
     {
         private readonly IRestService _restService;
-        private readonly IJsonSerializer _jsonSerializer;
         private readonly ISubscribableRestService<List<BitFlyerMarket>> _subscribableRestService;
 
 
@@ -27,14 +26,12 @@ namespace ChainTicker.Exchange.BitFlyer.Services
         private readonly HashSet<string> _subscriptions = new HashSet<string>();
 
 
-        public PollingPriceService(IRestService restService, string apiEndpoint, TimeSpan updateTimeSpan, IJsonSerializer jsonSerializer)
+        public PollingPriceService(IRestService restService, string apiEndpoint, TimeSpan updateTimeSpan)
         {
             _restService = restService;
-            _jsonSerializer = jsonSerializer;
-            _getPricesQuery = new RestQuery(apiEndpoint, "/v1/getprices").GetAddress();
+            _getPricesQuery = new RestQuery(apiEndpoint, "/v1/getprices").Address();
             _subscribableRestService = new SubscribableRestService<List<BitFlyerMarket>>(restService, 
                                                                                                                         _getPricesQuery,
-                                                                                                                        s => _jsonSerializer.Deserialize<List<BitFlyerMarket>>(s),
                                                                                                                         updateTimeSpan);
             _subscribableRestService.RecievedMessagesObservable
                                                     .ObserveOn(Scheduler.Default)
@@ -49,7 +46,7 @@ namespace ChainTicker.Exchange.BitFlyer.Services
                 _subscribableRestService.Subscribe();
         }
 
-        public IObservable<ITick> Subscribe(Market market)
+        public IObservable<ITick> Subscribe(IMarket market)
         {
             StartListeningIfNeeded();
 
@@ -58,7 +55,7 @@ namespace ChainTicker.Exchange.BitFlyer.Services
             return _rawReceivedSubject.Where(m => m.MarketId == market.ProductCode).Select(m => m.Tick).AsObservable();
         }
 
-        public void Unubscribe(Market market)
+        public void Unubscribe(IMarket market)
         {
             _subscriptions.Remove(market.ProductCode);
 
@@ -77,9 +74,9 @@ namespace ChainTicker.Exchange.BitFlyer.Services
 
         
 
-        public async Task<ITick> GetCurrentPriceAsync(Market market)
+        public async Task<ITick> GetCurrentPriceAsync(IMarket market)
         {
-            var getPricesResponse = await _restService.GetAsync(_getPricesQuery, s => _jsonSerializer.Deserialize<List<BitFlyerMarket>>(s)).ConfigureAwait(false);
+            var getPricesResponse = await _restService.GetAsync<List<BitFlyerMarket>>(_getPricesQuery).ConfigureAwait(false);
             if (getPricesResponse.IsSuccess)
             {
                 var thismarket = getPricesResponse.Data.FirstOrDefault(m => m.ProductCode == market.ProductCode);

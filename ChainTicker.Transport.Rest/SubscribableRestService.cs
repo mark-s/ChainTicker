@@ -7,7 +7,6 @@ namespace ChainTicker.Transport.Rest
     public class SubscribableRestService<T> : ISubscribableRestService<T>
     {
         private readonly string _restQuery;
-        private readonly Func<string, T> _deserializer;
         private readonly IObservable<long> _observableTimer;
         private readonly IRestService _restService;
 
@@ -17,11 +16,10 @@ namespace ChainTicker.Transport.Rest
         private IDisposable _timerSubscription;
 
 
-        public SubscribableRestService(IRestService restService, string restQuery, Func<string, T> deserializer, TimeSpan updateTimeSpan)
+        public SubscribableRestService(IRestService restService, string restQuery, TimeSpan updateTimeSpan)
         {
             _restService = restService;
             _restQuery = restQuery;
-            _deserializer = deserializer;
 
             _observableTimer = Observable.Timer(TimeSpan.FromSeconds(0), updateTimeSpan);
 
@@ -29,8 +27,7 @@ namespace ChainTicker.Transport.Rest
 
         public void Subscribe()
         {
-            
-            _timerSubscription = _observableTimer.Select(_ =>  _restService.GetAsync(_restQuery, _deserializer))
+            _timerSubscription = _observableTimer.Select(_ =>  _restService.GetAsync<T>(_restQuery))
                                    .Subscribe(m => _messageSubject.OnNext(m.Result.Data));
         }
 

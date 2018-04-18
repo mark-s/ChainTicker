@@ -25,7 +25,7 @@ namespace ChainTicker.DataSource.Coins.Tests
         {
 
             _cache = A.Fake<IDiskCache>();
-            _restService = new RestService(new RandomUserAgentService());
+            _restService = new RestService(new RandomUserAgentService(), new ChainTickerJsonSerializer());
             _filleIoService = A.Fake<IFileIOService>();
             
             _fileService = new ChainTickerFileService(_cache, _filleIoService, new ChainTickerJsonSerializer());
@@ -41,7 +41,7 @@ namespace ChainTicker.DataSource.Coins.Tests
                             ).Returns(GetCoinsJson());
 
 
-            var coinInfoService = new CoinInfoService(_restService, _fileService, new ChainTickerJsonSerializer());
+            var coinInfoService = new CoinInfoService(_restService, _fileService);
 
             await coinInfoService.GetAvailableCoinsAsync();
 

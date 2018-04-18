@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Reactive.Linq;
 using ChainTicker.Core.Domain;
 using ChainTicker.Core.Interfaces;
+using EnsureThat;
 using Prism.Commands;
 using Prism.Mvvm;
 
@@ -10,9 +11,8 @@ namespace ChainTicker.Shell.Models
 {
     public class MarketModel : BindableBase
     {
-        private readonly Market _market;
-        private readonly Func<Market, IObservable<ITick>> _subscriptionFunc;
-        private readonly Action<Market> _unSubscriptionFunc;
+        private readonly IMarket _market;
+
 
         private IDisposable _subscription;
 
@@ -56,34 +56,27 @@ namespace ChainTicker.Shell.Models
 
         public DelegateCommand ToggleSubscribeCommand { get; }
 
-        internal MarketModel(Market market,
+        internal MarketModel(IMarket market,
                                         ICoin baseCoinInfo,
                                         ICoin counterCoinInfo,
-                                        Func<Market, IObservable<ITick>> subscriptionFunc,
-                                        Action<Market> unSubscriptionFunc,
                                         string exchangeName)
         {
+            _market = EnsureArg.IsNotNull(market, nameof(market));
 
-            _market = market ?? throw new ArgumentNullException(nameof(market), "market is required!");
-
-            Tick = new TickModel(_market.MidMarketPriceSnapshot);
+            Tick = new TickModel(decimal.Zero);
 
             BaseCoin = baseCoinInfo;
             CounterCoin = counterCoinInfo;
             ExchangeName = exchangeName;
 
-            _subscriptionFunc = subscriptionFunc;
-            _unSubscriptionFunc = unSubscriptionFunc;
 
             ToggleSubscribeCommand = new DelegateCommand(() => IsSubscribed = !IsSubscribed, () => true);
 
         }
 
-
-
         private void Subscribe()
         {
-            _subscription = _subscriptionFunc(_market)
+            _subscription = _market.SubscribeToTicks()
                                                     .ObserveOnDispatcher()
                                                     .Subscribe(t => Tick.Update(t),
                                                                      ex => Debug.WriteLine(ex.Message),
@@ -92,8 +85,8 @@ namespace ChainTicker.Shell.Models
 
         private void Unsubscribe()
         {
-            _unSubscriptionFunc(_market);
+            _subscription.Dispose();
+            _market.UnsubscribeFromTicks();
         }
-
     }
 }

@@ -6,6 +6,6 @@ namespace ChainTicker.Core.Interfaces
 {
     public interface IMarketsService
     {
-        Task<List<Market>> GetAvailableMarketsAsync();
+        Task<List<IMarket>> GetAvailableMarketsAsync();
     }
 }

@@ -25,10 +25,10 @@ namespace ChainTicker.Shell.Models
         {
             _exchange = exchange;
 
-            GetAvailableMarkets(getCoinInfoFunc);
+            Populate(getCoinInfoFunc);
         }
 
-        private void GetAvailableMarkets(Func<string, ICoin> getCoinInfoFunc)
+        private void Populate(Func<string, ICoin> getCoinInfoFunc)
         {
 
             var displayMarkets = new List<MarketModel>();
@@ -38,8 +38,6 @@ namespace ChainTicker.Shell.Models
                 displayMarkets.Add(new MarketModel(market,
                                                                             getCoinInfoFunc(market.BaseCurrency),
                                                                             getCoinInfoFunc(market.CounterCurrency),
-                                                                            _exchange.SubscribeToTicks,
-                                                                            _exchange.UnsubscribeFromTicks,
                                                                             _exchange.Info.Name));
             }
 

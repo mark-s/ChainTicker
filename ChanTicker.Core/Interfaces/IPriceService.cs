@@ -6,13 +6,13 @@ namespace ChainTicker.Core.Interfaces
 {
     public interface IPriceService
     {
-        Task<ITick> GetCurrentPriceAsync(Market market);
+        Task<ITick> GetCurrentPriceAsync(IMarket market);
 
-        IObservable<ITick> SubscribeToTicks(Market market);
+        IObservable<ITick> SubscribeToTicks(IMarket market);
 
-        void UnsubscribeFromTicks(Market market);
+        void UnsubscribeFromTicks(IMarket market);
 
-        bool IsSubscribedToTicks(Market market);
+        bool IsSubscribedToTicks(IMarket market);
 
     }
 }

@@ -2,8 +2,8 @@
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using ChainTicker.Transport.Pubnub;
 using ChainTicker.Core.Domain;
+using ChainTicker.Transport.Pubnub;
 using ChainTicker.Core.Interfaces;
 
 namespace ChainTicker.Exchange.BitFlyer.Services
@@ -23,7 +23,7 @@ namespace ChainTicker.Exchange.BitFlyer.Services
         }
         
 
-        public IObservable<ITick> SubscribeToTicks(Market market)
+        public IObservable<ITick> SubscribeToTicks(IMarket market)
         {
             if (market.HasRealTimeUpdates)
                 return SubscribeToLiveMarket(market);
@@ -32,11 +32,11 @@ namespace ChainTicker.Exchange.BitFlyer.Services
 
         }
 
-        private IObservable<ITick> SubscribeToTimedUpdated(Market market) 
+        private IObservable<ITick> SubscribeToTimedUpdated(IMarket market) 
             => _priceQueryService.Subscribe(market);
 
         // This is for markets that have realtime updates available
-        private IObservable<ITick> SubscribeToLiveMarket(Market market)
+        private IObservable<ITick> SubscribeToLiveMarket(IMarket market)
         {
             var channelName = GetChannelName(market);
 
@@ -47,7 +47,7 @@ namespace ChainTicker.Exchange.BitFlyer.Services
                                                                                      .Select(m => _messageParser.ConvertToTick(m));
         }
 
-        public void UnsubscribeFromTicks(Market market)
+        public void UnsubscribeFromTicks(IMarket market)
         {
             if (market.HasRealTimeUpdates)
                 _pubnubTransport.UnsubscribeFromChannel(GetChannelName(market));
@@ -56,17 +56,17 @@ namespace ChainTicker.Exchange.BitFlyer.Services
         }
 
 
-        private string GetChannelName(Market market)
+        private string GetChannelName(IMarket market)
             => "lightning_ticker_" + market.ProductCode;
 
-        public async Task<ITick> GetCurrentPriceAsync(Market market)
+        public async Task<ITick> GetCurrentPriceAsync(IMarket market)
             => await _priceQueryService.GetCurrentPriceAsync(market);
 
 
         public void Dispose() 
             => _pubnubTransport?.Dispose();
 
-        public bool IsSubscribedToTicks(Market market)
+        public bool IsSubscribedToTicks(IMarket market)
         {
             var channelName = GetChannelName(market);
             return _pubnubTransport.IsSubscribedToChannel(channelName);

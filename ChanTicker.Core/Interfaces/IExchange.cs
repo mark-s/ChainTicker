@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using ChainTicker.Core.Domain;
 
 namespace ChainTicker.Core.Interfaces
@@ -10,16 +8,8 @@ namespace ChainTicker.Core.Interfaces
 
         ExchangeInfo Info { get; }
 
-        List<Market> Markets { get; }
+        List<IMarket> Markets { get; }
 
-
-        Task<ITick> GetCurrentPriceAsync(Market market);
-            
-        bool IsSubscribedToTicks(Market market);
-            
-        IObservable<ITick> SubscribeToTicks(Market market);
-
-         void UnsubscribeFromTicks(Market market);
 
     }
 }

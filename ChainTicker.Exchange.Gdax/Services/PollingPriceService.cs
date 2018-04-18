@@ -12,20 +12,17 @@ namespace ChainTicker.Exchange.Gdax.Services
     {
         private readonly IRestService _restService;
         private readonly ApiEndpointCollection _infoApiEndpoints;
-        private readonly IJsonSerializer _jsonSerialiser;
 
-        public PollingPriceService(IRestService restService, ApiEndpointCollection infoApiEndpoints, IJsonSerializer jsonSerialiser)
+        public PollingPriceService(IRestService restService, ApiEndpointCollection infoApiEndpoints)
         {
             _restService = restService;
             _infoApiEndpoints = infoApiEndpoints;
-            _jsonSerialiser = jsonSerialiser;
         }
 
 
-        public async Task<ITick> GetCurrentPriceAsync(Market market)
+        public async Task<ITick> GetCurrentPriceAsync(IMarket market)
         {
-            var productPriceResponse = await _restService.GetAsync(GetProductTickerUrl(market.ProductCode),
-                                                                   s => _jsonSerialiser.Deserialize<GdaxNonRealtimeTick>(s)).ConfigureAwait(false);
+            var productPriceResponse = await _restService.GetAsync<GdaxNonRealtimeTick>(GetProductTickerUrl(market.ProductCode)).ConfigureAwait(false);
 
             if (productPriceResponse.IsSuccess)
             {
@@ -49,10 +46,10 @@ namespace ChainTicker.Exchange.Gdax.Services
 
 
 
-        public IObservable<ITick> Subscribe(Market market) 
+        public IObservable<ITick> Subscribe(IMarket market) 
             => throw new InvalidOperationException("All GDAX subscriptions are realtime - prefer realtime subscriptions");
 
-        public void Unubscribe(Market market)
+        public void Unubscribe(IMarket market)
             => throw new InvalidOperationException("All GDAX subscriptions are realtime - prefer realtime subscriptions");
     }
 }

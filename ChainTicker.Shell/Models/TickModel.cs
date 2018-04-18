@@ -31,7 +31,7 @@ namespace ChainTicker.Shell.Models
             private set => SetProperty(ref _timeStamp, value);
         }
 
-        
+
         private decimal _bestBid;
         public decimal BestBid
         {
@@ -56,29 +56,19 @@ namespace ChainTicker.Shell.Models
         }
 
 
+        public TickModel(decimal initialPrice)
+        {
+            Price = initialPrice;
+        }
 
-        
         public void Update(ITick tick)
         {
-            SetPrice(tick.LastTradedPrice);
+            PriceDirection = PriceDirectionCalculator.GetPriceDirection(Price, tick.LastTradedPrice, PriceDirection);
+            Price = tick.LastTradedPrice;
             TimeStamp = tick.TimeStamp.ToLocalTime().DateTime;
             BestAsk = tick.BestAsk;
             BestBid = tick.BestBid;
             Volume = tick.Volume;
         }
-
-        public TickModel(decimal initialPrice )
-        {
-            Price = initialPrice;
-        }
-
-
-        private void SetPrice(decimal? newPrice)
-        {
-            PriceDirection = PriceDirectionCalculator.GetPriceDirection(Price, newPrice, PriceDirection);
-            Price = newPrice;
-
-        }
-
     }
 }
