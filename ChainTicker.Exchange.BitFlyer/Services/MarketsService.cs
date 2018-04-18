@@ -34,12 +34,12 @@ namespace ChainTicker.Exchange.BitFlyer.Services
             _marketFactory = marketFactory;
         }
 
-        public async Task<List<IMarket>> GetAvailableMarketsAsync()
+        public Task<List<IMarket>> GetAvailableMarketsAsync()
         {
             if (_fileService.IsCacheStale(new CachedFile(CACHE_FILE_NAME, _maxCacheAge)))
-                return await GetFromWebServiceAsync();
+                return GetFromWebServiceAsync();
             else
-                return await GetFromCacheAsync();
+                return GetFromCacheAsync();
         }
 
         private async Task<List<IMarket>> GetFromWebServiceAsync()
