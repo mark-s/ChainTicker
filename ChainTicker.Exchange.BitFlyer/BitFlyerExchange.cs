@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ChainTicker.Core.Domain;
 using ChainTicker.Core.Interfaces;
+using EnsureThat;
 
 
 namespace ChainTicker.Exchange.BitFlyer
@@ -13,8 +14,8 @@ namespace ChainTicker.Exchange.BitFlyer
 
         internal BitFlyerExchange(ExchangeInfo exchangeInfo, List<IMarket> markets)
         {
-            Info = exchangeInfo;
-            Markets = markets;
+            Info = EnsureArg.IsNotNull(exchangeInfo, nameof(exchangeInfo));
+            Markets = EnsureArg.IsNotNull(markets, nameof(markets));
         }
 
     }

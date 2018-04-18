@@ -10,6 +10,7 @@ using ChainTicker.Exchange.BitFlyer.DTO;
 using ChainTicker.Transport.Rest;
 using ChainTicker.Core.Domain;
 using ChainTicker.Core.Interfaces;
+using EnsureThat;
 
 namespace ChainTicker.Exchange.BitFlyer.Services
 {
@@ -28,7 +29,7 @@ namespace ChainTicker.Exchange.BitFlyer.Services
 
         public PollingPriceService(IRestService restService, string apiEndpoint, TimeSpan updateTimeSpan)
         {
-            _restService = restService;
+            _restService = EnsureArg.IsNotNull(restService, nameof(restService));
             _getPricesQuery = new RestQuery(apiEndpoint, "/v1/getprices").Address();
             _subscribableRestService = new SubscribableRestService<List<BitFlyerMarket>>(restService, 
                                                                                                                         _getPricesQuery,
@@ -40,7 +41,7 @@ namespace ChainTicker.Exchange.BitFlyer.Services
         }
 
 
-        public void StartListeningIfNeeded()
+        private void StartListeningIfNeeded()
         {
             if (_subscriptions.Any() == false)
                 _subscribableRestService.Subscribe();

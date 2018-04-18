@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ChainTicker.Core.Domain;
 using ChainTicker.Transport.Pubnub;
 using ChainTicker.Core.Interfaces;
+using EnsureThat;
 
 namespace ChainTicker.Exchange.BitFlyer.Services
 {
@@ -17,14 +18,16 @@ namespace ChainTicker.Exchange.BitFlyer.Services
 
         public PriceService(IPubnubTransport pubnubTransport, IPollingPriceService priceQueryService, MessageParser messageParser)
         {
-            _pubnubTransport = pubnubTransport;
-            _priceQueryService = priceQueryService;
-            _messageParser = messageParser;
+            _pubnubTransport = EnsureArg.IsNotNull(pubnubTransport, nameof(pubnubTransport));
+            _priceQueryService = EnsureArg.IsNotNull(priceQueryService, nameof(priceQueryService));
+            _messageParser = EnsureArg.IsNotNull(messageParser, nameof(messageParser));
         }
-        
+
 
         public IObservable<ITick> SubscribeToTicks(IMarket market)
         {
+            EnsureArg.IsNotNull(market, nameof(market));
+
             if (market.HasRealTimeUpdates)
                 return SubscribeToLiveMarket(market);
             else
@@ -32,12 +35,18 @@ namespace ChainTicker.Exchange.BitFlyer.Services
 
         }
 
-        private IObservable<ITick> SubscribeToTimedUpdated(IMarket market) 
-            => _priceQueryService.Subscribe(market);
+        private IObservable<ITick> SubscribeToTimedUpdated(IMarket market)
+        {
+            var marketToSubscribeTo = EnsureArg.IsNotNull(market, nameof(market));
+
+            return _priceQueryService.Subscribe(marketToSubscribeTo);
+        }
 
         // This is for markets that have realtime updates available
         private IObservable<ITick> SubscribeToLiveMarket(IMarket market)
         {
+            EnsureArg.IsNotNull(market, nameof(market));
+
             var channelName = GetChannelName(market);
 
             _pubnubTransport.SubscribeToChannel(channelName);
@@ -49,6 +58,8 @@ namespace ChainTicker.Exchange.BitFlyer.Services
 
         public void UnsubscribeFromTicks(IMarket market)
         {
+            EnsureArg.IsNotNull(market, nameof(market));
+
             if (market.HasRealTimeUpdates)
                 _pubnubTransport.UnsubscribeFromChannel(GetChannelName(market));
             else
@@ -60,14 +71,18 @@ namespace ChainTicker.Exchange.BitFlyer.Services
             => "lightning_ticker_" + market.ProductCode;
 
         public async Task<ITick> GetCurrentPriceAsync(IMarket market)
-            => await _priceQueryService.GetCurrentPriceAsync(market);
+        {
+            EnsureArg.IsNotNull(market, nameof(market));
+            return await _priceQueryService.GetCurrentPriceAsync(market);
+        }
 
 
-        public void Dispose() 
+        public void Dispose()
             => _pubnubTransport?.Dispose();
 
         public bool IsSubscribedToTicks(IMarket market)
         {
+            EnsureArg.IsNotNull(market, nameof(market));
             var channelName = GetChannelName(market);
             return _pubnubTransport.IsSubscribedToChannel(channelName);
         }

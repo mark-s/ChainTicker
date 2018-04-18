@@ -2,6 +2,7 @@
 using ChainTicker.Transport.Pubnub;
 using ChainTicker.Core.Domain;
 using ChainTicker.Core.Interfaces;
+using EnsureThat;
 
 namespace ChainTicker.Exchange.BitFlyer
 {
@@ -11,11 +12,13 @@ namespace ChainTicker.Exchange.BitFlyer
 
         public MessageParser(IJsonSerializer jsonSerializer)
         {
-            _jsonSerializer = jsonSerializer;
+            _jsonSerializer = EnsureArg.IsNotNull(jsonSerializer, nameof(jsonSerializer));
         }
 
         public ITick ConvertToTick(PubnubMessage message)
         {
+            EnsureArg.IsNotNull(message, nameof(message));
+
             var bitFlyerTick = _jsonSerializer.Deserialize<BitFlyerTick>(message.Content);
             return new Tick(bitFlyerTick.LastTradedPrice, 
                                   bitFlyerTick.TickTimeStamp,

@@ -8,6 +8,7 @@ using ChainTicker.Transport.Rest;
 using ChainTicker.Core.Domain;
 using ChainTicker.Core.Interfaces;
 using ChainTicker.Core.IO;
+using EnsureThat;
 
 namespace ChainTicker.Exchange.BitFlyer.Services
 {
@@ -28,10 +29,10 @@ namespace ChainTicker.Exchange.BitFlyer.Services
                                                 IChainTickerFileService fileService,
                                                 BitFlyerMarketFactory marketFactory)
         {
-            _apiEndpoints = apiEndpoints;
-            _restService = restService;
-            _fileService = fileService;
-            _marketFactory = marketFactory;
+            _apiEndpoints = EnsureArg.IsNotNull(apiEndpoints, nameof(apiEndpoints));
+            _restService = EnsureArg.IsNotNull(restService, nameof(restService));
+            _fileService = EnsureArg.IsNotNull(fileService, nameof(fileService));
+            _marketFactory = EnsureArg.IsNotNull(marketFactory, nameof(marketFactory));
         }
 
         public Task<List<IMarket>> GetAvailableMarketsAsync()
@@ -57,8 +58,7 @@ namespace ChainTicker.Exchange.BitFlyer.Services
             if (getPricesResponse.IsSuccess && getMarketsResponse.IsSuccess)
             {
                 var marketsWithLivePrices = getMarketsResponse.Data;
-                availableMarkets.AddRange(getPricesResponse.Data.Select(m =>
-                _marketFactory.GetMarket(m, marketsWithLivePrices.Any(p => p.ProductCode == m.ProductCode))));
+                availableMarkets.AddRange(getPricesResponse.Data.Select(m => _marketFactory.GetMarket(m, marketsWithLivePrices.Any(p => p.ProductCode == m.ProductCode))));
 
                 await _fileService.SaveAndSerializeAsync(ChainTickerFolder.Cache, CACHE_FILE_NAME, availableMarkets);
             }
@@ -78,9 +78,7 @@ namespace ChainTicker.Exchange.BitFlyer.Services
             var fromCache = await _fileService.LoadAndDeserializeAsync<List<CachedMarket>>(ChainTickerFolder.Cache, CACHE_FILE_NAME);
 
             foreach (var cachedMarket in fromCache)
-            {
                 toReturn.Add(_marketFactory.GetMarket(cachedMarket));
-            }
 
             return toReturn;
         }

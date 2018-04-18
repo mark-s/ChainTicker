@@ -5,6 +5,7 @@ using ChainTicker.Core.Interfaces;
 using ChainTicker.Exchange.BitFlyer.Services;
 using ChainTicker.Transport.Pubnub;
 using ChainTicker.Transport.Rest;
+using EnsureThat;
 
 namespace ChainTicker.Exchange.BitFlyer
 {
@@ -24,9 +25,9 @@ namespace ChainTicker.Exchange.BitFlyer
 
         public BitFlyerExchangeFactory(IRestService restService, IChainTickerFileService chainTickerFileService, IJsonSerializer jsonSerializer)
         {
-            _restService = restService;
-            _chainTickerFileService = chainTickerFileService;
-            _jsonSerializer = jsonSerializer;
+            _restService = EnsureArg.IsNotNull(restService, nameof(restService));
+            _chainTickerFileService = EnsureArg.IsNotNull(chainTickerFileService, nameof(chainTickerFileService));
+            _jsonSerializer = EnsureArg.IsNotNull(jsonSerializer, nameof(jsonSerializer));
         }
 
         public async Task<IExchange> GetExchangeAsync()
