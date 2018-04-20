@@ -76,6 +76,8 @@ namespace ChainTicker.Shell.Models
 
         private void Subscribe()
         {
+            Debug.WriteLine($"Subscribing to {ExchangeName}: {_market.DisplayName}");
+
             _subscription = _market.SubscribeToTicks()
                                                     .ObserveOnDispatcher()
                                                     .Subscribe(t => Tick.Update(t),
@@ -87,6 +89,9 @@ namespace ChainTicker.Shell.Models
         {
             _subscription.Dispose();
             _market.UnsubscribeFromTicks();
+
+            Debug.WriteLine($"Unsubscribed from  {ExchangeName}: {_market.DisplayName}");
+
         }
     }
 }

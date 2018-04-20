@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.Practices.Unity;
 using Prism.Unity;
 using ChainTicker.Shell.Views;
 using System.Windows;
-using ChainTicker.Core.Domain;
 using ChainTicker.DataSource.Coins;
 using ChainTicker.DataSource.FiatCurrencies;
 using ChainTicker.Exchange.BitFlyer;
