@@ -93,5 +93,11 @@ namespace ChainTicker.Shell.Models
             Debug.WriteLine($"Unsubscribed from  {ExchangeName}: {_market.DisplayName}");
 
         }
+
+
+
+
+
+
     }
 }

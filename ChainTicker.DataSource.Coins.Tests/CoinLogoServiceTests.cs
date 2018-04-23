@@ -9,7 +9,7 @@ namespace ChainTicker.DataSource.Coins.Tests
     public class CoinLogoServiceTests
     {
         [Test]
-        public async Task METHODUNDERTEST_PARTUNDERTEST_EXPECTEDRESULT()
+        public async Task GetAllAvailableImagesAsync_Works()
         {
 
             var fileIOService = new FileIOService(new FolderService());

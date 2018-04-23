@@ -38,6 +38,9 @@ namespace ChainTicker.Shell
             container.RegisterType<IJsonSerializer, ChainTickerJsonSerializer>(new ContainerControlledLifetimeManager());
             container.RegisterType<IChainTickerFileService, ChainTickerFileService>(new ContainerControlledLifetimeManager());
 
+            container.RegisterType<IMarketSubscriptionService, MarketSubscriptionService>(new ContainerControlledLifetimeManager());
+
+            
         }
 
         private void RegisterExchanges(IUnityContainer container)
@@ -45,7 +48,7 @@ namespace ChainTicker.Shell
             container.RegisterType<IExchangeFactory, BitFlyerExchangeFactory>(nameof(BitFlyerExchangeFactory), new ContainerControlledLifetimeManager());
             container.RegisterType<IExchangeFactory, GdaxExchangeFactory>(nameof(GdaxExchangeFactory), new ContainerControlledLifetimeManager());
 
-            container.RegisterType<ExchangesService>(new InjectionConstructor(
+            container.RegisterType<ExchangeModelsService>(new InjectionConstructor(
                 container.Resolve<IFiatCurrenciesService>(),
                 container.Resolve<ICoinInfoService>(),
                 new ResolvedArrayParameter<IExchangeFactory>(container.ResolveAll<IExchangeFactory>().ToArray())));

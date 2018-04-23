@@ -19,6 +19,9 @@
         <intr:EventTrigger EventName="Loaded">
             <intr:InvokeCommandAction Command="{Binding InitDataCommand}" />
         </intr:EventTrigger>
+        <intr:EventTrigger EventName="Closing">
+            <intr:InvokeCommandAction Command="{Binding ClosingCommand}" />
+        </intr:EventTrigger>
     </intr:Interaction.Triggers>
 
     <Window.Resources>
@@ -36,14 +39,14 @@
             Visibility="{Binding IsChecked, ElementName=ShowMenuBox, Converter={StaticResource boolToVisibilityConverter}}" />
 
 
-            <ItemsControl ItemTemplate="{StaticResource MarketTemplate}" ItemsSource="{Binding AvailableExchanges.Exchanges[0].Markets}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
+        <ItemsControl ItemTemplate="{StaticResource MarketTemplate}" ItemsSource="{Binding AvailableExchanges.Exchanges[0].Markets}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
 
-            </ItemsControl>
+        </ItemsControl>
 
     </StackPanel>
 
