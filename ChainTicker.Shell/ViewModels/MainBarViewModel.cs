@@ -14,7 +14,7 @@ namespace ChainTicker.Shell.ViewModels
     public class MainBarViewModel : BindableBase
     {
         private readonly ICoinInfoService _coinInfoService;
-        private readonly ExchangeModelsService _exchangeModelsService;
+        private readonly ExchangeModelsFactory _exchangeModelsFactory;
         private readonly IMarketSubscriptionService _marketSubscriptionService;
 
         public DelegateCommand InitDataCommand { get; }
@@ -40,10 +40,10 @@ namespace ChainTicker.Shell.ViewModels
 
 
 
-        public MainBarViewModel(ICoinInfoService coinInfoService, ExchangeModelsService exchangeModelsService, IMarketSubscriptionService marketSubscriptionService)
+        public MainBarViewModel(ICoinInfoService coinInfoService, ExchangeModelsFactory exchangeModelsFactory, IMarketSubscriptionService marketSubscriptionService)
         {
             _coinInfoService = coinInfoService;
-            _exchangeModelsService = exchangeModelsService;
+            _exchangeModelsFactory = exchangeModelsFactory;
             _marketSubscriptionService = marketSubscriptionService;
 
             InitDataCommand = GetInitDataCommand();
@@ -58,7 +58,7 @@ namespace ChainTicker.Shell.ViewModels
             {
 
                 // Save subscriptions for next time
-                await _marketSubscriptionService.SaveSubscribedMarketsAsync(AvailableExchanges);
+                await _marketSubscriptionService.SaveSubscribedMarketsAsync();
 
                 // Send Unsubscribe to the server
                 foreach (var exchange in AvailableExchanges.Exchanges)
@@ -74,19 +74,13 @@ namespace ChainTicker.Shell.ViewModels
 
         private async Task GetExchangesAsync()
         {
-            var exchanges = await _exchangeModelsService.GetExchangesAsync();
+            AvailableExchanges = await _exchangeModelsFactory.GetExchangesAsync();
 
-            AvailableExchanges = new ExchangeCollectionModel("AvailableExchanges", new ObservableCollection<ExchangeModel>(exchanges));
-
+            // load and apply previous subscribed status
             foreach (var exchange in AvailableExchanges.Exchanges)
-            {
                 foreach (var market in exchange.Markets)
-                {
                     if (await _marketSubscriptionService.WasSubscribedToAsync(exchange.Name, market.DisplayName))
                         market.IsSubscribed = true;
-                }
-            }
-
         }
 
 

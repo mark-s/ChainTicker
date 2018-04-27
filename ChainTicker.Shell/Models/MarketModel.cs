@@ -2,15 +2,19 @@
 using System.Diagnostics;
 using System.Reactive.Linq;
 using ChainTicker.Core.Domain;
+using ChainTicker.Core.EventTypes;
 using ChainTicker.Core.Interfaces;
+using ChainTicker.Core.IO;
 using EnsureThat;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 
 namespace ChainTicker.Shell.Models
 {
     public class MarketModel : BindableBase
     {
+        private readonly IEventAggregator _eventAggregator;
         private readonly IMarket _market;
 
 
@@ -59,8 +63,10 @@ namespace ChainTicker.Shell.Models
         internal MarketModel(IMarket market,
                                         ICoin baseCoinInfo,
                                         ICoin counterCoinInfo,
-                                        string exchangeName)
+                                        string exchangeName,
+                                        IEventAggregator eventAggregator)
         {
+            _eventAggregator = eventAggregator;
             _market = EnsureArg.IsNotNull(market, nameof(market));
 
             Tick = new TickModel(decimal.Zero);
@@ -83,12 +89,15 @@ namespace ChainTicker.Shell.Models
                                                     .Subscribe(t => Tick.Update(t),
                                                                      ex => Debug.WriteLine(ex.Message),
                                                                      () => Debug.WriteLine("OnCompleted"));
+
+            _eventAggregator.GetEvent<MarketSubscribed>().Publish(new SubscribedMarket(ExchangeName, _market.DisplayName));
         }
 
         private void Unsubscribe()
         {
             _subscription.Dispose();
             _market.UnsubscribeFromTicks();
+            _eventAggregator.GetEvent<MarketUnsubscribed>().Publish(new SubscribedMarket(ExchangeName, _market.DisplayName));
 
             Debug.WriteLine($"Unsubscribed from  {ExchangeName}: {_market.DisplayName}");
 

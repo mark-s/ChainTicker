@@ -11,6 +11,7 @@ using ChainTicker.Transport.Rest;
 using ChainTicker.Core.Interfaces;
 using ChainTicker.Core.IO;
 using ChainTicker.Shell.Services;
+using Prism.Events;
 
 namespace ChainTicker.Shell
 {
@@ -48,9 +49,10 @@ namespace ChainTicker.Shell
             container.RegisterType<IExchangeFactory, BitFlyerExchangeFactory>(nameof(BitFlyerExchangeFactory), new ContainerControlledLifetimeManager());
             container.RegisterType<IExchangeFactory, GdaxExchangeFactory>(nameof(GdaxExchangeFactory), new ContainerControlledLifetimeManager());
 
-            container.RegisterType<ExchangeModelsService>(new InjectionConstructor(
+            container.RegisterType<ExchangeModelsFactory>(new InjectionConstructor(
                 container.Resolve<IFiatCurrenciesService>(),
                 container.Resolve<ICoinInfoService>(),
+                container.Resolve<IEventAggregator>(),
                 new ResolvedArrayParameter<IExchangeFactory>(container.ResolveAll<IExchangeFactory>().ToArray())));
         }
 

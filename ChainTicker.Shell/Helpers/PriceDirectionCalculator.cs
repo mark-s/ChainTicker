@@ -14,10 +14,10 @@ namespace ChainTicker.Shell.Helpers
 
             var currentDirection = current < previous ? PriceDirection.Down : PriceDirection.Up;
 
-            if (previousPriceDirection != currentDirection)
-                return currentDirection;
-            else
+            if (previousPriceDirection == currentDirection)
                 return previousPriceDirection;
+            else
+                return currentDirection;
         }
 
     }

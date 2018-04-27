@@ -145,7 +145,7 @@
     <Compile Include="Models\MarketModel.cs" />
     <Compile Include="Models\PriceDirection.cs" />
     <Compile Include="Models\TickModel.cs" />
-    <Compile Include="Services\ExchangeModelsService.cs" />
+    <Compile Include="Services\ExchangeModelsFactory.cs" />
     <Compile Include="Services\IMarketSubscriptionService.cs" />
     <Compile Include="Services\MarketSubscriptionService.cs" />
     <Compile Include="ViewModels\MainBarViewModel.cs" />

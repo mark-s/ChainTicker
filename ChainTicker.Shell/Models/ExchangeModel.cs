@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using ChainTicker.Core.Interfaces;
-
+using Prism.Events;
 using Prism.Mvvm;
 
 namespace ChainTicker.Shell.Models
@@ -11,6 +11,7 @@ namespace ChainTicker.Shell.Models
     {
 
         private readonly IExchange _exchange;
+        private readonly IEventAggregator _eventAggregator;
 
         public string Name => _exchange.Info.Name;
 
@@ -21,9 +22,14 @@ namespace ChainTicker.Shell.Models
 
         public ObservableCollection<MarketModel> Markets { get; } = new ObservableCollection<MarketModel>();
 
-        public ExchangeModel(IExchange exchange, Func<string, ICoin> getCoinInfoFunc)
+
+        // For the message aggregator
+        internal ExchangeModel(){}
+
+        public ExchangeModel(IExchange exchange, Func<string, ICoin> getCoinInfoFunc, IEventAggregator eventAggregator)
         {
             _exchange = exchange;
+            _eventAggregator = eventAggregator;
 
             Populate(getCoinInfoFunc);
         }
@@ -38,7 +44,8 @@ namespace ChainTicker.Shell.Models
                 displayMarkets.Add(new MarketModel(market,
                                                                             getCoinInfoFunc(market.BaseCurrency),
                                                                             getCoinInfoFunc(market.CounterCurrency),
-                                                                            _exchange.Info.Name));
+                                                                            _exchange.Info.Name,
+                                                                            _eventAggregator));
             }
 
             Markets.AddRange(displayMarkets);
