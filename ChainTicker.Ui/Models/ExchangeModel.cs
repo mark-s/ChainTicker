@@ -23,9 +23,6 @@ namespace ChainTicker.Ui.Models
         public ObservableCollection<MarketModel> Markets { get; } = new ObservableCollection<MarketModel>();
 
 
-        // For the message aggregator
-        internal ExchangeModel(){}
-
         public ExchangeModel(IExchange exchange, Func<string, ICoin> getCoinInfoFunc, IEventAggregator eventAggregator)
         {
             _exchange = exchange;

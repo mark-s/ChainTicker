@@ -52,7 +52,7 @@
         <StackPanel
             Margin="0,0,10,0"
             Orientation="Horizontal"
-            Visibility="{Binding Path=IsSubscribed, Converter={StaticResource BooleanToVisibilityConverter}}">
+            Visibility="{Binding Path=Subscribed, Converter={StaticResource BooleanToVisibilityConverter}}">
 
             <StackPanel Margin="0,0,10,0" Orientation="Vertical">
 
@@ -87,7 +87,6 @@
 
 
         <DataTemplate.Triggers>
-
 
             <DataTrigger Binding="{Binding Tick.PriceDirection}" Value="{x:Static models:PriceDirection.Up}">
                 <Setter TargetName="priceText" Property="Foreground" Value="Green" />

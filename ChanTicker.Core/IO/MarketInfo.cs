@@ -2,21 +2,21 @@
 
 namespace ChainTicker.Core.IO
 {
-    public class SubscribedMarket : IEquatable<SubscribedMarket>
+    public class MarketInfo : IEquatable<MarketInfo>
     {
 
         public string ExchangeName { get; }
         public string MarketDescription { get; }
 
 
-        public SubscribedMarket(string exchangeName, string marketDescription)
+        public MarketInfo(string exchangeName, string marketDescription)
         {
             ExchangeName = exchangeName;
             MarketDescription = marketDescription;
         }
 
 
-        public bool Equals(SubscribedMarket other)
+        public bool Equals(MarketInfo other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -28,7 +28,7 @@ namespace ChainTicker.Core.IO
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((SubscribedMarket) obj);
+            return Equals((MarketInfo) obj);
         }
 
         public override int GetHashCode()

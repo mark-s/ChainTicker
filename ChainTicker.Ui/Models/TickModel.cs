@@ -56,12 +56,12 @@ namespace ChainTicker.Ui.Models
         }
 
 
-        public TickModel(decimal initialPrice)
+        internal TickModel(decimal initialPrice)
         {
             Price = initialPrice;
         }
 
-        public void Update(ITick tick)
+        internal void Update(ITick tick)
         {
             PriceDirection = PriceDirectionCalculator.GetPriceDirection(Price, tick.LastTradedPrice, PriceDirection);
             Price = tick.LastTradedPrice;
@@ -70,5 +70,6 @@ namespace ChainTicker.Ui.Models
             BestBid = tick.BestBid;
             Volume = tick.Volume;
         }
+
     }
 }

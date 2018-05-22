@@ -60,8 +60,8 @@ namespace ChainTicker.Ui.ViewModels
 
                 // Send Unsubscribe to the server
                 foreach (var exchange in AvailableExchanges.Exchanges)
-                    foreach (var market in exchange.Markets.Where(m => m.IsSubscribed))
-                        market.IsSubscribed = false;
+                    foreach (var market in exchange.Markets.Where(m => m.Subscribed))
+                        market.Subscribed = false;
             });
         }
 
@@ -78,7 +78,7 @@ namespace ChainTicker.Ui.ViewModels
             foreach (var exchange in AvailableExchanges.Exchanges)
                 foreach (var market in exchange.Markets)
                     if (await _marketSubscriptionService.WasSubscribedToAsync(exchange.Name, market.DisplayName))
-                        market.IsSubscribed = true;
+                        market.Subscribed = true;
         }
 
 

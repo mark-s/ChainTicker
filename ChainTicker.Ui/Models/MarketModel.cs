@@ -16,35 +16,35 @@ namespace ChainTicker.Ui.Models
     {
         private readonly IEventAggregator _eventAggregator;
         private readonly IMarket _market;
-
-
         private IDisposable _subscription;
-
-        private bool _isSubscribed;
-        public bool IsSubscribed
-        {
-            get => _isSubscribed;
-            set
-            {
-                SetProperty(ref _isSubscribed, value);
-                OnSubscribeChange(value);
-            }
-        }
-
-        private void OnSubscribeChange(bool subscribeRequested)
-        {
-            if (subscribeRequested)
-                Subscribe();
-            else
-                Unsubscribe();
-        }
 
         public string DisplayName => _market.DisplayName;
 
         public ICoin BaseCoin { get; }
+
         public ICoin CounterCoin { get; }
 
+        public TickModel Tick { get; } = new TickModel(decimal.Zero);
 
+        public bool HasLivePricesAvailable => _market.HasRealTimeUpdates;
+
+        public DelegateCommand ToggleSubscribeCommand { get; }
+
+        private bool _subscribed;
+        public bool Subscribed
+        {
+            get => _subscribed;
+            set
+            {
+                SetProperty(ref _subscribed, value);
+                if (value == true)
+                    Subscribe();
+                else
+                    Unsubscribe();
+            }
+        }
+
+        
         private string _exchangeName;
         public string ExchangeName
         {
@@ -52,13 +52,7 @@ namespace ChainTicker.Ui.Models
             set => SetProperty(ref _exchangeName, value);
         }
 
-
-        public TickModel Tick { get; }
-
-
-        public bool HasLivePricesAvailable => _market.HasRealTimeUpdates;
-
-        public DelegateCommand ToggleSubscribeCommand { get; }
+        
 
         internal MarketModel(IMarket market,
                                         ICoin baseCoinInfo,
@@ -66,19 +60,16 @@ namespace ChainTicker.Ui.Models
                                         string exchangeName,
                                         IEventAggregator eventAggregator)
         {
-            _eventAggregator = eventAggregator;
+            _eventAggregator = EnsureArg.IsNotNull(eventAggregator, nameof(eventAggregator));
             _market = EnsureArg.IsNotNull(market, nameof(market));
 
-            Tick = new TickModel(decimal.Zero);
-
-            BaseCoin = baseCoinInfo;
-            CounterCoin = counterCoinInfo;
-            ExchangeName = exchangeName;
-
-
-            ToggleSubscribeCommand = new DelegateCommand(() => IsSubscribed = !IsSubscribed, () => true);
-
+            BaseCoin = EnsureArg.IsNotNull(baseCoinInfo, nameof(BaseCoin));
+            CounterCoin = EnsureArg.IsNotNull(counterCoinInfo, nameof(CounterCoin));
+            ExchangeName = EnsureArg.IsNotNull(exchangeName, nameof(ExchangeName));
+           
+            ToggleSubscribeCommand = new DelegateCommand(() => Subscribed = !Subscribed, () => true);
         }
+
 
         private void Subscribe()
         {
@@ -90,23 +81,18 @@ namespace ChainTicker.Ui.Models
                                                                      ex => Debug.WriteLine(ex.Message),
                                                                      () => Debug.WriteLine("OnCompleted"));
 
-            _eventAggregator.GetEvent<MarketSubscribed>().Publish(new SubscribedMarket(ExchangeName, _market.DisplayName));
+            _eventAggregator.GetEvent<MarketSubscribed>().Publish(new MarketInfo(ExchangeName, _market.DisplayName));
         }
 
         private void Unsubscribe()
         {
             _subscription.Dispose();
             _market.UnsubscribeFromTicks();
-            _eventAggregator.GetEvent<MarketUnsubscribed>().Publish(new SubscribedMarket(ExchangeName, _market.DisplayName));
+            _eventAggregator.GetEvent<MarketUnsubscribed>().Publish(new MarketInfo(ExchangeName, _market.DisplayName));
 
             Debug.WriteLine($"Unsubscribed from  {ExchangeName}: {_market.DisplayName}");
 
         }
-
-
-
-
-
 
     }
 }

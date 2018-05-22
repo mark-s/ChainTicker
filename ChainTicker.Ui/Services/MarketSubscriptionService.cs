@@ -14,7 +14,7 @@ namespace ChainTicker.Ui.Services
         private const string FILENAME = "subs.json";
 
         // NOTE: this could be a bit fruity if manipulated by multiple threads...
-        private HashSet<SubscribedMarket> _subscribedMarkets = new HashSet<SubscribedMarket>();
+        private HashSet<MarketInfo> _subscribedMarkets = new HashSet<MarketInfo>();
         private bool _loaded;
 
         public MarketSubscriptionService(IChainTickerFileService fileService, IEventAggregator eventAggregator)
@@ -30,7 +30,7 @@ namespace ChainTicker.Ui.Services
         {
             await LoadIfNeededAsync();
 
-            return _subscribedMarkets.Contains(new SubscribedMarket(exchangeName, marketDescription));
+            return _subscribedMarkets.Contains(new MarketInfo(exchangeName, marketDescription));
         }
 
         public async Task SaveSubscribedMarketsAsync() 
@@ -41,7 +41,7 @@ namespace ChainTicker.Ui.Services
         {
             if (_loaded == false)
             {
-                var fromDisk = await _fileService.LoadAndDeserializeAsync<HashSet<SubscribedMarket>>(ChainTickerFolder.ApplicationBase, FILENAME);
+                var fromDisk = await _fileService.LoadAndDeserializeAsync<HashSet<MarketInfo>>(ChainTickerFolder.ApplicationBase, FILENAME);
                 if (fromDisk != null)
                     _subscribedMarkets = fromDisk;
             }

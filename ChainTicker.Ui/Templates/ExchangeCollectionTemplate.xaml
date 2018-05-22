@@ -25,10 +25,6 @@
                         Header="{Binding Description}"
                         ItemsSource="{Binding Markets}">
 
-
-
-
-
                         <HeaderedItemsControl.Template>
 
                             <ControlTemplate TargetType="{x:Type HeaderedItemsControl}">
@@ -71,7 +67,7 @@
                                                 <Trigger Property="IsMouseOver" Value="True">
                                                     <Setter Property="Background" Value="#DABEEDFD" />
                                                 </Trigger>
-                                                <DataTrigger Binding="{Binding IsSubscribed}" Value="True">
+                                                <DataTrigger Binding="{Binding Subscribed}" Value="True">
                                                     <Setter Property="Background" Value="#DABEEDFD" />
                                                 </DataTrigger>
                                             </Style.Triggers>

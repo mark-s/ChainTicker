@@ -16,7 +16,6 @@
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
 
-
     <intr:Interaction.Triggers>
         <intr:EventTrigger EventName="Loaded">
             <intr:InvokeCommandAction Command="{Binding InitDataCommand}" />
@@ -26,23 +25,10 @@
         </intr:EventTrigger>
     </intr:Interaction.Triggers>
 
-    <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter" />
-    </Window.Resources>
 
-    <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
+    <Grid>
 
         <tb:TaskbarIcon IconSource="pack://application:,,,/ChainTicker.Ui.WpfAssets;component/Images/link.ico" ToolTipText="ChainTicker!" />
-
-
-        <CheckBox x:Name="ShowMenuBox" IsChecked="True" />
-
-        <ContentPresenter
-            HorizontalAlignment="Stretch"
-            Content="{Binding AvailableExchanges}"
-            ContentTemplate="{StaticResource ExchangeCollectionTemplate}"
-            Visibility="{Binding IsChecked, ElementName=ShowMenuBox, Converter={StaticResource boolToVisibilityConverter}}" />
-
 
         <ItemsControl ItemTemplate="{StaticResource MarketTemplate}" ItemsSource="{Binding AvailableExchanges.Exchanges[0].Markets}">
             <ItemsControl.ItemsPanel>
@@ -53,7 +39,7 @@
 
         </ItemsControl>
 
-    </StackPanel>
+    </Grid>
 
 </Window>
 

@@ -3,7 +3,7 @@ using Prism.Events;
 
 namespace ChainTicker.Core.EventTypes
 {
-    public class MarketSubscribed : PubSubEvent<SubscribedMarket>
+    public class MarketSubscribed : PubSubEvent<MarketInfo>
     {
         
 
