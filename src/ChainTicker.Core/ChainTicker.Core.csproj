@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5D3F5326-905A-4480-9FA0-F1FF046E713E}</ProjectGuid>
+    <ProjectGuid>{151B57E5-6BEA-4EA7-A400-B96333D21251}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChainTicker.Exchange.BitFlyer</RootNamespace>
-    <AssemblyName>ChainTicker.Exchange.BitFlyer</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <RootNamespace>ChainTicker.Core</RootNamespace>
+    <AssemblyName>ChainTicker.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,17 +41,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BitFlyerExchange.cs" />
-    <Compile Include="BitFlyerExchangeFactory.cs" />
-    <Compile Include="BitFlyerMarketFactory.cs" />
-    <Compile Include="DTO\BitFlyerMarket.cs" />
-    <Compile Include="DTO\BitFlyerTick.cs" />
-    <Compile Include="Market.cs" />
-    <Compile Include="MessageParser.cs" />
+    <Compile Include="Domain\ApiEndpointCollection.cs" />
+    <Compile Include="Domain\ApiEndpointType.cs" />
+    <Compile Include="Domain\CachedMarket.cs" />
+    <Compile Include="Domain\CoinUrls.cs" />
+    <Compile Include="Domain\CoinUrlsUnknown.cs" />
+    <Compile Include="Domain\EmptyTick.cs" />
+    <Compile Include="Domain\ExchangeInfo.cs" />
+    <Compile Include="Domain\IMarket.cs" />
+    <Compile Include="Domain\PriceOnlyTick.cs" />
+    <Compile Include="Domain\Tick.cs" />
+    <Compile Include="EventTypes\MarketSubscribed.cs" />
+    <Compile Include="EventTypes\MarketUnsubscribed.cs" />
+    <Compile Include="Interfaces\IChainTickerFileService.cs" />
+    <Compile Include="Interfaces\ICoin.cs" />
+    <Compile Include="Interfaces\ICoinUrlSet.cs" />
+    <Compile Include="Interfaces\IDiskCache.cs" />
+    <Compile Include="Interfaces\IExchange.cs" />
+    <Compile Include="Interfaces\IExchangeFactory.cs" />
+    <Compile Include="Interfaces\IFileIOService.cs" />
+    <Compile Include="Interfaces\IFolderService.cs" />
+    <Compile Include="Interfaces\IJsonSerializer.cs" />
+    <Compile Include="Interfaces\IMarketsService.cs" />
+    <Compile Include="Interfaces\IPollingPriceService.cs" />
+    <Compile Include="Interfaces\IPriceService.cs" />
+    <Compile Include="Interfaces\ITick.cs" />
+    <Compile Include="IO\CachedFile.cs" />
+    <Compile Include="IO\ChainTickerFileService.cs" />
+    <Compile Include="IO\ChainTickerFolder.cs" />
+    <Compile Include="IO\ChainTickerJsonSerializer.cs" />
+    <Compile Include="IO\DiskCache.cs" />
+    <Compile Include="IO\FileIOService.cs" />
+    <Compile Include="IO\FolderService.cs" />
+    <Compile Include="IO\JsonHelpers.cs" />
+    <Compile Include="IO\MarketInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\MarketsService.cs" />
-    <Compile Include="Services\PollingPriceService.cs" />
-    <Compile Include="Services\PriceService.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Ensure.That">
@@ -62,20 +87,6 @@
     <PackageReference Include="System.Reactive">
       <Version>4.0.0</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\ChainTicker.Core\ChainTicker.Core.csproj">
-      <Project>{151b57e5-6bea-4ea7-a400-b96333d21251}</Project>
-      <Name>ChainTicker.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Transports\ChainTicker.Transport.Pubnub\ChainTicker.Transport.Pubnub.csproj">
-      <Project>{965dd0e5-d61b-4c23-8a49-3bedfd7f68e5}</Project>
-      <Name>ChainTicker.Transport.Pubnub</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Transports\ChainTicker.Transport.Rest\ChainTicker.Transport.Rest.csproj">
-      <Project>{6dfd446a-805d-4209-8ecb-f69453580d73}</Project>
-      <Name>ChainTicker.Transport.Rest</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

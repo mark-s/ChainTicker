@@ -1,0 +1,26 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dd="urn:gong-wpf-dragdrop"
+    xmlns:models="clr-namespace:ChainTicker.App.Models">
+
+
+    <DataTemplate x:Key="ExhangeWithMarketsTemplate" DataType="{x:Type models:ExchangeModel}">
+
+        <ItemsControl
+            dd:DragDrop.IsDragSource="True"
+            dd:DragDrop.IsDropTarget="True"
+            ItemTemplate="{StaticResource MarketTemplate}"
+            ItemsSource="{Binding Markets}">
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+        </ItemsControl>
+
+    </DataTemplate>
+
+</ResourceDictionary>

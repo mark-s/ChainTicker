@@ -60,7 +60,7 @@ namespace ChainTicker.DataSource.Coins
         private async Task<CoinsCollection> GetFromCacheAsync()
         {
             var cachedAllCoinsResponse = await _fileService.LoadAndDeserializeAsync<AllCoinsResponse>(ChainTickerFolder.Cache, _cacheFile.FileName);
-            return AllCoinsResponseMapper.ToCoinsCollection(cachedAllCoinsResponse);
+            return ConvertAllCoinsResponse.ToCoinsCollection(cachedAllCoinsResponse);
         }
 
 
@@ -68,7 +68,7 @@ namespace ChainTicker.DataSource.Coins
         {
             // Save to the cache so we don't need to do this expensive call all the time
             await _fileService.SaveAndSerializeAsync(ChainTickerFolder.Cache, _cacheFile.FileName, response).ConfigureAwait(false);
-            return AllCoinsResponseMapper.ToCoinsCollection(response);
+            return ConvertAllCoinsResponse.ToCoinsCollection(response);
         }
 
         private async Task<CoinsCollection> HandleErrorAsync(Response<AllCoinsResponse> response)

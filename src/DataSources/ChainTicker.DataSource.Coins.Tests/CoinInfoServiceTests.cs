@@ -17,7 +17,7 @@ namespace ChainTicker.DataSource.Coins.Tests
         private IDiskCache _cache;
         private RestService _restService;
         private IChainTickerFileService _fileService;
-        private IFileIOService _filleIoService;
+        private IFileIOService _fileIoService;
 
 
         [SetUp]
@@ -26,9 +26,9 @@ namespace ChainTicker.DataSource.Coins.Tests
 
             _cache = A.Fake<IDiskCache>();
             _restService = new RestService(new RandomUserAgentService(), new ChainTickerJsonSerializer());
-            _filleIoService = A.Fake<IFileIOService>();
+            _fileIoService = A.Fake<IFileIOService>();
             
-            _fileService = new ChainTickerFileService(_cache, _filleIoService, new ChainTickerJsonSerializer());
+            _fileService = new ChainTickerFileService(_cache, _fileIoService, new ChainTickerJsonSerializer());
         }
 
 
@@ -37,7 +37,7 @@ namespace ChainTicker.DataSource.Coins.Tests
         {
             A.CallTo(() => _cache.IsStale(A<ChainTickerFolder>.Ignored, A<string>.Ignored, A<TimeSpan>.Ignored)).Returns(false);
 
-            A.CallTo(() => _filleIoService.LoadTextAsync(A<ChainTickerFolder>.Ignored, A<string>.Ignored)
+            A.CallTo(() => _fileIoService.LoadTextAsync(A<ChainTickerFolder>.Ignored, A<string>.Ignored)
                             ).Returns(GetCoinsJson());
 
 
