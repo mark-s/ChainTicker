@@ -3,24 +3,27 @@ using System.Linq;
 using System.Threading.Tasks;
 using ChainTicker.App.Models;
 using ChainTicker.App.Services;
+using ChainTicker.DataSource.Coins;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 
 namespace ChainTicker.App.ViewModel
 {
-    public class MainBarViewModel : BindableBase
+    public class MainBarViewModel : ViewModelBase
     {
         private readonly ICoinInfoService _coinInfoService;
         private readonly ExchangeModelsFactory _exchangeModelsFactory;
         private readonly IMarketSubscriptionService _marketSubscriptionService;
 
-        public DelegateCommand InitDataCommand { get; }
-        public DelegateCommand ClosingCommand { get; }
+        public RelayCommand InitDataCommand { get; }
+        public RelayCommand ClosingCommand { get; }
 
 
         private bool _isLoading;
         public bool IsLoading
         {
             get => _isLoading;
-            set => SetProperty(ref _isLoading, value);
+            set => Set(ref _isLoading, value);
         }
 
 
@@ -29,7 +32,7 @@ namespace ChainTicker.App.ViewModel
         public ExchangeCollectionModel AvailableExchanges
         {
             get => _availableExchanges;
-            set => SetProperty(ref _availableExchanges, value);
+            set => Set(ref _availableExchanges, value);
         }
 
 
@@ -47,9 +50,9 @@ namespace ChainTicker.App.ViewModel
 
         }
 
-        private DelegateCommand GetClosingCommand()
+        private RelayCommand GetClosingCommand()
         {
-            return new DelegateCommand(async () =>
+            return new RelayCommand(async () =>
             {
 
                 // Save subscriptions for next time
@@ -79,9 +82,9 @@ namespace ChainTicker.App.ViewModel
         }
 
 
-        private DelegateCommand GetInitDataCommand()
+        private RelayCommand GetInitDataCommand()
         {
-            return new DelegateCommand(async () =>
+            return new RelayCommand(async () =>
                                     {
                                         IsLoading = true;
 

@@ -1,5 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using ChainTicker.Core.EventTypes;
+using ChainTicker.Core.Interfaces;
+using ChainTicker.Core.IO;
+using ChanTicker.Core.EventTypes;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace ChainTicker.App.Services
 {
@@ -13,12 +18,12 @@ namespace ChainTicker.App.Services
         private HashSet<MarketInfo> _subscribedMarkets = new HashSet<MarketInfo>();
         private bool _loaded;
 
-        public MarketSubscriptionService(IChainTickerFileService fileService, IEventAggregator eventAggregator)
+        public MarketSubscriptionService(IChainTickerFileService fileService)
         {
             _fileService = fileService;
 
-            eventAggregator.GetEvent<MarketUnsubscribed>().Subscribe( m => _subscribedMarkets.Remove(m));
-            eventAggregator.GetEvent<MarketSubscribed>().Subscribe(m => _subscribedMarkets.Add(m));
+            Messenger.Default.Register<MarketUnsubscribed>(this, m => _subscribedMarkets.Remove(m.MarketInfo));
+            Messenger.Default.Register<MarketSubscribed>(this, m => _subscribedMarkets.Add(m.MarketInfo));
         }
 
 
@@ -29,7 +34,7 @@ namespace ChainTicker.App.Services
             return _subscribedMarkets.Contains(new MarketInfo(exchangeName, marketDescription));
         }
 
-        public async Task SaveSubscribedMarketsAsync() 
+        public async Task SaveSubscribedMarketsAsync()
             => await _fileService.SaveAndSerializeAsync(ChainTickerFolder.ApplicationBase, FILENAME, _subscribedMarkets);
 
 

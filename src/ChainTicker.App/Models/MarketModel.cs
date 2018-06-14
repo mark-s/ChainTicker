@@ -7,11 +7,13 @@ using ChainTicker.Core.Interfaces;
 using ChainTicker.Core.IO;
 using ChanTicker.Core.EventTypes;
 using EnsureThat;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 
 namespace ChainTicker.App.Models
 {
-    public class MarketModel : BindableBase
+    public class MarketModel : ViewModelBase
     {
         private readonly IMarket _market;
         private IDisposable _subscription;
@@ -26,7 +28,7 @@ namespace ChainTicker.App.Models
 
         public bool HasLivePricesAvailable => _market.HasRealTimeUpdates;
 
-        public DelegateCommand ToggleSubscribeCommand { get; }
+        public RelayCommand ToggleSubscribeCommand { get; }
 
         private bool _subscribed;
         public bool Subscribed
@@ -34,7 +36,7 @@ namespace ChainTicker.App.Models
             get => _subscribed;
             set
             {
-                SetProperty(ref _subscribed, value);
+                Set(ref _subscribed, value);
                 if (value == true)
                     Subscribe();
                 else
@@ -47,7 +49,7 @@ namespace ChainTicker.App.Models
         public string ExchangeName
         {
             get => _exchangeName;
-            set => SetProperty(ref _exchangeName, value);
+            set => Set(ref _exchangeName, value);
         }
 
 
@@ -64,7 +66,7 @@ namespace ChainTicker.App.Models
             CounterCoin = EnsureArg.IsNotNull(counterCoinInfo, nameof(CounterCoin));
             ExchangeName = EnsureArg.IsNotNull(exchangeName, nameof(ExchangeName));
 
-            ToggleSubscribeCommand = new DelegateCommand(() => Subscribed = !Subscribed, () => true);
+            ToggleSubscribeCommand = new RelayCommand(() => Subscribed = !Subscribed, () => true);
         }
 
 

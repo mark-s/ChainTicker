@@ -9,6 +9,7 @@
   DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
 */
 
+using System.Collections.Generic;
 using System.Text;
 using Autofac;
 using Autofac.Extras.CommonServiceLocator;
@@ -21,7 +22,7 @@ using ChainTicker.DataSource.FiatCurrencies;
 using ChainTicker.Exchange.BitFlyer;
 using ChainTicker.Exchange.Gdax;
 using ChainTicker.Transport.Rest;
-
+using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 
 
@@ -41,8 +42,11 @@ namespace ChainTicker.App.ViewModel
         {
             var builder = new ContainerBuilder();
 
+            builder.RegisterType<MainBarViewModel>();
+
             if (ViewModelBase.IsInDesignModeStatic)
             {
+               
                 builder.RegisterType<Design.DesignDataService>().As<IDataService>();
             }
             else
@@ -74,6 +78,11 @@ namespace ChainTicker.App.ViewModel
 
             builder.RegisterType<CoinInfoService>().As<ICoinInfoService>();
             builder.RegisterType<FiatCurrenciesService>().As<IFiatCurrenciesService>();
+
+            builder.RegisterType<ChainTickerJsonSerializer>().As<IJsonSerializer>();
+            builder.RegisterType<RandomUserAgentService>();
+
+            
         }
 
         private static void RegisterExchanges(ContainerBuilder builder)
@@ -82,14 +91,11 @@ namespace ChainTicker.App.ViewModel
             builder.RegisterType<BitFlyerExchangeFactory>().Named<IExchangeFactory>(nameof(BitFlyerExchangeFactory));
             builder.RegisterType<GdaxExchangeFactory>().Named<IExchangeFactory>(nameof(GdaxExchangeFactory));
 
+            builder.Register(c => new ExchangeModelsFactory(c.Resolve<IFiatCurrenciesService>(), 
+                                                                                            c.Resolve<ICoinInfoService>(),
+                                                                                            c.Resolve<IEnumerable<IExchangeFactory>>()));
 
 
-
-
-            container.RegisterType<ExchangeModelsFactory>(new InjectionConstructor(
-                container.Resolve<IFiatCurrenciesService>(),
-                container.Resolve<ICoinInfoService>(),
-                new ResolvedArrayParameter<IExchangeFactory>(container.ResolveAll<IExchangeFactory>().ToArray())));
         }
 
 
@@ -98,7 +104,7 @@ namespace ChainTicker.App.ViewModel
         /// Gets the Main property.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "This non-static member is needed for data binding purposes.")]
-        public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
+        public MainBarViewModel Main => ServiceLocator.Current.GetInstance<MainBarViewModel>();
 
         /// <summary>
         /// Cleans up all the resources.

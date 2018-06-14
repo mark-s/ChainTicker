@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using ChainTicker.Core.Interfaces;
 
 namespace ChainTicker.App.Models
 {
-    public class ExchangeModel : BindableBase
+    public class ExchangeModel
     {
 
         private readonly IExchange _exchange;
-        private readonly IEventAggregator _eventAggregator;
 
         public string Name => _exchange.Info.Name;
 
@@ -30,19 +28,11 @@ namespace ChainTicker.App.Models
 
         private void Populate(Func<string, ICoin> getCoinInfoFunc)
         {
-
-            var displayMarkets = new List<MarketModel>();
-
             foreach (var market in _exchange.Markets)
-            {
-                displayMarkets.Add(new MarketModel(market,
-                                                                            getCoinInfoFunc(market.BaseCurrency),
-                                                                            getCoinInfoFunc(market.CounterCurrency),
-                                                                            _exchange.Info.Name,
-                                                                            _eventAggregator));
-            }
-
-            Markets.AddRange(displayMarkets);
+                Markets.Add(new MarketModel(market,
+                                                                getCoinInfoFunc(market.BaseCurrency),
+                                                                getCoinInfoFunc(market.CounterCurrency),
+                                                                _exchange.Info.Name));
         }
 
 

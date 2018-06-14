@@ -2,7 +2,7 @@
 
 namespace ChainTicker.App.Models
 {
-    public class ExchangeCollectionModel : BindableBase
+    public class ExchangeCollectionModel
     {
         public string Header { get; }
 

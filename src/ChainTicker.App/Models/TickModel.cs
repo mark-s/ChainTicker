@@ -1,16 +1,18 @@
 ﻿using System;
 using ChainTicker.App.Helpers;
+using ChainTicker.Core.Interfaces;
+using GalaSoft.MvvmLight;
 
 namespace ChainTicker.App.Models
 {
-    public class TickModel : BindableBase
+    public class TickModel : ViewModelBase
     {
 
         private PriceDirection _priceDirection;
         public PriceDirection PriceDirection
         {
             get => _priceDirection;
-            private set => SetProperty(ref _priceDirection, value);
+            private set => Set(ref _priceDirection, value);
         }
 
 
@@ -18,7 +20,7 @@ namespace ChainTicker.App.Models
         public decimal? Price
         {
             get => _price;
-            private set => SetProperty(ref _price, value);
+            private set => Set(ref _price, value);
         }
 
 
@@ -26,7 +28,7 @@ namespace ChainTicker.App.Models
         public DateTime TimeStamp
         {
             get => _timeStamp;
-            private set => SetProperty(ref _timeStamp, value);
+            private set => Set(ref _timeStamp, value);
         }
 
 
@@ -34,7 +36,7 @@ namespace ChainTicker.App.Models
         public decimal BestBid
         {
             get => _bestBid;
-            private set => SetProperty(ref _bestBid, value);
+            private set => Set(ref _bestBid, value);
         }
 
 
@@ -42,7 +44,7 @@ namespace ChainTicker.App.Models
         public decimal? BestAsk
         {
             get => _bestAsk;
-            private set => SetProperty(ref _bestAsk, value);
+            private set => Set(ref _bestAsk, value);
         }
 
 
@@ -50,7 +52,7 @@ namespace ChainTicker.App.Models
         public double Volume
         {
             get => _volume;
-            private set => SetProperty(ref _volume, value);
+            private set => Set(ref _volume, value);
         }
 
 
