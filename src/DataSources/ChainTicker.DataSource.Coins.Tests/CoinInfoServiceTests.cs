@@ -35,10 +35,11 @@ namespace ChainTicker.DataSource.Coins.Tests
         [Test]
         public async Task GetAllAvailableCoins_StaleCache_WebserviceCall_ReturnsAllCoins()
         {
-            A.CallTo(() => _cache.IsStale(A<ChainTickerFolder>.Ignored, A<string>.Ignored, A<TimeSpan>.Ignored)).Returns(false);
+            A.CallTo(() => _cache.IsStale(A<ChainTickerFolder>.Ignored, A<string>.Ignored, A<TimeSpan>.Ignored))
+                .Returns(false);
 
-            A.CallTo(() => _fileIoService.LoadTextAsync(A<ChainTickerFolder>.Ignored, A<string>.Ignored)
-                            ).Returns(GetCoinsJson());
+            A.CallTo(() => _fileIoService.LoadTextAsync(A<ChainTickerFolder>.Ignored, A<string>.Ignored))
+                .Returns(GetCoinsJson());
 
 
             var coinInfoService = new CoinInfoService(_restService, _fileService);

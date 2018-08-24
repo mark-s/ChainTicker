@@ -3,7 +3,7 @@
 
 namespace ChainTicker.Exchange.BitFlyer.DTO
 {
-    public class BitFlyerMarket
+    internal class BitFlyerMarket
     {
         [JsonProperty("product_code")]
         public string ProductCode { get; set; }

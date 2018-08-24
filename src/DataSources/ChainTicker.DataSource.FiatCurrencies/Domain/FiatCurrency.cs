@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using ChainTicker.Core.Domain;
 using ChainTicker.Core.Interfaces;
+using ChainTicker.DataSource.FiatCurrencies.DTOs;
 
 namespace ChainTicker.DataSource.FiatCurrencies.Domain
 {
@@ -15,17 +16,17 @@ namespace ChainTicker.DataSource.FiatCurrencies.Domain
 
         public ICoinUrlSet Urls { get; }
         
-        public FiatCurrency(DTO.FiatCurrency fiatCurrency)
+        public FiatCurrency(FiatCurrencyDto fiatCurrencyDto)
         {
-            Code = fiatCurrency.Code;
-            Description = fiatCurrency.Name;
-            Name = fiatCurrency.Symbol;
+            Code = fiatCurrencyDto.Code;
+            Description = fiatCurrencyDto.Name;
+            Name = fiatCurrencyDto.Symbol;
 
             // TODO: Figure this out
-            Urls = new CoinUrls(fiatCurrency.Image,
-                                                        "http://www.xe.com/currency/" + fiatCurrency.Code.ToLowerInvariant(),
-                                                        "./Images/" + fiatCurrency.Image,
-                                                        "http://www.xe.com/currency/" + fiatCurrency.Code.ToLowerInvariant(),
+            Urls = new CoinUrls(fiatCurrencyDto.Image,
+                                                        "http://www.xe.com/currency/" + fiatCurrencyDto.Code.ToLowerInvariant(),
+                                                        "./Images/" + fiatCurrencyDto.Image,
+                                                        "http://www.xe.com/currency/" + fiatCurrencyDto.Code.ToLowerInvariant(),
                                                         "????");
 
         }
