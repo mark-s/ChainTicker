@@ -54,10 +54,10 @@
       <Version>11.0.2</Version>
     </PackageReference>
     <PackageReference Include="Pubnub">
-      <Version>4.0.17</Version>
+      <Version>4.0.22</Version>
     </PackageReference>
     <PackageReference Include="System.Reactive">
-      <Version>4.0.0</Version>
+      <Version>4.1.0</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -10,12 +10,14 @@ using ChainTicker.Core.IO;
 
 namespace ChainTicker.DataSource.Coins
 {
+
+    // This is the main API for accessing Information about cryptocurrency 'coins'
     public class CoinInfoService : ICoinInfoService
     {
         private readonly IRestService _restService;
         private readonly IChainTickerFileService _fileService;
 
-        private CoinsCollection _coinsCollection;
+        private Domain.CoinsCollection _coinsCollection;
 
         private readonly CachedFile _cacheFile = new CachedFile("coins.json", TimeSpan.FromDays(5));
 
@@ -45,7 +47,7 @@ namespace ChainTicker.DataSource.Coins
             => _coinsCollection.GetCoin(coinCode);
 
 
-        private async Task<CoinsCollection> GetFromWebServiceAsync()
+        private async Task<Domain.CoinsCollection> GetFromWebServiceAsync()
         {
             var endpointAddress = new RestQuery("https://min-api.cryptocompare.com/", "data/all/coinlist").Address();
 
@@ -57,21 +59,21 @@ namespace ChainTicker.DataSource.Coins
                 return await HandleErrorAsync(response);
         }
 
-        private async Task<CoinsCollection> GetFromCacheAsync()
+        private async Task<Domain.CoinsCollection> GetFromCacheAsync()
         {
             var cachedAllCoinsResponse = await _fileService.LoadAndDeserializeAsync<AllCoinsResponse>(ChainTickerFolder.Cache, _cacheFile.FileName);
             return ConvertAllCoinsResponse.ToCoinsCollection(cachedAllCoinsResponse);
         }
 
 
-        private async Task<CoinsCollection> HandleSuccessAsync(AllCoinsResponse response)
+        private async Task<Domain.CoinsCollection> HandleSuccessAsync(AllCoinsResponse response)
         {
             // Save to the cache so we don't need to do this expensive call all the time
             await _fileService.SaveAndSerializeAsync(ChainTickerFolder.Cache, _cacheFile.FileName, response).ConfigureAwait(false);
             return ConvertAllCoinsResponse.ToCoinsCollection(response);
         }
 
-        private async Task<CoinsCollection> HandleErrorAsync(Response<AllCoinsResponse> response)
+        private async Task<Domain.CoinsCollection> HandleErrorAsync(Response<AllCoinsResponse> response)
         {
             Debug.WriteLine(response.ErrorMessage);
             return await GetFromCacheAsync();

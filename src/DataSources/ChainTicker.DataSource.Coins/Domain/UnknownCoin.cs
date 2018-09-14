@@ -7,7 +7,7 @@ namespace ChainTicker.DataSource.Coins.Domain
     [DebuggerDisplay("{" + nameof(Description) + "}")]
     internal sealed class UnknownCoin : CoinBase, ICoin
     {
-        public UnknownCoin(string coinCode)
+        internal UnknownCoin(string coinCode)
         {
             IsValid = false;
 

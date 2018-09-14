@@ -8,9 +8,9 @@ namespace ChainTicker.DataSource.Coins.Domain
 {
 
     [DebuggerDisplay("{" + nameof(Description) + "}")]
-    internal sealed class Coin : CoinBase, ICoin
+    public sealed class Coin : CoinBase, ICoin
     {
-        public Coin(CoinInfo coinInfo, string baseImageUrl, string baseLinkUrl)
+        internal Coin(CoinInfo coinInfo, string baseImageUrl, string baseLinkUrl)
         {
             EnsureArg.IsNotNull(coinInfo, nameof(coinInfo));
             EnsureArg.IsNotNullOrEmpty(baseImageUrl, nameof(baseImageUrl));
