@@ -17,6 +17,7 @@ using ChainTicker.App.Models;
 using ChainTicker.App.Services;
 using ChainTicker.Core.Interfaces;
 using ChainTicker.Core.IO;
+using ChainTicker.Core.Services;
 using ChainTicker.DataSource.Coins;
 using ChainTicker.DataSource.FiatCurrencies;
 using ChainTicker.Exchange.BitFlyer;
@@ -68,8 +69,9 @@ namespace ChainTicker.App.ViewModel
 
             builder.RegisterType<RestService>().As<IRestService>();
             builder.RegisterType<FolderService>().As<IFolderService>();
-            builder.RegisterType<FileIOService>().As<IFileIOService>();
-
+            builder.RegisterType<DiskIOService>().As<IDiskIOService>();
+            builder.RegisterType<ITimeService>().As<TimeService>();
+            
             builder.RegisterType<DiskCache>().As<IDiskCache>();
             builder.RegisterType<ChainTickerJsonSerializer>().As<IJsonSerializer>();
             builder.RegisterType<ChainTickerFileService>().As<IChainTickerFileService>();

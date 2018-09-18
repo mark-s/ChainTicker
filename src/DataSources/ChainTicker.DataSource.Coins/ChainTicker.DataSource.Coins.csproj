@@ -55,7 +55,6 @@
     <Compile Include="CoinInfoService.cs" />
     <Compile Include="ICoinInfoService.cs" />
     <Compile Include="ICoinLogoService.cs" />
-    <Compile Include="ImageDownloader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

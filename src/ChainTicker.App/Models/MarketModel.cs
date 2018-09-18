@@ -5,7 +5,6 @@ using ChainTicker.Core.Domain;
 using ChainTicker.Core.EventTypes;
 using ChainTicker.Core.Interfaces;
 using ChainTicker.Core.IO;
-using ChanTicker.Core.EventTypes;
 using EnsureThat;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;

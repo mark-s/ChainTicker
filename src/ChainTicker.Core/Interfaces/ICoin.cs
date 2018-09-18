@@ -10,7 +10,5 @@
 
         string Name { get; }
 
-        ICoinUrlSet Urls { get; }
-
     }
 }

@@ -8,17 +8,17 @@ namespace ChainTicker.DataSource.Coins
     public class CoinLogoService : ICoinLogoService
     {
         private readonly ImageDownloader _imageDownloader;
-        private readonly IFileIOService _fileIOService;
+        private readonly IDiskIOService _diskIOService;
 
-        public CoinLogoService(ImageDownloader imageDownloader, IFileIOService fileIOService)
+        public CoinLogoService(ImageDownloader imageDownloader, IDiskIOService diskIOService)
         {
             _imageDownloader = imageDownloader;
-            _fileIOService = fileIOService;
+            _diskIOService = diskIOService;
         }
 
         public async Task GetAllAvailableImagesAsync(IEnumerable<ICoin> coins)
         {
-            var coinsWithNoImages = coins.Where(coin => _fileIOService.FileExists(GetCoinImageFilePath(coin)) == false);
+            var coinsWithNoImages = coins.Where(coin => _diskIOService.FileExists(GetCoinImageFilePath(coin)) == false);
 
             await _imageDownloader.DownloadImagesAsync(coinsWithNoImages);
         }

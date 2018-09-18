@@ -1,6 +1,6 @@
 ﻿using ChainTicker.Core.IO;
 
-namespace ChanTicker.Core.EventTypes
+namespace ChainTicker.Core.EventTypes
 {
     public class MarketSubscribed
     {

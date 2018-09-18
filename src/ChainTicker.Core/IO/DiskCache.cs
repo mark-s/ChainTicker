@@ -5,26 +5,30 @@ namespace ChainTicker.Core.IO
 {
     public class DiskCache : IDiskCache
     {
-        private readonly IFileIOService _fileIOService;
+        private readonly IDiskIOService _diskIOService;
+        private readonly ITimeService _timeService;
 
-        public DiskCache(IFileIOService fileIOService)
+        public DiskCache(IDiskIOService diskIOService, ITimeService timeService)
         {
-            _fileIOService = fileIOService;
+            _diskIOService = diskIOService;
+            _timeService = timeService;
         }
 
         public bool IsStale(ChainTickerFolder folder, string cacheFileName, TimeSpan cacheAgeTimeSpan)
         {
             // check there's actually some saved data to load from 
-            if (_fileIOService.FileExists(folder, cacheFileName) == false)
+            if (_diskIOService.FileExists(folder, cacheFileName) == false)
                 return true;
 
-            var saveTime = _fileIOService.GetFileSaveTime(folder, cacheFileName);
+            var saveTime = _diskIOService.GetFileSaveTime(folder, cacheFileName);
 
-            var difference = saveTime.CompareTo(DateTime.Now.Subtract(cacheAgeTimeSpan));
+            var difference = saveTime.CompareTo(_timeService.Now.Subtract(cacheAgeTimeSpan));
 
             return difference < 0;
 
         }
 
     }
+
+
 }

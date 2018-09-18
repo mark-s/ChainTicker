@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using ChainTicker.Core.Domain;
 using ChainTicker.Core.Interfaces;
 
 namespace ChainTicker.DataSource.FiatCurrencies.Domain
@@ -13,16 +12,12 @@ namespace ChainTicker.DataSource.FiatCurrencies.Domain
         public string Description { get; }
         public string Name { get; }
 
-        public ICoinUrlSet Urls { get; }
 
-
-        public UnknownFiatCurrency(string currencyCode)
+        internal UnknownFiatCurrency(string currencyCode)
         {
             Code = currencyCode;
             Name = currencyCode;
             Description = currencyCode;
-
-           Urls = new CoinUrlsUnknown();
         }
 
 

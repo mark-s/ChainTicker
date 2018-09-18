@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using ChainTicker.Core.EventTypes;
 using ChainTicker.Core.Interfaces;
 using ChainTicker.Core.IO;
-using ChanTicker.Core.EventTypes;
 using GalaSoft.MvvmLight.Messaging;
 
 namespace ChainTicker.App.Services

@@ -44,8 +44,6 @@
     <Compile Include="Domain\ApiEndpointCollection.cs" />
     <Compile Include="Domain\ApiEndpointType.cs" />
     <Compile Include="Domain\CachedMarket.cs" />
-    <Compile Include="Domain\CoinUrls.cs" />
-    <Compile Include="Domain\CoinUrlsUnknown.cs" />
     <Compile Include="Domain\EmptyTick.cs" />
     <Compile Include="Domain\ExchangeInfo.cs" />
     <Compile Include="Domain\IMarket.cs" />
@@ -55,27 +53,28 @@
     <Compile Include="EventTypes\MarketUnsubscribed.cs" />
     <Compile Include="Interfaces\IChainTickerFileService.cs" />
     <Compile Include="Interfaces\ICoin.cs" />
-    <Compile Include="Interfaces\ICoinUrlSet.cs" />
     <Compile Include="Interfaces\IDiskCache.cs" />
     <Compile Include="Interfaces\IExchange.cs" />
     <Compile Include="Interfaces\IExchangeFactory.cs" />
-    <Compile Include="Interfaces\IFileIOService.cs" />
+    <Compile Include="Interfaces\IDiskIOService.cs" />
     <Compile Include="Interfaces\IFolderService.cs" />
     <Compile Include="Interfaces\IJsonSerializer.cs" />
     <Compile Include="Interfaces\IMarketsService.cs" />
     <Compile Include="Interfaces\IPollingPriceService.cs" />
     <Compile Include="Interfaces\IPriceService.cs" />
     <Compile Include="Interfaces\ITick.cs" />
+    <Compile Include="Interfaces\ITimeService.cs" />
     <Compile Include="IO\CachedFile.cs" />
     <Compile Include="IO\ChainTickerFileService.cs" />
     <Compile Include="IO\ChainTickerFolder.cs" />
     <Compile Include="IO\ChainTickerJsonSerializer.cs" />
     <Compile Include="IO\DiskCache.cs" />
-    <Compile Include="IO\FileIOService.cs" />
+    <Compile Include="IO\DiskIOService.cs" />
     <Compile Include="IO\FolderService.cs" />
     <Compile Include="IO\JsonHelpers.cs" />
     <Compile Include="IO\MarketInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\TimeService.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Ensure.That">

@@ -14,21 +14,11 @@ namespace ChainTicker.DataSource.FiatCurrencies.Domain
         public string Description { get; }
         public string Name { get; }
 
-        public ICoinUrlSet Urls { get; }
-        
         public FiatCurrency(FiatCurrencyDto fiatCurrencyDto)
         {
             Code = fiatCurrencyDto.Code;
             Description = fiatCurrencyDto.Name;
             Name = fiatCurrencyDto.Symbol;
-
-            // TODO: Figure this out
-            Urls = new CoinUrls(fiatCurrencyDto.Image,
-                                                        "http://www.xe.com/currency/" + fiatCurrencyDto.Code.ToLowerInvariant(),
-                                                        "./Images/" + fiatCurrencyDto.Image,
-                                                        "http://www.xe.com/currency/" + fiatCurrencyDto.Code.ToLowerInvariant(),
-                                                        "????");
-
         }
 
 

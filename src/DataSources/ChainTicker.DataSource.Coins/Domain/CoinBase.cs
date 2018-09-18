@@ -12,7 +12,5 @@ namespace ChainTicker.DataSource.Coins.Domain
 
         public string Description { get; protected set; }
         
-        public ICoinUrlSet Urls { get; protected set; }
-
     }
 }

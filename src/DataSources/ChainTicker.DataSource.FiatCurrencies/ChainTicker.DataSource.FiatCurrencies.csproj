@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Domain\FiatCurrency.cs" />
     <Compile Include="DTOs\FiatCurrencyDto.cs" />
+    <Compile Include="Domain\FiatCurrenciesCollection.cs" />
     <Compile Include="FiatCurrenciesService.cs" />
     <Compile Include="IFiatCurrenciesService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
