@@ -66,7 +66,7 @@
     <Compile Include="Interfaces\ITimeService.cs" />
     <Compile Include="IO\CachedFile.cs" />
     <Compile Include="IO\ChainTickerFileService.cs" />
-    <Compile Include="IO\ChainTickerFolder.cs" />
+    <Compile Include="IO\AppFolder.cs" />
     <Compile Include="IO\ChainTickerJsonSerializer.cs" />
     <Compile Include="IO\DiskCache.cs" />
     <Compile Include="IO\DiskIOService.cs" />

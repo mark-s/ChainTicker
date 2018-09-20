@@ -48,11 +48,11 @@ namespace ChainTicker.Exchange.BitFlyer.Services
             var availableMarkets = new List<IMarket>();
 
             // note: Using 'getprices' here as it returns nicer data than 'getmarkets'
-            var getPricesQuery = new RestQuery(_apiEndpoints[ApiEndpointType.Rest], "/v1/getprices");
+            var getPricesQuery = new RestQueryUri(_apiEndpoints[ApiEndpointType.Rest], "/v1/getprices");
             var getPricesResponse = await _restService.GetAsync<List<BitFlyerMarket>>(getPricesQuery.Address());
 
             // but it returns All markets - even ones that can't be subscribed to... So need to flag them
-            var getMarketsQuery = new RestQuery(_apiEndpoints[ApiEndpointType.Rest], "/v1/getmarkets");
+            var getMarketsQuery = new RestQueryUri(_apiEndpoints[ApiEndpointType.Rest], "/v1/getmarkets");
             var getMarketsResponse = await _restService.GetAsync<List<BitFlyerMarket>>(getMarketsQuery.Address());
 
             if (getPricesResponse.IsSuccess && getMarketsResponse.IsSuccess)
@@ -60,7 +60,7 @@ namespace ChainTicker.Exchange.BitFlyer.Services
                 var marketsWithLivePrices = getMarketsResponse.Data;
                 availableMarkets.AddRange(getPricesResponse.Data.Select(m => _marketFactory.GetMarket(m, marketsWithLivePrices.Any(p => p.ProductCode == m.ProductCode))));
 
-                await _fileService.SaveAndSerializeAsync(ChainTickerFolder.Cache, CACHE_FILE_NAME, availableMarkets);
+                await _fileService.SaveAndSerializeAsync(AppFolder.Cache, CACHE_FILE_NAME, availableMarkets);
             }
             else
             {
@@ -75,7 +75,7 @@ namespace ChainTicker.Exchange.BitFlyer.Services
         {
             var toReturn = new List<IMarket>();
 
-            var fromCache = await _fileService.LoadAndDeserializeAsync<List<CachedMarket>>(ChainTickerFolder.Cache, CACHE_FILE_NAME);
+            var fromCache = await _fileService.LoadAndDeserializeAsync<List<CachedMarket>>(AppFolder.Cache, CACHE_FILE_NAME);
 
             foreach (var cachedMarket in fromCache)
                 toReturn.Add(_marketFactory.GetMarket(cachedMarket));

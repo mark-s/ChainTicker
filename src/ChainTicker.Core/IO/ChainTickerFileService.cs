@@ -17,16 +17,16 @@ namespace ChainTicker.Core.IO
         }
 
         public bool IsCacheStale(CachedFile cachedFile)
-            => _cache.IsStale(ChainTickerFolder.Cache, cachedFile.FileName, cachedFile.CacheAge);
+            => _cache.IsStale(AppFolder.Cache, cachedFile.FileName, cachedFile.CacheAge);
 
 
-        public async Task<T> LoadAndDeserializeAsync<T>(ChainTickerFolder folder, string fileName)
+        public async Task<T> LoadAndDeserializeAsync<T>(AppFolder folder, string fileName)
         {
             var cachedRaw = await _diskIOService.LoadTextAsync(folder, fileName).ConfigureAwait(false);
             return _serializer.Deserialize<T>(cachedRaw);
         }
 
-        public async Task SaveAndSerializeAsync<T>(ChainTickerFolder folder, string fileName, T data)
+        public async Task SaveAndSerializeAsync<T>(AppFolder folder, string fileName, T data)
         {
             var serialized = _serializer.Serialize(data);
             await _diskIOService.SaveTextAsync(folder, fileName, serialized).ConfigureAwait(false);

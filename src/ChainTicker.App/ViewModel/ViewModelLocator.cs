@@ -78,7 +78,7 @@ namespace ChainTicker.App.ViewModel
 
             builder.RegisterType<MarketSubscriptionService>().As<IMarketSubscriptionService>();
 
-            builder.RegisterType<CoinInfoService>().As<ICoinInfoService>();
+            builder.RegisterType<CoinsService>().As<ICoinsService>();
             builder.RegisterType<FiatCurrenciesService>().As<IFiatCurrenciesService>();
 
             builder.RegisterType<ChainTickerJsonSerializer>().As<IJsonSerializer>();
@@ -94,7 +94,7 @@ namespace ChainTicker.App.ViewModel
             builder.RegisterType<GdaxExchangeFactory>().Named<IExchangeFactory>(nameof(GdaxExchangeFactory));
 
             builder.Register(c => new ExchangeModelsFactory(c.Resolve<IFiatCurrenciesService>(), 
-                                                                                            c.Resolve<ICoinInfoService>(),
+                                                                                            c.Resolve<ICoinsService>(),
                                                                                             c.Resolve<IEnumerable<IExchangeFactory>>()));
 
 

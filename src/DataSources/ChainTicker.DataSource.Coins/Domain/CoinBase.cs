@@ -1,6 +1,4 @@
-﻿using ChainTicker.Core.Interfaces;
-
-namespace ChainTicker.DataSource.Coins.Domain
+﻿namespace ChainTicker.DataSource.Coins.Domain
 {
     public abstract class CoinBase 
     {

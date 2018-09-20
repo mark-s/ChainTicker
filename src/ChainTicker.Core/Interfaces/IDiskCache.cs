@@ -5,6 +5,6 @@ namespace ChainTicker.Core.Interfaces
 {
     public interface IDiskCache
     {
-        bool IsStale(ChainTickerFolder cache, string cacheFileName, TimeSpan cacheAgeTimeSpan);
+        bool IsStale(AppFolder cache, string cacheFileName, TimeSpan cacheAgeTimeSpan);
     }
 }

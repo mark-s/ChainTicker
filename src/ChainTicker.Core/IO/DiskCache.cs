@@ -14,7 +14,7 @@ namespace ChainTicker.Core.IO
             _timeService = timeService;
         }
 
-        public bool IsStale(ChainTickerFolder folder, string cacheFileName, TimeSpan cacheAgeTimeSpan)
+        public bool IsStale(AppFolder folder, string cacheFileName, TimeSpan cacheAgeTimeSpan)
         {
             // check there's actually some saved data to load from 
             if (_diskIOService.FileExists(folder, cacheFileName) == false)

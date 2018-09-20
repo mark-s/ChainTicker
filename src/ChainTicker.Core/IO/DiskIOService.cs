@@ -19,16 +19,16 @@ namespace ChainTicker.Core.IO
         }
 
 
-        public DateTime GetFileSaveTime(ChainTickerFolder folder, string fileName)
+        public DateTime GetFileSaveTime(AppFolder folder, string fileName)
             => File.GetLastWriteTime(GetPathAndFilename(folder, fileName));
 
-        public bool FileExists(ChainTickerFolder folder, string fileName)
+        public bool FileExists(AppFolder folder, string fileName)
             => File.Exists(GetPathAndFilename(folder, fileName));
 
         public bool FileExists(string fileName)
             => File.Exists(fileName);
 
-        public async Task SaveTextAsync(ChainTickerFolder folder, string fileName, string textToSave)
+        public async Task SaveTextAsync(AppFolder folder, string fileName, string textToSave)
         {
             var jsonAsBytes = _encoding.GetBytes(textToSave);
 
@@ -42,7 +42,7 @@ namespace ChainTicker.Core.IO
             }
         }
 
-        public async Task<string> LoadTextAsync(ChainTickerFolder folder, string fileName)
+        public async Task<string> LoadTextAsync(AppFolder folder, string fileName)
         {
             var fullPathAndFileName = GetPathAndFilename(folder, fileName);
             byte[] result;
@@ -57,7 +57,7 @@ namespace ChainTicker.Core.IO
         }
 
 
-        public string GetPathAndFilename(ChainTickerFolder folder, string fileName)
+        public string GetPathAndFilename(AppFolder folder, string fileName)
             => Path.Combine(_folderService.GetFolderPath(folder), fileName);
 
 

@@ -6,15 +6,15 @@ namespace ChainTicker.Core.Interfaces
 {
     public interface IDiskIOService
     {
-        Task<string> LoadTextAsync(ChainTickerFolder folder, string fileName);
+        Task<string> LoadTextAsync(AppFolder folder, string fileName);
 
-        Task SaveTextAsync(ChainTickerFolder folder, string fileName, string textToSave);
+        Task SaveTextAsync(AppFolder folder, string fileName, string textToSave);
 
-        DateTime GetFileSaveTime(ChainTickerFolder folder, string fileName);
+        DateTime GetFileSaveTime(AppFolder folder, string fileName);
 
-        string GetPathAndFilename(ChainTickerFolder folder, string fileName);
+        string GetPathAndFilename(AppFolder folder, string fileName);
 
-        bool FileExists(ChainTickerFolder folder, string fileName);
+        bool FileExists(AppFolder folder, string fileName);
 
         bool FileExists(string fileName);
     }

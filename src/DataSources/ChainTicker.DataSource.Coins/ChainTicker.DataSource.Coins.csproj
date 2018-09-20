@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoinLogoService.cs" />
     <Compile Include="DTO\AllCoinsResponse.cs" />
     <Compile Include="DTO\CoinInfo.cs" />
     <Compile Include="DTO\DefaultWatchlist.cs" />
@@ -52,10 +51,13 @@
     <Compile Include="Domain\CoinsCollection.cs" />
     <Compile Include="Domain\Coin.cs" />
     <Compile Include="Domain\UnknownCoin.cs" />
-    <Compile Include="CoinInfoService.cs" />
-    <Compile Include="ICoinInfoService.cs" />
-    <Compile Include="ICoinLogoService.cs" />
+    <Compile Include="CoinsService.cs" />
+    <Compile Include="ICoinsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CacheSource.cs" />
+    <Compile Include="Services\ICacheSource.cs" />
+    <Compile Include="Services\IWebSource.cs" />
+    <Compile Include="Services\WebSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ChainTicker.Core\ChainTicker.Core.csproj">

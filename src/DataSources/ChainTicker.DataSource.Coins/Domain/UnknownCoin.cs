@@ -12,9 +12,6 @@ namespace ChainTicker.DataSource.Coins.Domain
             IsValid = false;
 
             Description = Name = Code = coinCode;
-
-            Urls = new CoinUrlsUnknown();
-
         }
     }
 }

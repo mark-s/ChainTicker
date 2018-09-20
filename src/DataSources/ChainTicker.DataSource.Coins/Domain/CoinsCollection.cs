@@ -5,9 +5,9 @@ using EnsureThat;
 
 namespace ChainTicker.DataSource.Coins.Domain
 {
-    internal sealed class CoinsCollection
+    public sealed class CoinsCollection
     {
-        private readonly Dictionary<string, ICoin> _coins = new Dictionary<string, ICoin>(2000); // There's approx this many coins available, let's pre-size the dictionary
+        private readonly Dictionary<string, ICoin> _coins = new Dictionary<string, ICoin>(3080); // There's approx this many coins available, let's pre-size the dictionary
 
         internal IEnumerable<string> GetAllCoinCodes()
             => _coins.Values.Select(c => c.Code);

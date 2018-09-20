@@ -7,8 +7,8 @@ namespace ChainTicker.Core.Interfaces
     {
         bool IsCacheStale(CachedFile cachedFile);
 
-        Task<T> LoadAndDeserializeAsync<T>(ChainTickerFolder folder, string fileName);
+        Task<T> LoadAndDeserializeAsync<T>(AppFolder folder, string fileName);
 
-        Task SaveAndSerializeAsync<T>(ChainTickerFolder folder, string fileName, T data);
+        Task SaveAndSerializeAsync<T>(AppFolder folder, string fileName, T data);
     }
 }

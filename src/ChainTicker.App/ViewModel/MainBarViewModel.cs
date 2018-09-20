@@ -11,7 +11,7 @@ namespace ChainTicker.App.ViewModel
 {
     public class MainBarViewModel : ViewModelBase
     {
-        private readonly ICoinInfoService _coinInfoService;
+        private readonly ICoinsService _coinsService;
         private readonly ExchangeModelsFactory _exchangeModelsFactory;
         private readonly IMarketSubscriptionService _marketSubscriptionService;
 
@@ -38,9 +38,9 @@ namespace ChainTicker.App.ViewModel
 
 
 
-        public MainBarViewModel(ICoinInfoService coinInfoService, ExchangeModelsFactory exchangeModelsFactory, IMarketSubscriptionService marketSubscriptionService)
+        public MainBarViewModel(ICoinsService coinsService, ExchangeModelsFactory exchangeModelsFactory, IMarketSubscriptionService marketSubscriptionService)
         {
-            _coinInfoService = coinInfoService;
+            _coinsService = coinsService;
             _exchangeModelsFactory = exchangeModelsFactory;
             _marketSubscriptionService = marketSubscriptionService;
 
@@ -67,7 +67,7 @@ namespace ChainTicker.App.ViewModel
 
 
         private async Task GetCoinsAsync()
-            => await _coinInfoService.GetAvailableCoinsAsync();
+            => await _coinsService.PopulateAvailableCoinsAsync();
 
 
         private async Task GetExchangesAsync()

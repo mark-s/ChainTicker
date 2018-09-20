@@ -11,15 +11,15 @@ namespace ChainTicker.App.Services
     public class ExchangeModelsFactory
     {
         private readonly IFiatCurrenciesService _fiatCurrenciesService;
-        private readonly ICoinInfoService _coinInfoService;
+        private readonly ICoinsService _coinsService;
         private readonly IEnumerable<IExchangeFactory> _exchangeFactories;
 
         public ExchangeModelsFactory(IFiatCurrenciesService fiatCurrenciesService,
-                                                        ICoinInfoService coinInfoService,
+                                                        ICoinsService coinsService,
                                                         IEnumerable<IExchangeFactory> exchangeFactories)
         {
             _fiatCurrenciesService = fiatCurrenciesService;
-            _coinInfoService = coinInfoService;
+            _coinsService = coinsService;
             _exchangeFactories = exchangeFactories;
         }
 
@@ -40,7 +40,7 @@ namespace ChainTicker.App.Services
 
         private ICoin CoinInfoFunc(string coinOrCurrencyCode)
         {
-            var coin = _coinInfoService.GetCoinInfo(coinOrCurrencyCode);
+            var coin = _coinsService.GetCoinInfoAsync(coinOrCurrencyCode);
             if (coin.IsValid)
                 return coin;
             else

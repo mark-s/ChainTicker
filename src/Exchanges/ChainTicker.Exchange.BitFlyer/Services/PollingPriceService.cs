@@ -30,7 +30,7 @@ namespace ChainTicker.Exchange.BitFlyer.Services
         public PollingPriceService(IRestService restService, string apiEndpoint, TimeSpan updateTimeSpan)
         {
             _restService = EnsureArg.IsNotNull(restService, nameof(restService));
-            _getPricesQuery = new RestQuery(apiEndpoint, "/v1/getprices").Address();
+            _getPricesQuery = new RestQueryUri(apiEndpoint, "/v1/getprices").Address();
             _subscribableRestService = new SubscribableRestService<List<BitFlyerMarket>>(restService, 
                                                                                                                         _getPricesQuery,
                                                                                                                         updateTimeSpan);

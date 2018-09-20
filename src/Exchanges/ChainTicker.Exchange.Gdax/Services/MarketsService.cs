@@ -45,7 +45,7 @@ namespace ChainTicker.Exchange.Gdax.Services
         {
             var availableMarkets = new List<IMarket>();
 
-            var getPricesQuery = new RestQuery(_apiEndpoints[ApiEndpointType.Rest], "/products");
+            var getPricesQuery = new RestQueryUri(_apiEndpoints[ApiEndpointType.Rest], "/products");
             var getPricesResponse = await _restService.GetAsync<List<GdaxMarket>>(getPricesQuery.Address());
 
             if (getPricesResponse.IsSuccess)
@@ -55,7 +55,7 @@ namespace ChainTicker.Exchange.Gdax.Services
 
                 ));
 
-                await _fileService.SaveAndSerializeAsync(ChainTickerFolder.Cache, CACHE_FILE_NAME, availableMarkets);
+                await _fileService.SaveAndSerializeAsync(AppFolder.Cache, CACHE_FILE_NAME, availableMarkets);
             }
             else
             {
@@ -70,7 +70,7 @@ namespace ChainTicker.Exchange.Gdax.Services
         {
             var toReturn = new List<IMarket>();
 
-            var fromCache = await _fileService.LoadAndDeserializeAsync<List<CachedMarket>>(ChainTickerFolder.Cache, CACHE_FILE_NAME);
+            var fromCache = await _fileService.LoadAndDeserializeAsync<List<CachedMarket>>(AppFolder.Cache, CACHE_FILE_NAME);
 
             foreach (var cachedMarket in fromCache)
             {

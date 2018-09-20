@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using ChainTicker.DataSource.Coins.DTO;
-using ChainTicker.Core.Domain;
 using ChainTicker.Core.Interfaces;
 using EnsureThat;
 
@@ -21,12 +20,6 @@ namespace ChainTicker.DataSource.Coins.Domain
             Code = coinInfo.Name;
             Name = coinInfo.CoinName;
             Description = coinInfo.FullName;
-
-            Urls = new CoinUrls(coinInfo.ImageUrl, 
-                                                   coinInfo.Url, 
-                                                   baseImageUrl + coinInfo.ImageUrl, 
-                                                   baseLinkUrl + coinInfo.Url, 
-                                                   coinInfo.ImageUrl?.Replace("/", ""));
         }
 
         

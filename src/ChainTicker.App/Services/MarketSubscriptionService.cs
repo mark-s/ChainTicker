@@ -34,14 +34,14 @@ namespace ChainTicker.App.Services
         }
 
         public async Task SaveSubscribedMarketsAsync()
-            => await _fileService.SaveAndSerializeAsync(ChainTickerFolder.ApplicationBase, FILENAME, _subscribedMarkets);
+            => await _fileService.SaveAndSerializeAsync(AppFolder.ApplicationBase, FILENAME, _subscribedMarkets);
 
 
         private async Task LoadIfNeededAsync()
         {
             if (_loaded == false)
             {
-                var fromDisk = await _fileService.LoadAndDeserializeAsync<HashSet<MarketInfo>>(ChainTickerFolder.ApplicationBase, FILENAME);
+                var fromDisk = await _fileService.LoadAndDeserializeAsync<HashSet<MarketInfo>>(AppFolder.ApplicationBase, FILENAME);
                 if (fromDisk != null)
                     _subscribedMarkets = fromDisk;
             }

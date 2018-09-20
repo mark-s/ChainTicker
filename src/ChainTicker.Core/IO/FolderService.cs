@@ -10,21 +10,21 @@ namespace ChainTicker.Core.IO
         private string _applicationBaseFolder;
         private const string APPNAME = "ChainTicker";
 
-        private readonly Dictionary<ChainTickerFolder, string> _folders = new Dictionary<ChainTickerFolder, string>(3);
+        private readonly Dictionary<AppFolder, string> _folders = new Dictionary<AppFolder, string>(3);
 
         public FolderService()
         {
-            AddFolder(ChainTickerFolder.ApplicationBase);
-            AddFolder(ChainTickerFolder.Cache);
-            AddFolder(ChainTickerFolder.Icons);
+            AddFolder(AppFolder.ApplicationBase);
+            AddFolder(AppFolder.Cache);
+            AddFolder(AppFolder.Icons);
         }
 
-        private void AddFolder(ChainTickerFolder folder)
+        private void AddFolder(AppFolder folder)
         {
-            if (folder == ChainTickerFolder.ApplicationBase)
+            if (folder == AppFolder.ApplicationBase)
             {
                 _applicationBaseFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), APPNAME);
-                _folders.Add(ChainTickerFolder.ApplicationBase, _applicationBaseFolder);
+                _folders.Add(AppFolder.ApplicationBase, _applicationBaseFolder);
                 EnsureFolderExists(_applicationBaseFolder);
             }
             else
@@ -41,7 +41,7 @@ namespace ChainTicker.Core.IO
                 Directory.CreateDirectory(applicationBaseFolder);
         }
 
-        public string GetFolderPath(ChainTickerFolder folder)
+        public string GetFolderPath(AppFolder folder)
             => _folders[folder];
 
     }

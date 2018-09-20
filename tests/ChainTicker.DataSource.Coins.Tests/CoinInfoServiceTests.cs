@@ -35,19 +35,19 @@ namespace ChainTicker.DataSource.Coins.Tests
         [Test]
         public async Task GetAllAvailableCoins_StaleCache_WebserviceCall_ReturnsAllCoins()
         {
-            A.CallTo(() => _cache.IsStale(A<ChainTickerFolder>.Ignored, A<string>.Ignored, A<TimeSpan>.Ignored))
+            A.CallTo(() => _cache.IsStale(A<AppFolder>.Ignored, A<string>.Ignored, A<TimeSpan>.Ignored))
                 .Returns(false);
 
-            A.CallTo(() => _diskIOService.LoadTextAsync(A<ChainTickerFolder>.Ignored, A<string>.Ignored))
+            A.CallTo(() => _diskIOService.LoadTextAsync(A<AppFolder>.Ignored, A<string>.Ignored))
                 .Returns(GetCoinsJson());
 
 
-            var coinInfoService = new CoinInfoService(_restService, _fileService);
+            var coinInfoService = new CoinsService(_restService, _fileService);
 
-            await coinInfoService.GetAvailableCoinsAsync();
+            await coinInfoService.PopulateAvailableCoinsAsync();
 
 
-            var result = coinInfoService.GetAllCoins();
+            var result = coinInfoService.GetAllCoinsAsync();
 
             //var btcInfo = result.GetCoinInfo("BTC");
 
@@ -58,10 +58,9 @@ namespace ChainTicker.DataSource.Coins.Tests
         }
 
 
-
         private string GetCoinsJson()
         {
-            return "{\"Response\":\"Success\",\"Message\":\"Coin list sucscesfully returned!\",\"BaseImageUrl\":\"https://www.someurl.com\",\"BaseLinkUrl\":\"https://www.someurl.com\",\"Data\":{\"42\":{\"ProductCode\":\"4321\",\"Url\":\"/coins/42/overview\",\"ImageUrl\":\"/media/19984/42.png\",\"Name\":\"42\",\"CoinName\":\"42 Coin\",\"FullName\":\"42 Coin (42)\",\"Algorithm\":\"Scrypt\",\"ProofType\":\"PoW\",\"FullyPremined\":\"0\",\"TotalCoinSupply\":\"42\",\"PreMinedValue\":\"N/A\",\"TotalCoinsFreeFloat\":\"N/A\",\"SortOrder\":\"34\",\"Sponsored\":false},\"365\":{\"ProductCode\":\"33639\",\"Url\":\"/coins/365/overview\",\"ImageUrl\":\"/media/352070/365.png\",\"Name\":\"365\",\"CoinName\":\"365Coin\",\"FullName\":\"365Coin (365)\",\"Algorithm\":\"X11\",\"ProofType\":\"PoW/PoS\",\"FullyPremined\":\"0\",\"TotalCoinSupply\":\"2300000000\",\"PreMinedValue\":\"N/A\",\"TotalCoinsFreeFloat\":\"N/A\",\"SortOrder\":\"916\",\"Sponsored\":false}},\"Type\":100}";
+            return "{\"Response\":\"Success\",\"Message\":\"Coin list successfully returned!\",\"BaseImageUrl\":\"https://www.someurl.com\",\"BaseLinkUrl\":\"https://www.someurl.com\",\"Data\":{\"42\":{\"ProductCode\":\"4321\",\"Url\":\"/coins/42/overview\",\"ImageUrl\":\"/media/19984/42.png\",\"Name\":\"42\",\"CoinName\":\"42 Coin\",\"FullName\":\"42 Coin (42)\",\"Algorithm\":\"Scrypt\",\"ProofType\":\"PoW\",\"FullyPremined\":\"0\",\"TotalCoinSupply\":\"42\",\"PreMinedValue\":\"N/A\",\"TotalCoinsFreeFloat\":\"N/A\",\"SortOrder\":\"34\",\"Sponsored\":false},\"365\":{\"ProductCode\":\"33639\",\"Url\":\"/coins/365/overview\",\"ImageUrl\":\"/media/352070/365.png\",\"Name\":\"365\",\"CoinName\":\"365Coin\",\"FullName\":\"365Coin (365)\",\"Algorithm\":\"X11\",\"ProofType\":\"PoW/PoS\",\"FullyPremined\":\"0\",\"TotalCoinSupply\":\"2300000000\",\"PreMinedValue\":\"N/A\",\"TotalCoinsFreeFloat\":\"N/A\",\"SortOrder\":\"916\",\"Sponsored\":false}},\"Type\":100}";
         }
 
 
