@@ -52,7 +52,7 @@ namespace ChainTicker.DataSource.Coins
 
         private async Task PopulateAvailableCoinsAsync()
         {
-            if (_cacheSource.IsCacheStale() || ignoreCache)
+            if (_cacheSource.IsCacheStale())
                 await _webSource.GetFromWebServiceAsync(async response => await WebSuccess(response), WebFailure);
             else
                 await _cacheSource.GetFromCacheAsync(CacheSuccess, CacheFailure);

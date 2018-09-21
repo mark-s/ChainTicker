@@ -31,9 +31,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.Transport.Pubnu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.Transport.Rest", "src\Transports\ChainTicker.Transport.Rest\ChainTicker.Transport.Rest.csproj", "{6DFD446A-805D-4209-8ECB-F69453580D73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.App", "src\ChainTicker.App\ChainTicker.App.csproj", "{86BB5E74-EDB7-436A-8555-D05CDEB732CE}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3FAE20A7-92DC-4400-8885-C8E789325947}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.Shell", "src\ChainTicker.Shell\ChainTicker.Shell.csproj", "{BF394BF6-1F0E-4D0B-AD07-3C137FDFE04A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.Module.Tickers", "src\Modules\ChainTicker.Module.Tickers\ChainTicker.Module.Tickers.csproj", "{14B34ED1-6833-42F4-9B51-77312F748085}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,10 +87,14 @@ Global
 		{6DFD446A-805D-4209-8ECB-F69453580D73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DFD446A-805D-4209-8ECB-F69453580D73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DFD446A-805D-4209-8ECB-F69453580D73}.Release|Any CPU.Build.0 = Release|Any CPU
-		{86BB5E74-EDB7-436A-8555-D05CDEB732CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{86BB5E74-EDB7-436A-8555-D05CDEB732CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{86BB5E74-EDB7-436A-8555-D05CDEB732CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{86BB5E74-EDB7-436A-8555-D05CDEB732CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF394BF6-1F0E-4D0B-AD07-3C137FDFE04A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF394BF6-1F0E-4D0B-AD07-3C137FDFE04A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF394BF6-1F0E-4D0B-AD07-3C137FDFE04A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF394BF6-1F0E-4D0B-AD07-3C137FDFE04A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14B34ED1-6833-42F4-9B51-77312F748085}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14B34ED1-6833-42F4-9B51-77312F748085}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14B34ED1-6833-42F4-9B51-77312F748085}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14B34ED1-6833-42F4-9B51-77312F748085}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
