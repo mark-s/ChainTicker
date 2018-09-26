@@ -9,7 +9,7 @@ namespace ChainTicker.Exchange.Gdax
     [DebuggerDisplay("Name: {" + nameof(DisplayName) + "}")]
     public class Market : IMarket
     {
-        private readonly IPriceService _priceService;
+        private readonly IPriceTicker _priceTicker;
 
         public string ProductCode { get; }
 
@@ -34,14 +34,14 @@ namespace ChainTicker.Exchange.Gdax
             HasRealTimeUpdates = hasRealTimeUpdates;
         }
 
-        internal Market(IMarket market, IPriceService priceService)
+        internal Market(IMarket market, IPriceTicker priceTicker)
             : this(market.ProductCode,
                 market.BaseCurrency,
                 market.CounterCurrency,
                 market.DisplayName,
                 market.HasRealTimeUpdates)
         {
-            _priceService = priceService;
+            _priceTicker = priceTicker;
         }
 
         internal Market(string productCode,
@@ -49,9 +49,9 @@ namespace ChainTicker.Exchange.Gdax
             string counterCurrency,
             string displayName,
             bool hasRealTimeUpdates,
-            IPriceService priceService)
+            IPriceTicker priceTicker)
         {
-            _priceService = priceService;
+            _priceTicker = priceTicker;
             ProductCode = productCode;
             BaseCurrency = baseCurrency;
             CounterCurrency = counterCurrency;
@@ -61,16 +61,16 @@ namespace ChainTicker.Exchange.Gdax
 
 
         public Task<ITick> GetCurrentPriceAsync()
-            => _priceService.GetCurrentPriceAsync(this);
+            => _priceTicker.GetCurrentPriceAsync(this);
 
         public bool IsSubscribedToTicks()
-            => _priceService.IsSubscribedToTicks(this);
+            => _priceTicker.IsSubscribedToTicks(this);
 
         public IObservable<ITick> SubscribeToTicks()
-            => _priceService.SubscribeToTicks(this);
+            => _priceTicker.SubscribeToTicks(this);
 
         public void UnsubscribeFromTicks()
-            => _priceService.UnsubscribeFromTicks(this);
+            => _priceTicker.UnsubscribeFromTicks(this);
 
 
     }

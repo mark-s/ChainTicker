@@ -1,8 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using ChainTicker.Core.Interfaces;
-
-namespace ChainTicker.Core.Domain
+﻿namespace ChainTicker.Core.Domain
 {
     public interface IMarket
     {
@@ -16,12 +12,6 @@ namespace ChainTicker.Core.Domain
 
         string ProductCode { get; }
 
-        Task<ITick> GetCurrentPriceAsync();
 
-        bool IsSubscribedToTicks();
-
-        IObservable<ITick> SubscribeToTicks();
-
-        void UnsubscribeFromTicks();
     }
 }

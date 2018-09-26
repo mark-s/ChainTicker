@@ -9,14 +9,14 @@ using EnsureThat;
 
 namespace ChainTicker.Exchange.BitFlyer.Services
 {
-    public class PriceService : IPriceService, IDisposable
+    internal class PriceTicker : IPriceTicker, IDisposable
     {
         private readonly IPubnubTransport _pubnubTransport;
         private readonly IPollingPriceService _priceQueryService;
         private readonly MessageParser _messageParser;
 
 
-        public PriceService(IPubnubTransport pubnubTransport, IPollingPriceService priceQueryService, MessageParser messageParser)
+        public PriceTicker(IPubnubTransport pubnubTransport, IPollingPriceService priceQueryService, MessageParser messageParser)
         {
             _pubnubTransport = EnsureArg.IsNotNull(pubnubTransport, nameof(pubnubTransport));
             _priceQueryService = EnsureArg.IsNotNull(priceQueryService, nameof(priceQueryService));
@@ -53,7 +53,7 @@ namespace ChainTicker.Exchange.BitFlyer.Services
 
             return _pubnubTransport.RecievedMessagesObservable.ObserveOn(Scheduler.Default)
                                                                                      .Where(m => m.ChannelName == channelName)
-                                                                                     .Select(m => _messageParser.ConvertToTick(m));
+                                                                                     .Select(m => _messageParser.ConvertToTick(m.Content));
         }
 
         public void UnsubscribeFromTicks(IMarket market)

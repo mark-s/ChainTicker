@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace ChainTicker.Exchange.BitFlyer.DTO
 {
-    public class BitFlyerTick
+    internal class BitFlyerTickDTO
     {
         [JsonProperty("best_bid_size")]
         public double BestBidSize { get; set; }

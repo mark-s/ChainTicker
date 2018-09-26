@@ -42,16 +42,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitFlyerExchange.cs" />
-    <Compile Include="BitFlyerExchangeFactory.cs" />
-    <Compile Include="BitFlyerMarketFactory.cs" />
-    <Compile Include="DTO\BitFlyerMarket.cs" />
-    <Compile Include="DTO\BitFlyerTick.cs" />
+    <Compile Include="Converters\Helpers.cs" />
+    <Compile Include="DTO\BitFlyerMarketDTO.cs" />
+    <Compile Include="DTO\BitFlyerTickDTO.cs" />
     <Compile Include="Market.cs" />
     <Compile Include="MessageParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MarketsService.cs" />
     <Compile Include="Services\PollingPriceService.cs" />
-    <Compile Include="Services\PriceService.cs" />
+    <Compile Include="Services\PriceTicker.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Ensure.That">

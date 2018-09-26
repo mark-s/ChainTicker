@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using ChainTicker.Core.Domain;
 
 namespace ChainTicker.Core.Interfaces
@@ -8,8 +9,9 @@ namespace ChainTicker.Core.Interfaces
 
         ExchangeInfo Info { get; }
 
-        List<IMarket> Markets { get; }
+        MarketCollection Markets { get; }
 
+   
 
     }
 }

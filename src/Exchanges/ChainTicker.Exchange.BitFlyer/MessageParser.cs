@@ -1,5 +1,4 @@
 ﻿using ChainTicker.Exchange.BitFlyer.DTO;
-using ChainTicker.Transport.Pubnub;
 using ChainTicker.Core.Domain;
 using ChainTicker.Core.Interfaces;
 using EnsureThat;
@@ -15,11 +14,11 @@ namespace ChainTicker.Exchange.BitFlyer
             _jsonSerializer = EnsureArg.IsNotNull(jsonSerializer, nameof(jsonSerializer));
         }
 
-        public ITick ConvertToTick(PubnubMessage message)
+        public ITick ConvertToTick(string messageContent)
         {
-            EnsureArg.IsNotNull(message, nameof(message));
+            EnsureArg.IsNotNull(messageContent, nameof(messageContent));
 
-            var bitFlyerTick = _jsonSerializer.Deserialize<BitFlyerTick>(message.Content);
+            var bitFlyerTick = _jsonSerializer.Deserialize<BitFlyerTickDTO>(messageContent);
             return new Tick(bitFlyerTick.LastTradedPrice, 
                                   bitFlyerTick.TickTimeStamp,
                                   bitFlyerTick.BestAsk,

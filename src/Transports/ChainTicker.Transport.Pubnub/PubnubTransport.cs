@@ -1,9 +1,9 @@
-﻿using System;
+﻿using PubnubApi;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using PubnubApi;
 
 namespace ChainTicker.Transport.Pubnub
 {
@@ -14,7 +14,7 @@ namespace ChainTicker.Transport.Pubnub
         private readonly Subject<PubnubMessage> _messageSubject = new Subject<PubnubMessage>();
 
 
-        public PubnubTransport(string subscribeKey, IPubnubLog logger)
+        private PubnubTransport(string subscribeKey, IPubnubLog logger)
         {
             var config = CreateConfiguration(subscribeKey, logger);
 
@@ -26,6 +26,9 @@ namespace ChainTicker.Transport.Pubnub
 
             _pubnubConnector.AddListener(listenerSubscribeCallback);
         }
+
+        public static IPubnubTransport GetNewTransport(string subscribeKey) 
+            => new PubnubTransport(subscribeKey, new DebugLogger());
 
 
         public void SubscribeToChannel(string channelName)
@@ -57,7 +60,6 @@ namespace ChainTicker.Transport.Pubnub
         public bool IsSubscribedToChannel(string channelName)
             => GetSubscribedChannels().Contains(channelName);
 
-
         public List<string> GetSubscribedChannels()
             => _pubnubConnector.GetSubscribedChannels() ?? new List<string>();
 
@@ -70,7 +72,6 @@ namespace ChainTicker.Transport.Pubnub
                 Secure = true
             };
         }
-
 
         private void PresenceCallback(PNPresenceEventResult presence)
             => Debug.WriteLine(presence.Event);
@@ -137,7 +138,6 @@ namespace ChainTicker.Transport.Pubnub
                     break;
             }
         }
-
 
         private void Dispose(bool disposing)
         {

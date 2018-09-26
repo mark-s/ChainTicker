@@ -17,7 +17,7 @@ namespace ChainTicker.Exchange.BitFlyer.Services
     public class PollingPriceService : IPollingPriceService
     {
         private readonly IRestService _restService;
-        private readonly ISubscribableRestService<List<BitFlyerMarket>> _subscribableRestService;
+        private readonly ISubscribableRestService<List<BitFlyerMarketDTO>> _subscribableRestService;
 
 
         private readonly string _getPricesQuery;
@@ -31,7 +31,7 @@ namespace ChainTicker.Exchange.BitFlyer.Services
         {
             _restService = EnsureArg.IsNotNull(restService, nameof(restService));
             _getPricesQuery = new RestQueryUri(apiEndpoint, "/v1/getprices").Address();
-            _subscribableRestService = new SubscribableRestService<List<BitFlyerMarket>>(restService, 
+            _subscribableRestService = new SubscribableRestService<List<BitFlyerMarketDTO>>(restService, 
                                                                                                                         _getPricesQuery,
                                                                                                                         updateTimeSpan);
             _subscribableRestService.RecievedMessagesObservable
@@ -40,12 +40,6 @@ namespace ChainTicker.Exchange.BitFlyer.Services
 
         }
 
-
-        private void StartListeningIfNeeded()
-        {
-            if (_subscriptions.Any() == false)
-                _subscribableRestService.Subscribe();
-        }
 
         public IObservable<ITick> Subscribe(IMarket market)
         {
@@ -64,20 +58,9 @@ namespace ChainTicker.Exchange.BitFlyer.Services
                 _subscribableRestService.Unsubscribe();
         }
 
-
-        private void PopulateTickFromMarketList(List<BitFlyerMarket> bitFlyerMarkets)
-        {
-            foreach (var bitFlyerMarket in bitFlyerMarkets)
-                _rawReceivedSubject.OnNext( new MarketAndTick(bitFlyerMarket.ProductCode , new PriceOnlyTick(bitFlyerMarket.CurrentPrice, DateTimeOffset.Now)));
-        }
-
-
-
-        
-
         public async Task<ITick> GetCurrentPriceAsync(IMarket market)
         {
-            var getPricesResponse = await _restService.GetAsync<List<BitFlyerMarket>>(_getPricesQuery).ConfigureAwait(false);
+            var getPricesResponse = await _restService.GetAsync<List<BitFlyerMarketDTO>>(_getPricesQuery).ConfigureAwait(false);
             if (getPricesResponse.IsSuccess)
             {
                 var thismarket = getPricesResponse.Data.FirstOrDefault(m => m.ProductCode == market.ProductCode);
@@ -95,6 +78,19 @@ namespace ChainTicker.Exchange.BitFlyer.Services
         }
 
 
+        private void StartListeningIfNeeded()
+        {
+            if (_subscriptions.Any() == false)
+                _subscribableRestService.Subscribe();
+        }
+
+        private void PopulateTickFromMarketList(List<BitFlyerMarketDTO> bitFlyerMarkets)
+        {
+            foreach (var bitFlyerMarket in bitFlyerMarkets)
+                _rawReceivedSubject.OnNext( new MarketAndTick(bitFlyerMarket.ProductCode , new PriceOnlyTick(bitFlyerMarket.CurrentPrice, DateTimeOffset.Now)));
+        }
+
+        
         private class MarketAndTick
         {
             public string MarketId { get; }

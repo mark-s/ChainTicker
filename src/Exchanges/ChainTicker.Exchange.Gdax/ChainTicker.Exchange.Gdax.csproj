@@ -54,7 +54,7 @@
     <Compile Include="GdaxMarketFactory.cs" />
     <Compile Include="Market.cs" />
     <Compile Include="Services\PollingPriceService.cs" />
-    <Compile Include="Services\PriceService.cs" />
+    <Compile Include="Services\PriceTicker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MarketsService.cs" />
     <Compile Include="Services\MessageFactory.cs" />

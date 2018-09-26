@@ -47,6 +47,7 @@
     <Compile Include="Domain\EmptyTick.cs" />
     <Compile Include="Domain\ExchangeInfo.cs" />
     <Compile Include="Domain\IMarket.cs" />
+    <Compile Include="Domain\MarketCollection.cs" />
     <Compile Include="Domain\PriceOnlyTick.cs" />
     <Compile Include="Domain\Tick.cs" />
     <Compile Include="EventTypes\MarketSubscribed.cs" />
@@ -59,9 +60,8 @@
     <Compile Include="Interfaces\IDiskIOService.cs" />
     <Compile Include="Interfaces\IFolderService.cs" />
     <Compile Include="Interfaces\IJsonSerializer.cs" />
-    <Compile Include="Interfaces\IMarketsService.cs" />
     <Compile Include="Interfaces\IPollingPriceService.cs" />
-    <Compile Include="Interfaces\IPriceService.cs" />
+    <Compile Include="Interfaces\IPriceTicker.cs" />
     <Compile Include="Interfaces\ITick.cs" />
     <Compile Include="Interfaces\ITimeService.cs" />
     <Compile Include="IO\CachedFile.cs" />

@@ -7,7 +7,7 @@ namespace ChainTicker.Exchange.Gdax
     public class GdaxExchange : IExchange
     {
         public ExchangeInfo Info { get; }
-        public List<IMarket> Markets { get; }
+        public IReadOnlyList<IMarket> Markets { get; }
         
         internal GdaxExchange(ExchangeInfo exchangeInfo, List<IMarket> markets)
         {

@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
-using ChainTicker.Core.Domain;
+﻿using ChainTicker.Core.Domain;
 using ChainTicker.Core.Interfaces;
 using ChainTicker.Exchange.Gdax.Services;
 using ChainTicker.Transport.Rest;
 using ChainTicker.Transport.WebSocket;
+using System.Threading.Tasks;
 
 namespace ChainTicker.Exchange.Gdax
 {
@@ -13,7 +13,7 @@ namespace ChainTicker.Exchange.Gdax
         private readonly IChainTickerFileService _chainTickerFileService;
         private readonly IJsonSerializer _jsonSerializer;
 
-        private readonly ExchangeInfo _exchangeInfo = new ExchangeInfo("Gdax","https://gdax.com","Global Digital Asset Exchange",true,
+        private readonly ExchangeInfo _exchangeInfo = new ExchangeInfo("Gdax", "https://gdax.com", "Global Digital Asset Exchange", true,
             new ApiEndpointCollection
             {
                 [ApiEndpointType.WebSocket] = "wss://ws-feed.gdax.com",
@@ -32,9 +32,9 @@ namespace ChainTicker.Exchange.Gdax
         {
             var webSocketTransport = new WebSocketTransport(_exchangeInfo.ApiEndpoints[ApiEndpointType.WebSocket]);
             var notRealTimeService = new PollingPriceService(_restService, _exchangeInfo.ApiEndpoints);
-            var priceService = new PriceService(webSocketTransport, notRealTimeService, _jsonSerializer);
+            var priceService = new PriceTicker(webSocketTransport, notRealTimeService, _jsonSerializer);
             var marketFactory = new GdaxMarketFactory(priceService);
-            
+
             var marketsService = new MarketsService(_exchangeInfo.ApiEndpoints, _restService, _chainTickerFileService, marketFactory);
 
             var markets = await marketsService.GetAvailableMarketsAsync();
