@@ -9,17 +9,17 @@ using EnsureThat;
 
 namespace ChainTicker.Exchange.BitFlyer.Services
 {
-    internal class PriceTicker : IPriceTicker, IDisposable
+    internal class BitFlyerPriceTicker : IPriceTicker, IDisposable
     {
         private readonly IPubnubTransport _pubnubTransport;
         private readonly IPollingPriceService _priceQueryService;
         private readonly MessageParser _messageParser;
 
 
-        public PriceTicker(IPubnubTransport pubnubTransport, IPollingPriceService priceQueryService, MessageParser messageParser)
+        public BitFlyerPriceTicker(IPubnubTransport pubnubTransport, IPollingPriceService pollingPriceService, MessageParser messageParser)
         {
             _pubnubTransport = EnsureArg.IsNotNull(pubnubTransport, nameof(pubnubTransport));
-            _priceQueryService = EnsureArg.IsNotNull(priceQueryService, nameof(priceQueryService));
+            _priceQueryService = EnsureArg.IsNotNull(pollingPriceService, nameof(pollingPriceService));
             _messageParser = EnsureArg.IsNotNull(messageParser, nameof(messageParser));
         }
 

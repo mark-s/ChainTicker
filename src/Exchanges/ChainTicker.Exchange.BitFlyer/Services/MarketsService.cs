@@ -31,8 +31,6 @@ namespace ChainTicker.Exchange.BitFlyer.Services
             _apiEndpoints = EnsureArg.IsNotNull(apiEndpoints, nameof(apiEndpoints));
             _restService = EnsureArg.IsNotNull(restService, nameof(restService));
             _fileService = EnsureArg.IsNotNull(fileService, nameof(fileService));
-
-
         }
 
         public Task<List<IMarket>> GetAvailableMarketsAsync()
