@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.DataSource.Coin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.Exchange.BitFlyer.Tests", "tests\ChainTicker.Exchange.BitFlyer.Tests\ChainTicker.Exchange.BitFlyer.Tests.csproj", "{80A7D018-28C5-4929-988E-49F0FB8F9932}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.DataSource.FiatCurrencies", "src\DataSources\ChainTicker.DataSource.FiatCurrencies\ChainTicker.DataSource.FiatCurrencies.csproj", "{86CF3BAF-656F-4A54-AF9B-C315CF419F99}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.DataSource.Currencies", "src\DataSources\ChainTicker.DataSource.Currencies\ChainTicker.DataSource.Currencies.csproj", "{86CF3BAF-656F-4A54-AF9B-C315CF419F99}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainTicker.Ui.WpfAssets", "src\ChainTicker.Ui.WpfAssets\ChainTicker.Ui.WpfAssets.csproj", "{5C83A774-6746-483C-B146-B5A24EE29978}"
 EndProject

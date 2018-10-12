@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ChainTicker.Core.Interfaces;
 
-namespace ChainTicker.DataSource.FiatCurrencies.Domain
+namespace ChainTicker.DataSource.Currencies.Domain
 {
     internal class FiatCurrenciesCollection
     {

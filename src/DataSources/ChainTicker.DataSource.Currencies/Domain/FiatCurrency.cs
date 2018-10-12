@@ -1,9 +1,8 @@
 ﻿using System.Diagnostics;
-using ChainTicker.Core.Domain;
 using ChainTicker.Core.Interfaces;
-using ChainTicker.DataSource.FiatCurrencies.DTOs;
+using ChainTicker.DataSource.Currencies.DTOs;
 
-namespace ChainTicker.DataSource.FiatCurrencies.Domain
+namespace ChainTicker.DataSource.Currencies.Domain
 {
     [DebuggerDisplay("{" + nameof(Description) + "}")]
     public class FiatCurrency : ICoin

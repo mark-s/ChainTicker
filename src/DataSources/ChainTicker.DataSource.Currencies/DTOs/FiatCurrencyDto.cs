@@ -1,4 +1,4 @@
-﻿namespace ChainTicker.DataSource.FiatCurrencies.DTOs
+﻿namespace ChainTicker.DataSource.Currencies.DTOs
 {
     public class FiatCurrencyDto
     {
