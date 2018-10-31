@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ChainTicker.Core.Domain;
 using ChainTicker.Core.Interfaces;
+using ChainTicker.Core.IO;
 using ChainTicker.Exchange.BitFlyer.Services;
 using ChainTicker.Transport.Pubnub;
 using ChainTicker.Transport.Rest;
@@ -14,7 +15,6 @@ namespace ChainTicker.Exchange.BitFlyer
     {
         private readonly IChainTickerFileService _chainTickerFileService;
         private readonly IRestService _restService;
-        private MarketCollection _markets;
         private readonly BitFlyerPriceTicker _bitFlyerPriceTicker;
 
         public ExchangeInfo Info { get; } = new ExchangeInfo("bitFlyer", "https://bitflyer.jp", "bitFlyer Japan", true,
@@ -39,13 +39,12 @@ namespace ChainTicker.Exchange.BitFlyer
 
         public async Task<MarketCollection> GetAvailableMarketsAsync()
         {
-            var marketsService = new MarketsService(Info.ApiEndpoints, _restService, _chainTickerFileService);
+            var cachedFile = new CachedFile("BitFlyerAvailableMarkets.json", TimeSpan.FromHours(3));
+            var marketsServiceCache = new MarketsServiceCache(_chainTickerFileService, cachedFile);
 
-            var markets = await marketsService.GetAvailableMarketsAsync();
+            var marketsService = new MarketsService(Info.ApiEndpoints, _restService, marketsServiceCache);
 
-            _markets = new MarketCollection(markets);
-
-            return _markets;
+            return await marketsService.GetAvailableMarketsAsync();
         }
 
         public Task<ITick> GetCurrentPriceAsync(IMarket market)
@@ -62,4 +61,6 @@ namespace ChainTicker.Exchange.BitFlyer
 
         
     }
+
+
 }

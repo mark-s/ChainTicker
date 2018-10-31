@@ -116,5 +116,6 @@ namespace ChainTicker.Exchange.BitFlyer.Tests
             pubnubEndpoint.ShouldBe("sub-c-52a9ab50-29b-e5-baaa-069f8945a4f");
         }
 
+
     }
 }

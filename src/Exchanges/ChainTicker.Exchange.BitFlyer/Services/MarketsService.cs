@@ -1,47 +1,40 @@
-﻿using ChainTicker.Core.Domain;
-using ChainTicker.Core.Interfaces;
-using ChainTicker.Core.IO;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using ChainTicker.Core.Domain;
 using ChainTicker.Exchange.BitFlyer.Converters;
 using ChainTicker.Exchange.BitFlyer.DTO;
 using ChainTicker.Transport.Rest;
 using EnsureThat;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ChainTicker.Exchange.BitFlyer.Services
 {
 
     public class MarketsService
     {
-
         private readonly ApiEndpointCollection _apiEndpoints;
         private readonly IRestService _restService;
-        private readonly IChainTickerFileService _fileService;
-
-        private const string CACHE_FILE_NAME = "BitFlyerAvailableMarkets.json";
-        private readonly TimeSpan _maxCacheAge = TimeSpan.FromHours(3);
+        private readonly IMarketsServiceCache _cache;
 
         public MarketsService(ApiEndpointCollection apiEndpoints,
-                                                IRestService restService,
-                                                IChainTickerFileService fileService)
+                                      IRestService restService,
+                                      IMarketsServiceCache cache)
         {
             _apiEndpoints = EnsureArg.IsNotNull(apiEndpoints, nameof(apiEndpoints));
             _restService = EnsureArg.IsNotNull(restService, nameof(restService));
-            _fileService = EnsureArg.IsNotNull(fileService, nameof(fileService));
+            _cache = EnsureArg.IsNotNull(cache, nameof(cache));
         }
 
-        public Task<List<IMarket>> GetAvailableMarketsAsync()
+        public Task<MarketCollection> GetAvailableMarketsAsync()
         {
-            if (_fileService.IsCacheStale(new CachedFile(CACHE_FILE_NAME, _maxCacheAge)))
+            if (_cache.IsCacheStale())
                 return GetFromWebServiceAsync();
             else
-                return GetFromCacheAsync();
+                return _cache.ReadCacheAsync();
         }
 
-        private async Task<List<IMarket>> GetFromWebServiceAsync()
+        private async Task<MarketCollection> GetFromWebServiceAsync()
         {
             var availableMarkets = new List<IMarket>();
 
@@ -56,25 +49,23 @@ namespace ChainTicker.Exchange.BitFlyer.Services
             if (getPricesResponse.IsSuccess && getMarketsResponse.IsSuccess)
             {
                 var marketsWithLivePrices = getMarketsResponse.Data;
-                availableMarkets.AddRange(getPricesResponse.Data.Select(m =>
-                    Helpers.ConvertToMarket(m, marketsWithLivePrices.Any(p => p.ProductCode == m.ProductCode))));
 
-                await _fileService.SaveAndSerializeAsync(AppFolder.Cache, CACHE_FILE_NAME, availableMarkets);
+                availableMarkets.AddRange(getPricesResponse.Data.Select(m => Helpers.ConvertToMarket(m, marketsWithLivePrices.Any(p => p.ProductCode == m.ProductCode))));
+
+                var marketCollection = new MarketCollection(availableMarkets);
+
+                await _cache.WriteCacheAsync(marketCollection);
+
+                return marketCollection;
             }
             else
             {
                 // TODO: display this to user
                 Debug.WriteLine("Failed to get Markets! " + getPricesResponse.ErrorMessage);
+                return new MarketCollection(new List<IMarket>(0));
             }
 
-            return availableMarkets;
         }
 
-        private async Task<List<IMarket>> GetFromCacheAsync()
-        {
-            var cached = await _fileService.LoadAndDeserializeAsync<List<CachedMarket>>(AppFolder.Cache, CACHE_FILE_NAME);
-            return cached.ToList<IMarket>();
-
-        }
     }
 }

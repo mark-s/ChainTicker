@@ -12,5 +12,4 @@ namespace ChainTicker.Core.Domain
             set => _endpoints[endpointType] = value;
         }
     }
-
 }

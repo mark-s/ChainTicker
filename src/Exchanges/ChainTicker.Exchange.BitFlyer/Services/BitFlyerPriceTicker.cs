@@ -12,14 +12,14 @@ namespace ChainTicker.Exchange.BitFlyer.Services
     internal class BitFlyerPriceTicker : IPriceTicker, IDisposable
     {
         private readonly IPubnubTransport _pubnubTransport;
-        private readonly IPollingPriceService _priceQueryService;
+        private readonly IPollingPriceService _pollingPriceService;
         private readonly MessageParser _messageParser;
 
 
         public BitFlyerPriceTicker(IPubnubTransport pubnubTransport, IPollingPriceService pollingPriceService, MessageParser messageParser)
         {
             _pubnubTransport = EnsureArg.IsNotNull(pubnubTransport, nameof(pubnubTransport));
-            _priceQueryService = EnsureArg.IsNotNull(pollingPriceService, nameof(pollingPriceService));
+            _pollingPriceService = EnsureArg.IsNotNull(pollingPriceService, nameof(pollingPriceService));
             _messageParser = EnsureArg.IsNotNull(messageParser, nameof(messageParser));
         }
 
@@ -39,7 +39,7 @@ namespace ChainTicker.Exchange.BitFlyer.Services
         {
             var marketToSubscribeTo = EnsureArg.IsNotNull(market, nameof(market));
 
-            return _priceQueryService.Subscribe(marketToSubscribeTo);
+            return _pollingPriceService.Subscribe(marketToSubscribeTo);
         }
 
         // This is for markets that have realtime updates available
@@ -63,17 +63,14 @@ namespace ChainTicker.Exchange.BitFlyer.Services
             if (market.HasRealTimeUpdates)
                 _pubnubTransport.UnsubscribeFromChannel(GetChannelName(market));
             else
-                _priceQueryService.Unubscribe(market);
+                _pollingPriceService.Unubscribe(market);
         }
 
-
-        private string GetChannelName(IMarket market)
-            => "lightning_ticker_" + market.ProductCode;
 
         public async Task<ITick> GetCurrentPriceAsync(IMarket market)
         {
             EnsureArg.IsNotNull(market, nameof(market));
-            return await _priceQueryService.GetCurrentPriceAsync(market);
+            return await _pollingPriceService.GetCurrentPriceAsync(market);
         }
 
 
@@ -86,5 +83,9 @@ namespace ChainTicker.Exchange.BitFlyer.Services
             var channelName = GetChannelName(market);
             return _pubnubTransport.IsSubscribedToChannel(channelName);
         }
+
+
+        private string GetChannelName(IMarket market)
+            => "lightning_ticker_" + market.ProductCode;
     }
 }
