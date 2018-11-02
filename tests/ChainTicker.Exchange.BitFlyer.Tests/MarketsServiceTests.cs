@@ -5,10 +5,8 @@ using ChainTicker.Core.Domain;
 using ChainTicker.Core.Interfaces;
 using ChainTicker.Core.IO;
 using ChainTicker.Exchange.BitFlyer.Services;
-using ChainTicker.Transport.Pubnub;
 using ChainTicker.Transport.Rest;
 using FakeItEasy;
-using FakeItEasy.Creation;
 using NUnit.Framework;
 using Shouldly;
 
